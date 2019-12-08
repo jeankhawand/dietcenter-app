@@ -5,9 +5,14 @@
  */
 
 require("./bootstrap");
-import { store } from "./store/index.js";
+import {store} from "./store/index.js";
 import routes from "./routes.js";
 import VueRouter from "vue-router";
+import vuetify from "./vuetify";
+
+
+import App from "./components/App.vue";
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -22,9 +27,7 @@ import VueRouter from "vue-router";
 window.Vue = require("vue");
 Vue.use(VueRouter);
 
-import vuetify from "./vuetify";
 
-import App from "./components/App.vue";
 const router = new VueRouter({
     routes,
     mode: "history"

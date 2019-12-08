@@ -1,7 +1,7 @@
 <template>
     <v-card color="grey lighten-4" flat height="50px" tile>
         <v-toolbar dense>
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon v-if="loggedIn"></v-app-bar-nav-icon>
 
             <v-toolbar-title @click="goBack()">Diet Center</v-toolbar-title>
 

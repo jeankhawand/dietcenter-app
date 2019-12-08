@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class ImportIngredients extends Command
 {
@@ -36,6 +37,11 @@ class ImportIngredients extends Command
      */
     public function handle()
     {
-        \DB::unprepared(file_get_contents('database/migrations/ingredient.sql'));
+        if(DB::table('Ingredient')->exists()){
+            print_r("table already exist \n");
+        }else{
+            DB::unprepared(file_get_contents('database/migrations/ingredient.sql'));
+        }
+
     }
 }
