@@ -8,12 +8,16 @@
                             <form @submit.prevent="login">
                                 <v-layout row>
                                     <v-flex xs12>
+                                        <v-alert v-if="errorMessage" type="error">
+                                            {{errorMessage}}
+                                        </v-alert>
                                         <v-text-field
                                             name="email"
                                             label="Email/Username"
                                             id="email"
                                             v-model="email"
                                             type="email"
+                                            :rules="emailRules"
                                             required
                                         ></v-text-field>
                                     </v-flex>
@@ -25,6 +29,7 @@
                                             label="Password"
                                             id="password"
                                             v-model="password"
+                                            :rules="passwordRules"
                                             type="password"
                                             required
                                         ></v-text-field>
@@ -50,7 +55,17 @@ export default {
     data() {
         return {
             email: "",
-            password: ""
+            password: "",
+            errorMessage: "",
+            passwordRules: [
+                v => !!v || 'Password is required',
+                v => (v && v.length <= 10) || 'Password must be less than 10 characters',
+            ],
+            emailRules: [
+                v => !!v || 'E-mail is required',
+                v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+            ],
+
         };
     },
     computed: {
