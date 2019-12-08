@@ -3,27 +3,20 @@
         <v-toolbar dense>
             <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-            <v-toolbar-title>Diet Center</v-toolbar-title>
+            <v-toolbar-title @click="goBack()">Diet Center</v-toolbar-title>
 
             <v-spacer></v-spacer>
 
-            <v-btn icon>
-                <v-icon>mdi-magnify</v-icon>
+            <v-btn v-if="!loggedIn" @click="loginIn()" class="ma-2" color="indigo" dark>Login
+                <v-icon dark right>fas fa-lock</v-icon>
             </v-btn>
-
-            <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-            </v-btn>
-            <v-avatar>
+            <v-avatar v-if="loggedIn">
                 <img
                     src="https://cdn.vuetifyjs.com/images/john.jpg"
                     alt="John"
                 />
             </v-avatar>
-            <v-btn icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
-            <v-btn icon>
+            <v-btn @click="logout()" v-if="loggedIn" icon>
                 <v-icon>mdi-export</v-icon>
             </v-btn>
         </v-toolbar>
@@ -31,6 +24,23 @@
 </template>
 <script>
 export default {
-    name: "Navbar"
+    name: "Navbar",
+    computed: {
+        loggedIn(){
+            return this.$store.getters.loggedIn
+        }
+    },
+    methods:{
+        logout() {
+            this.$router.push({name: 'Logout'});
+        },
+        loginIn() {
+            this.$router.push({name: 'Login'});
+        },
+        goBack(){
+            this.$router.push({name: 'Home'});
+        }
+
+    }
 };
 </script>

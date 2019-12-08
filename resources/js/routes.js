@@ -1,5 +1,7 @@
 import Home from "./components/recipe/RecipeList.vue";
-import Login from "./components/login/Login.vue";
+import Login from "./components/auth/Login.vue";
+import Logout from "./components/auth/Logout.vue";
+
 const routes = [
     {
         path: "/",
@@ -10,6 +12,11 @@ const routes = [
         path: "/login",
         name: "Login",
         component: Login
+    },
+    {
+        path: "/logout",
+        name: "Logout",
+        component: Logout
     }
 ];
 export default routes;
