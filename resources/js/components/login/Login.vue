@@ -5,6 +5,13 @@
                 <v-card>
                     <v-card-text>
                         <v-container>
+                            <v-progress-linear
+                                :active="loading"
+                                :indeterminate="loading"
+                                absolute
+                                bottom
+                                color="deep-purple accent-4"
+                            ></v-progress-linear>
                             <form @submit.prevent="login">
                                 <v-layout row>
                                     <v-flex xs12>
@@ -57,6 +64,7 @@ export default {
             email: "",
             password: "",
             errorMessage: "",
+            loading: false,
             passwordRules: [
                 v => !!v || 'Password is required',
                 v => (v && v.length <= 10) || 'Password must be less than 10 characters',
@@ -75,19 +83,22 @@ export default {
     },
     methods: {
         login() {
+            this.loading=true;
             this.$store
                 .dispatch("retrieveToken", {
                     username: this.email,
-                    password: this.password
+                    password: this.password,
                 })
                 .then(response => {
                     console.log(response);
+                    this.loading = false;
                     this.$router.push({ name: "Home" });
                 })
                 .catch(error => {
                     console.log(error.response.data),
                         (this.errorMessage = error.response.data),
                         (this.password = "");
+                    this.loading = false;
                 });
         }
     }
