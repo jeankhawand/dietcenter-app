@@ -2,7 +2,7 @@
     <v-app>
         <Navbar />
         <v-content>
-            <RecipeList />
+            <router-view></router-view>
         </v-content>
         <Footer />
     </v-app>
@@ -11,13 +11,11 @@
 <script>
 import Navbar from "./Navbar.vue";
 import Footer from "./Footer";
-import RecipeList from "./recipe/RecipeList";
 export default {
     name: "App",
     components: {
         Navbar,
-        Footer,
-        RecipeList
+        Footer
     }
 };
 </script>
