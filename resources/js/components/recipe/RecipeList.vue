@@ -2,13 +2,7 @@
     <div>
         <v-container class="my-5">
             <v-layout row wrap>
-                <v-flex
-                    xs12
-                    sm6
-                    md4
-                    v-for="product in products.data"
-                    :key="product.id"
-                >
+                <v-flex xs12 sm6 md4 v-for="product in products.data" :key="product.id">
                     <RecipeItem :product="product" />
                 </v-flex>
             </v-layout>
