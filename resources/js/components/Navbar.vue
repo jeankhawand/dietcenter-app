@@ -4,7 +4,16 @@
       <v-app-bar-nav-icon v-if="loggedIn"></v-app-bar-nav-icon>
 
       <v-toolbar-title @click="goBack()">Diet Center</v-toolbar-title>
-
+        <v-spacer></v-spacer>
+        <v-text-field
+            v-model="search"
+            clearable
+            flat
+            solo-inverted
+            hide-details
+            prepend-inner-icon="search"
+            label="Search"
+        ></v-text-field>
       <v-spacer></v-spacer>
 
       <v-btn v-if="!loggedIn" @click="goCart()" text class="ma-2" color="indigo" dark>
@@ -31,6 +40,11 @@
 <script>
 export default {
   name: "Navbar",
+    data () {
+      return {
+          search: '',
+      }
+    },
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
