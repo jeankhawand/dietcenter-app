@@ -1,10 +1,12 @@
 <template>
     <v-card color="grey lighten-4" flat height="50px" tile>
         <v-toolbar dense>
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
+           
 
             <v-toolbar-title @click="goBack()">Diet Center</v-toolbar-title>
-
+            <v-btn @click="goDashboard()" v-if="loggedIn" icon>
+                <v-icon>mdi-account-badge-horizontal-outline</v-icon>
+            </v-btn>
             <v-spacer></v-spacer>
 
             <v-btn v-if="!loggedIn" @click="loginIn()" class="ma-2" color="indigo" dark>Login
@@ -39,6 +41,9 @@ export default {
         },
         goBack(){
             this.$router.push({name: 'Home'});
+        },
+        goDashboard(){
+               this.$router.push({name: 'AdminDashboard'});
         }
 
     }
