@@ -7,16 +7,16 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn v-if="!loggedIn" @click="goCart()" class="ma-2" color="indigo" dark>
-        Cart
+      <v-btn v-if="!loggedIn" @click="goCart()" text class="ma-2" color="indigo" dark>
+        <span class="hidden-sm-and-down">Cart</span>
         <v-badge>
           <template v-slot:badge>{{ cartItems }}</template>
           <v-icon dark right>fas fa-shopping-cart</v-icon>
         </v-badge>
       </v-btn>
 
-      <v-btn v-if="!loggedIn" @click="loginIn()" class="ma-2" color="indigo" dark>
-        Login
+      <v-btn v-if="!loggedIn" text @click="loginIn()" class="ma-2" color="indigo" dark>
+          <span class="hidden-sm-and-down">Login</span>
         <v-icon dark right>fas fa-lock</v-icon>
       </v-btn>
       <v-avatar v-if="loggedIn">
