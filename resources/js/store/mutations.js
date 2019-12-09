@@ -1,27 +1,9 @@
-
-import {
-    ADD_PRODUCT,
-    ADD_PRODUCT_SUCCESS,
-    PRODUCT_BY_ID,
-    PRODUCT_BY_ID_SUCCESS,
-    UPDATE_PRODUCT,
-    UPDATE_PRODUCT_SUCCESS,
-    REMOVE_PRODUCT,
-    REMOVE_PRODUCT_SUCCESS,
-    ADD_TO_CART,
-    REMOVE_FROM_CART,
-    ALL_PRODUCTS,
-    ALL_PRODUCTS_SUCCESS,
-    ALL_MANUFACTURERS,
-    ALL_MANUFACTURERS_SUCCESS,
-    ERROR_MSG,
-    DESTROY_TOKEN, RETRIEVE_TOKEN,
+import {ADD_QUANTITY_TO_CART,REMOVE_QUANTITY_FROM_CART,ADD_PRODUCT,ADD_PRODUCT_SUCCESS,PRODUCT_BY_ID,PRODUCT_BY_ID_SUCCESS,UPDATE_PRODUCT,UPDATE_PRODUCT_SUCCESS,REMOVE_PRODUCT,REMOVE_PRODUCT_SUCCESS,ADD_TO_CART,REMOVE_FROM_CART,ALL_PRODUCTS,ALL_PRODUCTS_SUCCESS,ERROR_MSG,DESTROY_TOKEN,RETRIEVE_TOKEN
 } from './mutation-types'
 
 export const productMutations = {
   [ALL_PRODUCTS] (state) {
     state.showLoader = true
-    // this[]
   },
   [ALL_PRODUCTS_SUCCESS] (state, payload) {
     state.showLoader = false
@@ -66,20 +48,30 @@ export const productMutations = {
 }
 
 export const cartMutations = {
-  [ADD_TO_CART]: (state, payload) => state.cart.push(payload),
-  [REMOVE_FROM_CART]: (state, payload) => {
-    const index = state.cart.findIndex(p => p._id === payload)
-    state.cart.splice(index, 1)
-  }
-}
-
-export const manufacturerMutations = {
-  [ALL_MANUFACTURERS] (state) {
-    state.showLoader = true
+  [ADD_TO_CART]: (state, payload) => {
+    if(state.cart.some(recipe => recipe.id == payload.id)){
+        state.cart.find((recipe) => { return recipe.id === payload.id }).quantity++
+    }
+    else{
+        payload.quantity = 1
+        state.cart.push(payload)
+    }
   },
-  [ALL_MANUFACTURERS_SUCCESS] (state, payload) {
-    state.showLoader = false
-    state.manufacturers = payload
+  [REMOVE_FROM_CART]: (state, payload) => {
+    const index = state.cart.findIndex(p => p._id === payload.id)
+    state.cart.splice(index, 1)
+  },
+  [ADD_QUANTITY_TO_CART]: (state, payload) => {
+    state.cart.find((recipe) => { return recipe.id === payload.id }).quantity++
+  },
+  [REMOVE_QUANTITY_FROM_CART]: (state, payload) => {
+      if(payload.quantity == 1){
+        const index = state.cart.findIndex(p => p._id === payload.id)
+        state.cart.splice(index, 1)
+      }
+      else{
+        state.cart.find((recipe) => { return recipe.id === payload.id }).quantity--
+      }
   }
 }
 
