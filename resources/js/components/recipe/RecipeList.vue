@@ -11,7 +11,7 @@
 </template>
 <script>
 import RecipeItem from "./RecipeItem";
-import {PRODUCT_PAGE_INDEX} from "../../store/mutation-types";
+import { PRODUCT_PAGE_INDEX } from "../../store/mutation-types";
 export default {
   created() {
     if (this.products.length === 0) {
@@ -22,8 +22,8 @@ export default {
     products() {
       return this.$store.getters.allProducts;
     },
-    productsPageIndex(){
-        return this.$store.getters.productsPageIndex;
+    productsPageIndex() {
+      return this.$store.getters.productsPageIndex;
     }
   },
   components: {
@@ -32,7 +32,9 @@ export default {
   methods: {
     scroll(person) {
       window.onscroll = () => {
-        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight - 1;
+        let bottomOfWindow =
+          document.documentElement.scrollTop + window.innerHeight >=
+          document.documentElement.offsetHeight - 1;
         if (bottomOfWindow) {
           this.$store.commit(PRODUCT_PAGE_INDEX);
           this.$store.dispatch("allProductsNextPage", this.productsPageIndex);
