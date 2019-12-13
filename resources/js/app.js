@@ -9,14 +9,15 @@ import {store} from "./store/index.js";
 import routes from "./routes.js";
 import VueRouter from "vue-router";
 import vuetify from "./vuetify";
-
-
 import App from "./components/App.vue";
+
+var $ = require("jquery");
+window.jQuery = $;
 
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
+ * components and automaticqqally register them with their "basename".
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */

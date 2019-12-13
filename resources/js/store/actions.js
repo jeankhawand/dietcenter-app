@@ -14,7 +14,7 @@ import {
     UPDATE_PRODUCT_SUCCESS
 } from './mutation-types'
 // -------- PLEASE ENCAPSULATE AXIOS REQUEST WITH PROMISE BLOCK !!! -------
-axios.defaults.baseURL = "http://192.168.1.111/api/";
+axios.defaults.baseURL = "http://dietcenter/api/";
 
 export const productActions = {
   allProducts ({commit}) {
