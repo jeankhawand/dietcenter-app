@@ -8,6 +8,9 @@ export const productGetters = {
     } else {
       return state.product
     }
+  },
+  productsPageIndex: (state) => {
+      return state.productsPageIndex
   }
 }
 

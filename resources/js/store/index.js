@@ -5,7 +5,7 @@ Vue.use(Vuex);
 // we have to import each object from getters.js, mutations.js, and actions.js
 import { productGetters, authGetters } from "./getters";
 import { productMutations, cartMutations, authMutations} from "./mutations";
-import { productActions, authActions } from "./actions";
+import { productActions, cartActions, authActions } from "./actions";
 
 export const store = new Vuex.Store({
     // vuex definitions
@@ -15,6 +15,7 @@ export const store = new Vuex.Store({
         showLoader: false,
         product: {},
         products: [],
+        productsPageIndex: 1,
         token: localStorage.getItem("access_token") || null
     },
     mutations: Object.assign(
@@ -31,5 +32,6 @@ export const store = new Vuex.Store({
     actions: Object.assign(
         {},
         productActions,
+        cartActions,
         authActions)
 });
