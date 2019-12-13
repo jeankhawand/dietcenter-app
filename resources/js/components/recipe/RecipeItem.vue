@@ -62,22 +62,22 @@ export default {
     methods: {
         addToCart() {
             this.loading = true;
-            this.$store.commit(ADD_TO_CART, this.product);
+            this.$store.dispatch("addToCart", this.product);
             this.loading = false;
         },
         removeFromCart() {
             this.loading = true;
-            this.$store.commit(REMOVE_FROM_CART, this.product.id);
+            this.$store.dispatch("removeFromCart", this.product.id);
             this.loading = false;
         },
         addQuantityToCart() {
             this.loading = true;
-            this.$store.commit(ADD_QUANTITY_TO_CART, this.product);
+            this.$store.dispatch("addQuantityToCart", this.product);
             this.loading = false;
         },
         removeQuantityFromCart() {
             this.loading = true;
-            this.$store.commit(REMOVE_QUANTITY_FROM_CART, this.product);
+            this.$store.dispatch("removeQuantityFromCart", this.product);
             this.loading = false;
         }
     }
