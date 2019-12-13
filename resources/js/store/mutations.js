@@ -1,4 +1,4 @@
-import {ADD_QUANTITY_TO_CART,REMOVE_QUANTITY_FROM_CART,ADD_PRODUCT,ADD_PRODUCT_SUCCESS,PRODUCT_BY_ID,PRODUCT_BY_ID_SUCCESS,UPDATE_PRODUCT,UPDATE_PRODUCT_SUCCESS,REMOVE_PRODUCT,REMOVE_PRODUCT_SUCCESS,ADD_TO_CART,REMOVE_FROM_CART,ALL_PRODUCTS,ALL_PRODUCTS_SUCCESS,ERROR_MSG,DESTROY_TOKEN,RETRIEVE_TOKEN
+import {PRODUCT_PAGE_INDEX,LOAD_SESSION_STORAGE_CART,UPDATE_SESSION_STORAGE_CART,ALL_PRODUCTS_NEXT_PAGE_SUCCESS,ADD_QUANTITY_TO_CART,REMOVE_QUANTITY_FROM_CART,ADD_PRODUCT,ADD_PRODUCT_SUCCESS,PRODUCT_BY_ID,PRODUCT_BY_ID_SUCCESS,UPDATE_PRODUCT,UPDATE_PRODUCT_SUCCESS,REMOVE_PRODUCT,REMOVE_PRODUCT_SUCCESS,ADD_TO_CART,REMOVE_FROM_CART,ALL_PRODUCTS,ALL_PRODUCTS_SUCCESS,ERROR_MSG,DESTROY_TOKEN,RETRIEVE_TOKEN
 } from './mutation-types'
 
 export const productMutations = {
@@ -9,6 +9,12 @@ export const productMutations = {
     state.showLoader = false
     state.products = payload
   },
+  [ALL_PRODUCTS_NEXT_PAGE_SUCCESS] (state, payload) {
+    state.showLoader = false
+    for(var i = 0; i <payload.data.length; i++){
+        state.products.data.push(payload.data[i])
+    }
+  },
   [PRODUCT_BY_ID] (state) {
     state.showLoader = true
   },
@@ -18,6 +24,9 @@ export const productMutations = {
   },
   [ADD_PRODUCT]: (state) => {
     state.showLoader = true
+  },
+  [PRODUCT_PAGE_INDEX]: (state) => {
+    state.productsPageIndex++
   },
   [ADD_PRODUCT_SUCCESS]: (state, payload) => {
     state.showLoader = false
@@ -72,6 +81,12 @@ export const cartMutations = {
       else{
         state.cart.find((recipe) => { return recipe.id === payload.id }).quantity--
       }
+  },
+  [UPDATE_SESSION_STORAGE_CART]: (state) => {
+      sessionStorage.cart = JSON.stringify(state.cart)
+  },
+  [LOAD_SESSION_STORAGE_CART]: (state) => {
+    state.cart = JSON.parse(sessionStorage.cart)
   }
 }
 

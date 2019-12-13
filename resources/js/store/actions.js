@@ -1,40 +1,66 @@
 import axios from 'axios'
-import {ADD_PRODUCT,ADD_PRODUCT_SUCCESS,ALL_PRODUCTS,ALL_PRODUCTS_SUCCESS,DESTROY_TOKEN,PRODUCT_BY_ID,PRODUCT_BY_ID_SUCCESS,REMOVE_PRODUCT,REMOVE_PRODUCT_SUCCESS,RETRIEVE_TOKEN,UPDATE_PRODUCT,UPDATE_PRODUCT_SUCCESS
+import {
+    ADD_TO_CART,REMOVE_FROM_CART,ADD_QUANTITY_TO_CART,REMOVE_QUANTITY_FROM_CART,ALL_PRODUCTS_NEXT_PAGE_SUCCESS, ADD_PRODUCT, ADD_PRODUCT_SUCCESS, ALL_PRODUCTS, ALL_PRODUCTS_SUCCESS, DESTROY_TOKEN, PRODUCT_BY_ID, PRODUCT_BY_ID_SUCCESS, REMOVE_PRODUCT, REMOVE_PRODUCT_SUCCESS, RETRIEVE_TOKEN, UPDATE_PRODUCT, UPDATE_PRODUCT_SUCCESS, UPDATE_SESSION_STORAGE_CART
 } from './mutation-types'
 // -------- PLEASE ENCAPSULATE AXIOS REQUEST WITH PROMISE BLOCK !!! -------
-axios.defaults.baseURL = "http://dietcenter:8000/api/";
+axios.defaults.baseURL = "http://dietcenter/api/";
 
 export const productActions = {
-  allProducts ({commit}) {
-    commit(ALL_PRODUCTS)
-    axios.get(`recipes`).then(response => {
-      commit(ALL_PRODUCTS_SUCCESS, response.data)
-    })
-  },
-  productById ({commit}, payload) {
-    commit(PRODUCT_BY_ID)
-    axios.get(`products/${payload}`).then(response => {
-      commit(PRODUCT_BY_ID_SUCCESS, response.data)
-    })
-  },
-  addProduct ({commit}, payload) {
-    commit(ADD_PRODUCT)
-    axios.post(`products`, payload).then(response => {
-      commit(ADD_PRODUCT_SUCCESS, response.data)
-    })
-  },
-  updateProduct ({commit}, payload) {
-    commit(UPDATE_PRODUCT)
-    axios.put(`products/${payload._id}`, payload).then(response => {
-      commit(UPDATE_PRODUCT_SUCCESS, response.data)
-    })
-  },
-  removeProduct ({commit}, payload) {
-    commit(REMOVE_PRODUCT)
-    axios.delete(`products/${payload}`, payload).then(response => {
-      commit(REMOVE_PRODUCT_SUCCESS, response.data)
-    })
-  }
+    allProducts({ commit }) {
+        commit(ALL_PRODUCTS)
+        axios.get(`recipes`).then(response => {
+            commit(ALL_PRODUCTS_SUCCESS, response.data)
+        })
+    },
+    allProductsNextPage({ commit }, index) {
+        commit(ALL_PRODUCTS)
+        axios.get(`recipes?page=` + index).then(response => {
+            commit(ALL_PRODUCTS_NEXT_PAGE_SUCCESS, response.data)
+        })
+    },
+    productById({ commit }, payload) {
+        commit(PRODUCT_BY_ID)
+        axios.get(`products/${payload}`).then(response => {
+            commit(PRODUCT_BY_ID_SUCCESS, response.data)
+        })
+    },
+    addProduct({ commit }, payload) {
+        commit(ADD_PRODUCT)
+        axios.post(`products`, payload).then(response => {
+            commit(ADD_PRODUCT_SUCCESS, response.data)
+        })
+    },
+    updateProduct({ commit }, payload) {
+        commit(UPDATE_PRODUCT)
+        axios.put(`products/${payload._id}`, payload).then(response => {
+            commit(UPDATE_PRODUCT_SUCCESS, response.data)
+        })
+    },
+    removeProduct({ commit }, payload) {
+        commit(REMOVE_PRODUCT)
+        axios.delete(`products/${payload}`, payload).then(response => {
+            commit(REMOVE_PRODUCT_SUCCESS, response.data)
+        })
+    }
+}
+
+export const cartActions = {
+    addToCart({ commit }, payload) {
+        commit(ADD_TO_CART, payload)
+        commit(UPDATE_SESSION_STORAGE_CART)
+    },
+    removeFromCart({ commit }, payload) {
+        commit(REMOVE_FROM_CART, payload)
+        commit(UPDATE_SESSION_STORAGE_CART)
+    },
+    addQuantityToCart({ commit }, payload) {
+        commit(ADD_QUANTITY_TO_CART, payload)
+        commit(UPDATE_SESSION_STORAGE_CART)
+    },
+    removeQuantityFromCart({ commit }, payload) {
+        commit(REMOVE_QUANTITY_FROM_CART, payload)
+        commit(UPDATE_SESSION_STORAGE_CART)
+    },
 }
 
 export const authActions = {
@@ -63,10 +89,10 @@ export const authActions = {
         }
     },
     retrieveToken(context, credentials) {
-       /*
-       once user provide username / password we handle the recieve of the access_token
+        /*
+        once user provide username / password we handle the recieve of the access_token
 
-        */
+         */
         return new Promise((resolve, reject) => {
             axios
                 .post("/login", {
