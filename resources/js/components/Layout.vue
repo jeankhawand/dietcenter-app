@@ -18,7 +18,7 @@
         </v-list-item>
         <v-list-item to="/revenue">
           <v-list-item-action>
-            <v-icon>mdi-contact-mail</v-icon>
+            <v-icon>mdi-currency-usd </v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Revenue</v-list-item-title>
