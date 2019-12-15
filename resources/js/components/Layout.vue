@@ -26,7 +26,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-        
+
 
     <v-app-bar
       app
@@ -45,8 +45,8 @@
             label="Search"
         ></v-text-field>
       <v-spacer></v-spacer>
- 
-      <v-btn v-if="!loggedIn" @click="goCart()" text class="ma-2" color="indigo" dark>
+
+      <v-btn @click="goCart()" text class="ma-2" dark>
         <span class="hidden-sm-and-down">Cart</span>
         <v-badge>
           <template v-slot:badge>{{ cartItems }}</template>
@@ -54,7 +54,7 @@
         </v-badge>
       </v-btn>
 
-      <v-btn v-if="!loggedIn" text @click="loginIn()" class="ma-2" color="indigo" dark>
+      <v-btn v-if="!loggedIn" text @click="loginIn()" class="ma-2" dark>
           <span class="hidden-sm-and-down">Login</span>
         <v-icon dark right>fas fa-lock</v-icon>
       </v-btn>
