@@ -17,8 +17,8 @@ class CreateUserOrdersTable extends Migration
             $table->uuid('userId');
             $table->integer('orderId')->unsigned();
             $table->boolean('isDone');
-            $table->foreign('userId')->references('id')->on('User')->onDelete('cascade');
-            $table->foreign('orderId')->references('id')->on('Order')->onDelete('cascade');
+            $table->foreign('userId')->references('id')->on('User');
+            $table->foreign('orderId')->references('id')->on('Order');
             $table->dateTimeTz('created_at')->useCurrent();
             $table->dateTimeTz('edited_at')->useCurrent();
         });

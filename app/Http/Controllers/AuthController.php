@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
@@ -9,6 +9,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+
         $http = new \GuzzleHttp\Client;
         $secret = DB::table('oauth_clients')->where('id', 2)->first();
         try {

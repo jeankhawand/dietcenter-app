@@ -4,7 +4,9 @@ import Logout from "./components/auth/Logout.vue";
 import Cart from "./components/cart/Cart.vue";
 import Dashboard from "./components/Admin/Dashboard.vue";
 import Revenue from "./components/Admin/Revenue.vue";
-const routes = [{
+
+const routes = [
+    {
         path: "/",
         name: "Home",
         component: Home
@@ -12,7 +14,11 @@ const routes = [{
     {
         path: "/login",
         name: "Login",
-        component: Login
+        component: Login,
+        meta:{
+            requiresVisitors: true
+        }
+
     },
     {
         path: "/cart",
@@ -27,15 +33,21 @@ const routes = [{
     {
         path: "/dashboard",
         name: "Dashboard",
-        component: Dashboard
-    },
-    {
-        path: "/revenue",
-        name: "Revenue",
-        component: Revenue
-    },
+        component: Dashboard,
+        meta: {
+            requiresAuth: true,
+        },
+        children: [
+            {
+
+                path: "/revenue",
+                name: "Revenue",
+                component: Revenue
+            }
+        ],
 
 
+    }
 
 
 ];
