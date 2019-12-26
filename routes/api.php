@@ -19,13 +19,13 @@ Route::middleware('auth:api')->group(function(){
         return $request->user();
     });
     // Store Recipe
-    Route::post('recipe','RecipeController@store');
+    Route::post('recipe','RecipeController@store')->middleware('check-role:dietitian,chef');
     // Update Recipe
-    Route::patch('recipe/{recipe}','RecipeController@update');
+    Route::patch('recipe/{recipe}','RecipeController@update')->middleware('check-role:dietitian,chef');
     // Delete Recipe
-    Route::delete('recipe/{recipe}','RecipeController@destroy');
+    Route::delete('recipe/{recipe}','RecipeController@destroy')->middleware('check-role:dietitian,chef');
 
-    Route::post('/logout','AuthController@logout');
+    Route::post('/logout','AuthController@logout')->middleware('check-role:dietitian,chef,user,manager,admin');
 });
 
 // List Recipes
@@ -35,5 +35,4 @@ Route::get('recipe/{id}','RecipeController@show');
 // Auth for all users
 Route::post('register','AuthController@register');
 Route::post('login','AuthController@login');
-
 

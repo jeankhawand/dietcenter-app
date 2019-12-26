@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->dateTimeTz('created_at')->useCurrent();
             $table->dateTimeTz('updated_at')->useCurrent();
+            $table->softDeletes();
         });
     }
 

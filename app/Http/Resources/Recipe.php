@@ -14,13 +14,14 @@ class Recipe extends JsonResource
      */
     public function toArray($request)
     {
-        // return parent::toArray($request); used to return all the date 
+        // return parent::toArray($request); used to return all the date
         // to customize it so we can call it from vue
         return [
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'image'=> $this->image
+            'image'=> $this->image,
+            'price'=> $this->price,
         ];
     }
 }

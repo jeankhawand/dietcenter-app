@@ -17,7 +17,7 @@ class CreateRecipeIngredientsTable extends Migration
             $table->integer('recipeId')->unsigned();
 
             $table->boolean('isOptional');
-            $table->foreign('recipeId')->references('id')->on('Recipe')->onDelete('cascade');
+            $table->foreign('recipeId')->references('id')->on('Recipe');
             $table->dateTimeTz('created_at')->useCurrent();
             $table->dateTimeTz('edited_at')->useCurrent();
         });
