@@ -17,7 +17,7 @@
             <div class="card-item__wrapper">
                 <div class="card-item__top">
                     <img
-                        src="./images/chip.png"
+                        src="/images/chip.png"
                         class="card-item__chip"
                     />
                     <div class="card-item__type">
@@ -209,7 +209,7 @@
             currentCardBackground () {
                 if (this.randomBackgrounds && !this.backgroundImage) { // TODO will be optimized
                     let random = Math.floor(Math.random() * 25 + 1)
-                    return `https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/${random}.jpeg`
+                    return `./images/${random}.jpeg`
                 } else if (this.backgroundImage) {
                     return this.backgroundImage
                 } else {

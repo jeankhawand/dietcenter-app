@@ -18,6 +18,9 @@ Route::middleware('auth:api')->group(function(){
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    Route::get('/role', function (Request $request) {
+        return $request->user()->roles()->get();
+    });
     // Store Recipe
     Route::post('recipe','RecipeController@store')->middleware('check-role:dietitian,chef');
     // Update Recipe

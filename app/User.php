@@ -82,7 +82,7 @@ class User extends Authenticatable
      */
     public function hasRoleName()
     {
-        return $this->roles()->select('name')->first();
+        return $this->roles()->get();
     }
     public function hasRoleId()
     {
