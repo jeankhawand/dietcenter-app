@@ -48,7 +48,7 @@
 
       <v-btn @click="goCart()" text class="ma-2" dark>
         <span class="hidden-sm-and-down">Cart</span>
-        <v-badge>
+        <v-badge color="rgba(0, 0, 0, .12)">
           <template v-slot:badge>{{ cartItems }}</template>
           <v-icon dark right>fas fa-shopping-cart</v-icon>
         </v-badge>
@@ -66,9 +66,9 @@
       </v-btn>
     </v-app-bar>
         <v-content>
-            <v-container>
+            
               <router-view></router-view>
-            </v-container>
+       
           </v-content>
     <v-footer
       color="green"
