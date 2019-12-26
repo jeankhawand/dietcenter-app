@@ -18,8 +18,10 @@ class CreateRecipesTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->longText('image');
+            $table->double('price');
             $table->dateTimeTz('created_at')->useCurrent();
             $table->dateTimeTz('edited_at')->useCurrent();
+            $table->softDeletes();
         });
     }
 

@@ -1,0 +1,20 @@
+name: Build,Test Deploy App
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Build Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v1
+      - name: Build Docker Compose
+          run: |
+            docker-compose up -d
+  test:
+    name: Testing Job
+    runs-on: ubuntu-latest
+  deploy:
+    name: Deploy Docker Compose to AWS EC2
