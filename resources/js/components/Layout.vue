@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -8,23 +9,36 @@
       v-if="loggedIn"
     >
       <v-list dense>
-        <v-list-item to="/dashboard">
+        <v-list-item class="mt-10" to="/admin/dashboard">
           <v-list-item-action>
-            <v-icon>mdi-home</v-icon>
+            <v-icon color="black">mdi-home</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/dashboard/revenue">
+        <v-list-item to="/admin/revenue">
           <v-list-item-action>
-            <v-icon>mdi-currency-usd </v-icon>
+            <v-icon color="black">mdi-currency-usd </v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Revenue</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+          <v-list-item to="/client/client_dashboard">
+          <v-list-item-action>
+            <v-icon color="black">mdi-home</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>ClientDashboard</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
+      <template v-slot:append>
+        <div class="pa-2"  @click="logout()" v-if="loggedIn" icon>
+          <v-btn block>Logout</v-btn>
+        </div>
+      </template>
     </v-navigation-drawer>
 
 
@@ -49,6 +63,12 @@
         <v-btn  class="d-lg-none d-md" icon>
             <v-icon>mdi-magnify</v-icon>
         </v-btn>
+         <v-switch    class="mt-6"
+                      v-model="$vuetify.theme.dark"
+                      primary
+                      label="Dark"
+                      v-if="loggedIn"
+                    />
         <v-btn v-if="loggedIn" class="hidden-sm-and-down" icon @click="handleFullScreen()">
             <v-icon>mdi-fullscreen</v-icon>
         </v-btn>
@@ -65,9 +85,6 @@
       <v-avatar v-if="loggedIn">
         <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
       </v-avatar>
-      <v-btn @click="logout()" v-if="loggedIn" icon>
-        <v-icon>mdi-export</v-icon>
-      </v-btn>
     </v-app-bar>
         <v-content>
             

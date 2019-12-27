@@ -102,5 +102,5 @@
   }
 </script>
 <style lang="scss">
-    @import '../Card/style.scss';
+    //  @import '../Card/style.scss';
 </style>

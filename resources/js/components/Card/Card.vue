@@ -17,7 +17,7 @@
             <div class="card-item__wrapper">
                 <div class="card-item__top">
                     <img
-                        src="./images/chip.png"
+                      
                         class="card-item__chip"
                     />
                     <div class="card-item__type">
