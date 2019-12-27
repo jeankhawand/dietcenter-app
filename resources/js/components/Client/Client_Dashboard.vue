@@ -1,7 +1,7 @@
 <template>
 <v-container fill-height
     fluid
-    grid-list-xl 
+    grid-list-xl
   >
    <v-layout wrap>
 <v-flex
@@ -11,31 +11,31 @@
       >
       <v-card
     class="mx-auto text-center"
-    
+
     max-width="600"
-  > 
+  >
     <div id="radial">
       <apexchart type=radialBar height=350 :options="chartOptions" :series="series" />
     </div>
     <v-divider></v-divider>
     <v-card-text>
       <div class="display-1 font-weight-thin" >Protein Intake</div>
-    </v-card-text>    
+    </v-card-text>
   </v-card>
 
       <v-card
     class="mx-auto mt-4 text-center"
-   
-    
+
+
     max-width="600"
-  > 
+  >
     <div id="radial">
       <apexchart type=radialBar height=350 :options="chartOptions2" :series="series2" />
     </div>
     <v-divider></v-divider>
     <v-card-text>
       <div class="display-1 font-weight-thin" >Carbs Intake</div>
-    </v-card-text>    
+    </v-card-text>
   </v-card>
 </v-flex>
 <v-flex
@@ -45,30 +45,30 @@
       >
       <v-card
     class="mx-auto text-center"
-    
+
     max-width="600"
-  > 
+  >
     <div id="radial">
       <apexchart type=radialBar height=350 :options="chartOptions3" :series="series3" />
     </div>
     <v-divider></v-divider>
     <v-card-text>
       <div class="display-1 font-weight-thin" >Sugar Intake</div>
-    </v-card-text>    
+    </v-card-text>
   </v-card>
       <v-card
     class="mx-auto mt-4 text-center"
- 
-   
+
+
     max-width="600"
-  > 
+  >
     <div id="radial">
       <apexchart type=radialBar height=350 :options="chartOptions4" :series="series4" />
     </div>
     <v-divider></v-divider>
     <v-card-text>
       <div class="display-1 font-weight-thin">Calories Intake</div>
-    </v-card-text>    
+    </v-card-text>
   </v-card>
 </v-flex>
 
@@ -81,15 +81,16 @@
     :items="desserts"
     :items-per-page="5"
     class="elevation-1"
-  ></v-data-table> 
+  ></v-data-table>
 </v-flex>
    </v-layout>
 </v-container>
 </template>
 
 <script>
-import VueApexCharts from 'vue-apexcharts'
-export default {
+    import VueApexCharts from 'vue-apexcharts'
+
+    export default {
     components: {
         apexchart: VueApexCharts,
    },
@@ -105,7 +106,7 @@ export default {
               startAngle: -90,
               endAngle: 90,
               track: {
-            
+
                 background: "#e7e7e7",
                 strokeWidth: '97%',
                 margin: 5, // margin is in pixels
@@ -154,7 +155,7 @@ export default {
               startAngle: -90,
               endAngle: 90,
               track: {
-            
+
                 background: "#e7e7e7",
                 strokeWidth: '97%',
                 margin: 5, // margin is in pixels
@@ -203,7 +204,7 @@ export default {
               startAngle: -90,
               endAngle: 90,
               track: {
-            
+
                 background: "#e7e7e7",
                 strokeWidth: '97%',
                 margin: 5, // margin is in pixels
@@ -252,7 +253,7 @@ export default {
               startAngle: -90,
               endAngle: 90,
               track: {
-            
+
                 background: "#e7e7e7",
                 strokeWidth: '97%',
                 margin: 5, // margin is in pixels
@@ -389,6 +390,6 @@ export default {
 
     }
     }
-    
+
 }
 </script>

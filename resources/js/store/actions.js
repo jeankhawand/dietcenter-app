@@ -1,10 +1,26 @@
 import axios from 'axios'
 import {
-    ADD_TO_CART,REMOVE_FROM_CART,ADD_QUANTITY_TO_CART,REMOVE_QUANTITY_FROM_CART,ALL_PRODUCTS_NEXT_PAGE_SUCCESS, ADD_PRODUCT, ADD_PRODUCT_SUCCESS, ALL_PRODUCTS, ALL_PRODUCTS_SUCCESS, DESTROY_TOKEN, PRODUCT_BY_ID, PRODUCT_BY_ID_SUCCESS, REMOVE_PRODUCT, REMOVE_PRODUCT_SUCCESS, RETRIEVE_TOKEN, UPDATE_PRODUCT, UPDATE_PRODUCT_SUCCESS, UPDATE_SESSION_STORAGE_CART
+    ADD_PRODUCT,
+    ADD_PRODUCT_SUCCESS,
+    ADD_QUANTITY_TO_CART,
+    ADD_TO_CART,
+    ALL_PRODUCTS,
+    ALL_PRODUCTS_NEXT_PAGE_SUCCESS,
+    ALL_PRODUCTS_SUCCESS,
+    DESTROY_TOKEN,
+    PRODUCT_BY_ID,
+    PRODUCT_BY_ID_SUCCESS,
+    REMOVE_FROM_CART,
+    REMOVE_PRODUCT,
+    REMOVE_PRODUCT_SUCCESS,
+    REMOVE_QUANTITY_FROM_CART,
+    RETRIEVE_TOKEN,
+    UPDATE_PRODUCT,
+    UPDATE_PRODUCT_SUCCESS,
+    UPDATE_SESSION_STORAGE_CART
 } from './mutation-types'
 // -------- PLEASE ENCAPSULATE AXIOS REQUEST WITH PROMISE BLOCK !!! -------
-axios.defaults.baseURL = "http://dietcenter/api/";
-
+axios.defaults.baseURL = process.env.MIX_API_ENDPOINT;;
 export const productActions = {
     allProducts({ commit }) {
         commit(ALL_PRODUCTS)
@@ -105,6 +121,28 @@ export const authActions = {
 
                     localStorage.setItem("access_token", token);
                     context.commit(RETRIEVE_TOKEN, token);
+                    resolve(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+        });
+    },
+
+    checkout(context, data) {
+        /*
+        checkout token
+
+         */
+        return new Promise((resolve, reject) => {
+            axios
+                .post("/checkout", {
+                    email: data.email,
+                    stripetoken: data.stripetoken,
+                })
+                .then(response => {
+                    console.log(response);
                     resolve(response);
                 })
                 .catch(error => {

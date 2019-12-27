@@ -8,11 +8,8 @@
 
                   <v-divider></v-divider>
 
-                  <v-stepper-step :editable="editable" :complete="e1 > 2" step="2">Fill Your Info</v-stepper-step>
+                  <v-stepper-step :editable="editable" :complete="e1 > 2" step="2">Checkout</v-stepper-step>
 
-                  <v-divider></v-divider>
-
-                  <v-stepper-step :editable="editable" step="3">Checkout</v-stepper-step>
               </v-stepper-header>
 
               <v-stepper-items>
@@ -37,24 +34,9 @@
                   </v-stepper-content>
 
                   <v-stepper-content step="2">
-                      <v-btn
-                          color="primary"
-                          @click="e1 = 3"
-                      >
-                          Continue
-                      </v-btn>
+                      <PaymentForm></PaymentForm>
                   </v-stepper-content>
 
-                  <v-stepper-content step="3">
-                      <CardForm
-                          :form-data="formData"
-                          @input-card-number="updateCardNumber"
-                          @input-card-name="updateCardName"
-                          @input-card-month="updateCardMonth"
-                          @input-card-year="updateCardYear"
-                          @input-card-cvv="updateCardCvv"
-                      />
-                  </v-stepper-content>
               </v-stepper-items>
           </v-stepper>
       </template>
@@ -65,7 +47,7 @@
 
 <script>
     import RecipeItem from "../recipe/RecipeItem";
-    import CardForm from "../Card/CardForm";
+    import PaymentForm from "../Payment/PaymentForm";
 
     export default {
     data () {
@@ -74,33 +56,15 @@
           e1: 0,
           altLabels: false,
           editable: true,
-          formData: {
-              cardName: '',
-              cardNumber: '',
-              cardMonth: '',
-              cardYear: '',
-              cardCvv: ''
-          }
       }
     },
     components: {
         RecipeItem,
-        CardForm
+        PaymentForm
     },
         methods:{
-            updateCardNumber (val) {
-            },
-            updateCardName (val) {
-            },
-            updateCardMonth (val) {
-            },
-            updateCardYear (val) {
-            },
-            updateCardCvv (val) {
-            }
+
         }
   }
 </script>
-<style lang="scss">
-    //  @import '../Card/style.scss';
-</style>
+

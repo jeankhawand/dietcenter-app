@@ -3,14 +3,14 @@
 <v-app>
 <v-container  fill-height
     fluid
-    grid-list-xl 
+    grid-list-xl
     >
        <v-layout wrap>
      <v-flex
         md12
         sm12
         lg4
-      > 
+      >
        <v-card
     class="mx-auto"
     max-width="344"
@@ -19,7 +19,7 @@
   >
     <v-list-item three-line>
       <v-list-item-avatar
-        
+
         size="80"
         color="green"
         >
@@ -33,7 +33,7 @@
       <v-list-item-content>
         <div class="category grey--text font-weight-light text-right">Revenue</div>
         <div class="display-1 mb-2 font-weight-light text-right">34,000$</div>
-       
+
       </v-list-item-content>
 
 
@@ -44,7 +44,7 @@
         md12
         sm12
         lg4
-      > 
+      >
        <v-card
     class="mx-auto"
     max-width="344"
@@ -53,7 +53,7 @@
   >
     <v-list-item three-line>
       <v-list-item-avatar
-        
+
         size="80"
         color="#25A032"
         >
@@ -67,7 +67,7 @@
       <v-list-item-content>
         <div class="category grey--text font-weight-light text-right">Revenue</div>
         <div class="display-1 mb-2 font-weight-light text-right">34,000$</div>
-       
+
       </v-list-item-content>
 
 
@@ -78,7 +78,7 @@
         md12
         sm12
         lg4
-      > 
+      >
        <v-card
     class="mx-auto"
     max-width="344"
@@ -87,7 +87,7 @@
   >
     <v-list-item three-line>
       <v-list-item-avatar
-        
+
         size="80"
         color="#006727"
         >
@@ -101,15 +101,15 @@
       <v-list-item-content>
         <div class="category grey--text font-weight-light text-right">Revenue</div>
         <div class="display-1 mb-2 font-weight-light text-right">34,000$</div>
-       
+
       </v-list-item-content>
 
 
     </v-list-item>
   </v-card>
     </v-flex>
-  
- 
+
+
         <v-flex lg12>
           <v-card-text>
       <div class="display-1 font-weight-thin">Clients </div>
@@ -170,15 +170,16 @@
             </v-card-text>
           </v-card>
         </v-flex>
-    
+
        </v-layout>
 </v-container>
 </v-app>
 </template>
 
 <script>
- import {Items as Users} from '../../Users/user';
-  export default {
+    import {Items as Users} from '../../Users/user';
+
+    export default {
     data () {
       return {
       search: '',
