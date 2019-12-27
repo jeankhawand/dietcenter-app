@@ -42,12 +42,14 @@ Route::post('login','AuthController@login');
 Route::post('/checkout',function (Request $request){
     // dd($request->all());
     // validation
+//    dd($request->all());
     try {
-        $charge = Stripe::charges()->create([
-            'amount' => $request->amount,
-            'currency' => 'USD',
-            'source' => $request->stripeToken,
-            'description' => $request->description,
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+        $charge = \Stripe\Charge::create([
+            'amount' => 3000,
+            'currency' => 'usd',
+            'source' => $request->stripetoken,
+            'description' => 'some description',
             'receipt_email' => $request->email,
             'metadata' => [
                 'ip' => 'metadata 1',
@@ -55,12 +57,13 @@ Route::post('/checkout',function (Request $request){
                 'product_id' => 'metadata 3',
             ],
         ]);
+//        dd($charge);
         // save this info to your database
         // SUCCESSFUL
-        return back()->with('success_message', 'Thank you! Your payment has been accepted.');
-    } catch (CardErrorException $e) {
+        return response()->json('Thank you! Your payment has been accepted.');
+    } catch (Exception $e) {
         // save info to database for failed
-        return back()->withErrors('Error! ' . $e->getMessage());
+        return response()->json($e->getMessage() . $e->getCode());
     }
 });
 

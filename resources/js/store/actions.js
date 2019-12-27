@@ -129,6 +129,28 @@ export const authActions = {
                 });
         });
     },
+
+    checkout(context, data) {
+        /*
+        checkout token
+
+         */
+        return new Promise((resolve, reject) => {
+            axios
+                .post("/checkout", {
+                    email: data.email,
+                    stripetoken: data.stripetoken,
+                })
+                .then(response => {
+                    console.log(response);
+                    resolve(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+        });
+    },
     register(context, data) {
         return new Promise((resolve, reject) => {
             axios

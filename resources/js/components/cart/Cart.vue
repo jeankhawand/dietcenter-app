@@ -8,11 +8,8 @@
 
                   <v-divider></v-divider>
 
-                  <v-stepper-step :editable="editable" :complete="e1 > 2" step="2">Fill Your Info</v-stepper-step>
+                  <v-stepper-step :editable="editable" :complete="e1 > 2" step="2">Checkout</v-stepper-step>
 
-                  <v-divider></v-divider>
-
-                  <v-stepper-step :editable="editable" step="3">Checkout</v-stepper-step>
               </v-stepper-header>
 
               <v-stepper-items>
@@ -37,17 +34,9 @@
                   </v-stepper-content>
 
                   <v-stepper-content step="2">
-                      <v-btn
-                          color="primary"
-                          @click="e1 = 3"
-                      >
-                          Continue
-                      </v-btn>
+                      <PaymentForm></PaymentForm>
                   </v-stepper-content>
 
-                  <v-stepper-content step="3">
-
-                  </v-stepper-content>
               </v-stepper-items>
           </v-stepper>
       </template>
@@ -58,7 +47,7 @@
 
 <script>
     import RecipeItem from "../recipe/RecipeItem";
-    import CardElement from "../Payment/CardElement";
+    import PaymentForm from "../Payment/PaymentForm";
 
     export default {
     data () {
@@ -71,7 +60,7 @@
     },
     components: {
         RecipeItem,
-        CardElement
+        PaymentForm
     },
         methods:{
 

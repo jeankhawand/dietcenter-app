@@ -1,114 +1,125 @@
 <template>
-    <form action="/checkout" method="POST" id="payment-form" @submit.prevent="pay()">
-        <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" class="form-control" id="email">
-        </div>
+    <div>
+        <v-alert id="card-errors" ref="message" role="alert" v-if="errorMessage" type="error">
+            {{errorMessage}}
+        </v-alert>
+        <v-text-field
+            label="First Name"
+            v-model="firstname" required></v-text-field>
+        <v-text-field
+            label="Last Name"
+            v-model="lastname" required></v-text-field>
+        <v-text-field
+            label="Phone Number"
+            v-model="phonenumber" required></v-text-field>
+        <v-text-field
+            label="Email"
+            v-model="email" :rules="emailRules" type="email" required></v-text-field>
 
-        <div class="form-group">
-            <label for="name_on_card">Name on Card</label>
-            <input type="text" class="form-control" id="name_on_card" name="name_on_card" v-model="name_on_card">
-        </div>
+        <card class='stripe-card'
+              :class='{ complete }'
+              stripe='pk_test_4S7dtz39zfwDh1YkcvBQfPs300tsPZAiB9'
+              :options='stripeOptions'
+              @change='complete = $event.complete || change($event)'
+        />
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" name="address">
-                </div>
-            </div>
+        <v-btn
+            color="primary"
+            @click='pay'
+            :disabled='!complete'
+        >
+            Checkout
+        </v-btn>
 
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="city">City</label>
-                    <input type="text" class="form-control" id="city" name="city">
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="province">Province</label>
-                    <input type="text" class="form-control" id="province" name="province">
-                </div>
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="postalcode">Postal Code</label>
-                    <input type="text" class="form-control" id="postalcode" name="postalcode">
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="country">Country</label>
-                    <input type="text" class="form-control" id="country" name="country">
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="phone">Phone</label>
-                    <input type="text" class="form-control" id="phone" name="phone">
-                </div>
-            </div>
-
-        </div>
-
-        <div class="form-group">
-            <label for="card-element">Credit Card</label>
-            <card-element></card-element>
-        </div>
-
-        <!-- CSRF Field -->
-        <input type="hidden" name="_token" :value="csrf">
-
-        <div class="spacer"></div>
-
-        <button type="submit" class="btn btn-success">Submit Payment</button>
-    </form>
+    </div>
 </template>
 
 <script>
-    import {createToken} from 'vue-stripe-elements-plus'
-    import CardElement from "./CardElement";
+    import {Card, createToken} from 'vue-stripe-elements-plus'
 
     export default {
-        data () {
+        components: {Card},
+        data() {
             return {
-                csrf: document.head.querySelector('meta[name="csrf-token"]').content,
-                name_on_card: ''
+                firstname: '',
+                lastname: '',
+                phonenumber: '',
+                email: '',
+                complete: false,
+                errorMessage: '',
+                emailRules: [
+                    v => !!v || 'E-mail is required',
+                    v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+                ],
+                stripeOptions: {
+                    // see https://stripe.com/docs/stripe.js#element-options for details
+                    style: {
+                        base: {
+                            color: '#32325d',
+                            lineHeight: '18px',
+                            fontFamily: '"Raleway", Helvetica, sans-serif',
+                            fontSmoothing: 'antialiased',
+                            fontSize: '16px',
+                            '::placeholder': {
+                                color: '#aab7c4'
+                            }
+                        },
+                        invalid: {
+                            color: '#fa755a',
+                            iconColor: '#fa755a'
+                        }
+                    },
+                    hidePostalCode: true
+                }
             }
         },
+
         methods: {
-            pay () {
+            pay() {
+                var options = {
+                    name: this.firstname + ' ' + this.lastname,
+                }
                 // createToken returns a Promise which resolves in a result object with
                 // either a token or an error key.
                 // See https://stripe.com/docs/api#tokens for the token object.
                 // See https://stripe.com/docs/api#errors for the error object.
                 // More general https://stripe.com/docs/stripe.js#stripe-create-token.
-                var options = {
-                    name: this.name_on_card,
-                }
-                createToken(options).then(result => {
-                    // var form = document.getElementById('payment-form');
-                    var hiddenInput = document.createElement('input');
-                    hiddenInput.setAttribute('type', 'hidden');
-                    hiddenInput.setAttribute('name', 'stripeToken');
-                    hiddenInput.setAttribute('value', result.token.id);
-                    this.$el.appendChild(hiddenInput);
-                    // Submit the form
-                    this.$el.submit();
+                createToken(options)
+                    .then(data => {
+                        console.log(data.token.id)
+                        this.$store.dispatch("checkout", {
+                            email: this.email,
+                            stripetoken: data.token.id,
+                        }).then(response => {
+                            // console.log(response);
 
-                })
+                            console.log(this.$refs);
+                            // this.$refs.message.setAttribute("type","success");
+                            this.errorMessage = response.data;
+                            // this.loading = false;
+                            // this.$router.push({ name: "Home" });
+                        }).catch(error => {
+                            // console.log(error.response.data),
+                            // this.$refs.message.setAttribute("type","error");
+                                this.errorMessage = error.response.data;
+                            // this.loading = false;
+                        })
+                        // console.log(data.token)
+
+                    }).catch(error => {
+                    // console.log(error.response.data),
+                        (this.errorMessage = error.response.data);
+                    // this.loading = false;
+                });
+            },
+            change(event) {
+                // if (event.error) {
+                //   this.errorMessage = event.error.message;
+                // } else {
+                //   this.errorMessage = ''
+                // }
+                this.errorMessage = event.error ? event.error.message : ''
             }
-        },
-        components: {
-            CardElement
         }
-
     }
 </script>
