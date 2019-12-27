@@ -46,14 +46,7 @@
                   </v-stepper-content>
 
                   <v-stepper-content step="3">
-                      <CardForm
-                          :form-data="formData"
-                          @input-card-number="updateCardNumber"
-                          @input-card-name="updateCardName"
-                          @input-card-month="updateCardMonth"
-                          @input-card-year="updateCardYear"
-                          @input-card-cvv="updateCardCvv"
-                      />
+
                   </v-stepper-content>
               </v-stepper-items>
           </v-stepper>
@@ -65,7 +58,7 @@
 
 <script>
     import RecipeItem from "../recipe/RecipeItem";
-    import CardForm from "../Card/CardForm";
+    import CardElement from "../Payment/CardElement";
 
     export default {
     data () {
@@ -74,33 +67,15 @@
           e1: 0,
           altLabels: false,
           editable: true,
-          formData: {
-              cardName: '',
-              cardNumber: '',
-              cardMonth: '',
-              cardYear: '',
-              cardCvv: ''
-          }
       }
     },
     components: {
         RecipeItem,
-        CardForm
+        CardElement
     },
         methods:{
-            updateCardNumber (val) {
-            },
-            updateCardName (val) {
-            },
-            updateCardMonth (val) {
-            },
-            updateCardYear (val) {
-            },
-            updateCardCvv (val) {
-            }
+
         }
   }
 </script>
-<style lang="scss">
-    @import '../Card/style.scss';
-</style>
+

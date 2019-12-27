@@ -29,6 +29,7 @@ Route::middleware('auth:api')->group(function(){
     Route::delete('recipe/{recipe}','RecipeController@destroy')->middleware('check-role:dietitian,chef');
 
     Route::post('/logout','AuthController@logout')->middleware('check-role:dietitian,chef,user,manager,admin');
+
 });
 
 // List Recipes
@@ -38,4 +39,28 @@ Route::get('recipe/{id}','RecipeController@show');
 // Auth for all users
 Route::post('register','AuthController@register');
 Route::post('login','AuthController@login');
+Route::post('/checkout',function (Request $request){
+    // dd($request->all());
+    // validation
+    try {
+        $charge = Stripe::charges()->create([
+            'amount' => $request->amount,
+            'currency' => 'USD',
+            'source' => $request->stripeToken,
+            'description' => $request->description,
+            'receipt_email' => $request->email,
+            'metadata' => [
+                'ip' => 'metadata 1',
+                'session_id' => 'metadata 2',
+                'product_id' => 'metadata 3',
+            ],
+        ]);
+        // save this info to your database
+        // SUCCESSFUL
+        return back()->with('success_message', 'Thank you! Your payment has been accepted.');
+    } catch (CardErrorException $e) {
+        // save info to database for failed
+        return back()->withErrors('Error! ' . $e->getMessage());
+    }
+});
 

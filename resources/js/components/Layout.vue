@@ -44,7 +44,7 @@
             solo-inverted
             hide-details
             label="Search"
-        ></v-text-field>
+        @keyup.enter="searchit"></v-text-field>
       <v-spacer></v-spacer>
         <v-btn  class="d-lg-none d-md" icon>
             <v-icon>mdi-magnify</v-icon>
@@ -103,6 +103,10 @@
 
   },
   methods: {
+        searchit(){
+            console.log('searching ..');
+        },
+
       handleFullScreen() {
 
               let doc = window.document;
