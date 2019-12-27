@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import Layout from "./Layout.vue";
-import {LOAD_SESSION_STORAGE_CART} from '../store/mutation-types'
+    import Layout from "./Layout.vue";
+    import {LOAD_SESSION_STORAGE_CART} from '../store/mutation-types'
 
-export default {
+    export default {
     name: "App",
     components: {
         Layout,
@@ -22,3 +22,4 @@ export default {
   }
 };
 </script>
+
