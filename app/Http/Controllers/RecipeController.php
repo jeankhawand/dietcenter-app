@@ -47,7 +47,8 @@ class RecipeController extends Controller
         $data = $request->validate([
             'name'=>'required|string',
             'description'=>'required',
-            'image'=>'required'
+            'image'=>'required',
+            'price'=>'required'
         ]);
         $recipe = Recipe::create($data);
         return response($recipe,201);
