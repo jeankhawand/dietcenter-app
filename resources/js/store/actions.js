@@ -74,7 +74,7 @@ export const authActions = {
         if (context.getters.loggedIn) {
             return new Promise((resolve, reject) => {
                 axios
-                    .post("/logout")
+                    .post("logout")
                     .then(response => {
                         localStorage.removeItem("access_token");
                         context.commit(DESTROY_TOKEN);
@@ -95,7 +95,7 @@ export const authActions = {
          */
         return new Promise((resolve, reject) => {
             axios
-                .post("/login", {
+                .post("login", {
                     username: credentials.username,
                     password: credentials.password
                 })
@@ -116,7 +116,7 @@ export const authActions = {
     register(context, data) {
         return new Promise((resolve, reject) => {
             axios
-                .post("/register", {
+                .post("register", {
                     name: data.name,
                     email: data.email,
                     password: data.password
