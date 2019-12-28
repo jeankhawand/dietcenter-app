@@ -1,18 +1,19 @@
 <?php
 
 namespace App;
-use Laravel\Passport\HasApiTokens;
-use Illuminate\Support\Str;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 use Webpatser\Uuid\Uuid;
+
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
-    public $incrementing = false;
-    protected $table ='User';
-    public $timestamps = false;
+    use HasApiTokens, Notifiable,SoftDeletes;
+    public $incrementing = false;// disable defaults incrementing as integer key
+    protected $table ='User';// custom user table
+    public $timestamps = false; // disable defaults timestamp
+    protected $keyType = 'string'; // had to change key type since we are using uuid
     public static function boot()
     {
          parent::boot();
@@ -30,7 +31,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'id','name', 'email', 'password',
     ];
 
     /**
@@ -55,14 +56,14 @@ class User extends Authenticatable
      * this function return a relationship between user and order
      */
     public function orders(){
-        return $this->hasMany('App\Recipe');
+        return $this->belongsToMany('App\Order');
     }
     /**
      * this function return a relationship between user and role
      */
     public function roles()
     {
-        return $this->belongsToMany('Role', 'UserRole');
+        return $this->belongsToMany(Role::class,'UserRole','userId','roleId');
     }
 
     /**
@@ -79,8 +80,19 @@ class User extends Authenticatable
      * @param $check
      * @return bool
      */
-    public function hasRole($check)
+    public function hasRoleName()
     {
-        return in_array($check, array_fetch($this->roles->toArray(), 'name'));
+        return $this->roles()->get();
+    }
+    public function hasRoleId()
+    {
+        return $this->roles()->select('roleId')->first();
+    }
+    public function hasRole($role)
+    {
+        if ($this->roles()->where('name', $role)->first()) {
+            return true;
+        }
+        return false;
     }
 }

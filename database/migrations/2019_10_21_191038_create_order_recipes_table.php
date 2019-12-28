@@ -16,8 +16,8 @@ class CreateOrderRecipesTable extends Migration
         Schema::create('OrderRecipe', function (Blueprint $table) {
             $table->integer('orderId')->unsigned();
             $table->integer('recipeId')->unsigned();
-            $table->foreign('orderId')->references('id')->on('Order')->onDelete('cascade');
-            $table->foreign('recipeId')->references('id')->on('Recipe')->onDelete('cascade');
+            $table->foreign('orderId')->references('id')->on('Order');
+            $table->foreign('recipeId')->references('id')->on('Recipe');
             $table->dateTimeTz('created_at')->useCurrent();
             $table->dateTimeTz('edited_at')->useCurrent();
         });

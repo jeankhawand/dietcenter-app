@@ -30,7 +30,6 @@ php artisan migrate:refresh --seed
 5. generate password grant token 
 ```
 php artisan passport:install --force
-
 ```
 6. next insert ingredients 
 ```

@@ -1,17 +1,7 @@
 version: "3"
 #Laravel App
 services:
-  load_balancer:
-    image: tutum/haproxy
-    links:
-      - server
-    ports:
-      - "80:80"
-  cache:
-    image: redis
   app:
-    # get App Name from .env file and let container name match the following format
-    container_name: ${APP_NAME}_web
     # used build to map each build of each services into a specific Dockerfile to proceed a specific image
     build:
       context: ./docker/app
@@ -19,28 +9,39 @@ services:
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
+    environment:
+      - "DB_PORT=3306"
+      - "DB_HOST=database"
+    networks:
+      - appnetwork
   server:
+    container_name: server
     build:
       context: ./docker/nginx
       dockerfile: Dockerfile
     working_dir: /var/www/html
-    volumes_from:
-      - app
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/nginx.conf
     ports:
-      - 8080:80
+      - 80:80
       - 443:443
     networks:
       - appnetwork
+    depends_on:
+      - app
   mysql:
+
     image: mysql:5.7
-    container_name: ${APP_NAME}_db
+    container_name: database
+    tty: true
     environment:
       - MYSQL_DATABASE=${DB_DATABASE}
       - MYSQL_ROOT_PASSWORD=quuV44{7g>oz]AT2bd
       - MYSQL_USER=dc
       - MYSQL_PASSWORD=4A)2L=v2?ucTJDJ9fj
     volumes:
-      - dbdata: /var/lib/mysql
+      - dbdata:/var/lib/mysql
     networks:
       - appnetwork
   myadmin:
@@ -57,7 +58,7 @@ services:
       - /sessions
 #Docker Networks
 networks:
-  app-network:
+  appnetwork:
     driver: bridge
 #Volumes
 volumes:
