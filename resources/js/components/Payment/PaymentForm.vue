@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-alert id="card-errors" ref="message" role="alert" v-if="errorMessage" type="error">
+        <v-alert id="card-errors" ref="message" role="alert" v-if="errorMessage" :type="errorType">
             {{errorMessage}}
         </v-alert>
         <v-text-field
@@ -47,6 +47,7 @@
                 email: '',
                 complete: false,
                 errorMessage: '',
+                errorType: '',
                 emailRules: [
                     v => !!v || 'E-mail is required',
                     v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
@@ -94,20 +95,21 @@
                             // console.log(response);
 
                             console.log(this.$refs);
-                            // this.$refs.message.setAttribute("type","success");
+                            this.errorType = 'success';
                             this.errorMessage = response.data;
                             // this.loading = false;
-                            // this.$router.push({ name: "Home" });
+                            // this.$router.push({ name: "Success" });
                         }).catch(error => {
                             // console.log(error.response.data),
-                            // this.$refs.message.setAttribute("type","error");
+                                 this.errorType = 'error';
                                 this.errorMessage = error.response.data;
-                            // this.loading = false;
+
                         })
-                        // console.log(data.token)
+
 
                     }).catch(error => {
                     // console.log(error.response.data),
+                    this.errorType = 'error';
                         (this.errorMessage = error.response.data);
                     // this.loading = false;
                 });
@@ -118,6 +120,7 @@
                 // } else {
                 //   this.errorMessage = ''
                 // }
+                this.errorType = 'error';
                 this.errorMessage = event.error ? event.error.message : ''
             }
         }
