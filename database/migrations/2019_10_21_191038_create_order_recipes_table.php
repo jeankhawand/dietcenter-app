@@ -14,6 +14,7 @@ class CreateOrderRecipesTable extends Migration
     public function up()
     {
         Schema::create('OrderRecipe', function (Blueprint $table) {
+            $table->primary(['orderId','recipeId']);
             $table->integer('orderId')->unsigned();
             $table->integer('recipeId')->unsigned();
             $table->foreign('orderId')->references('id')->on('Order');

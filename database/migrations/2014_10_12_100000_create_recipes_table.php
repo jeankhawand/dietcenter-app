@@ -21,6 +21,13 @@ class CreateRecipesTable extends Migration
             $table->double('price');
             $table->dateTimeTz('created_at')->useCurrent();
             $table->dateTimeTz('edited_at')->useCurrent();
+            $table->uuid('created_by');
+            $table->uuid('edited_by');
+            $table->uuid('organizationId');
+            $table->foreign('organizationId')->on('Organization')->references('id');
+            $table->foreign('created_by')->on('User')->references('id');
+            $table->foreign('edited_by')->on('User')->references('id');
+
             $table->softDeletes();
         });
     }

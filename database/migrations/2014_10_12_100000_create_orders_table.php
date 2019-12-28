@@ -17,6 +17,10 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->dateTimeTz('created_at')->useCurrent();
             $table->dateTimeTz('updated_at')->useCurrent();
+            $table->uuid('userId');
+            $table->foreign('userId')->on('User')->references('id');
+            $table->uuid('organizationId')->nullable(true);
+            $table->foreign('organizationId')->on('Organization')->references('id');
             $table->softDeletes();
         });
     }
