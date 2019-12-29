@@ -11,8 +11,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v1
       - name: Build Docker Compose
-          run: |
-            docker-compose up -d
+        run: docker-compose up -d
   test:
     name: Testing Job
     runs-on: ubuntu-latest

@@ -56,12 +56,12 @@
         solo-inverted
         hide-details
         label="Search"
+        @keyup.enter="searchit"
       ></v-text-field>
       <v-spacer></v-spacer>
       <v-btn class="d-lg-none d-md" icon>
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
-
       <v-btn v-if="loggedIn" class="hidden-sm-and-down" icon @click="handleFullScreen()">
         <v-icon>mdi-fullscreen</v-icon>
       </v-btn>
@@ -106,6 +106,10 @@ export default {
     }
   },
   methods: {
+    searchit() {
+      console.log("searching ..");
+    },
+
     handleFullScreen() {
       let doc = window.document;
       let docEl = doc.documentElement;

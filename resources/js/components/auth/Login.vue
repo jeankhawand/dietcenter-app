@@ -90,14 +90,14 @@ export default {
                     password: this.password,
                 })
                 .then(response => {
-                    console.log(response);
+                    // console.log(response);
                     this.loading = false;
                     this.$router.push({ name: "Home" });
                 })
                 .catch(error => {
-                    console.log(error.response.data),
-                        (this.errorMessage = error.response.data),
-                        (this.password = "");
+                    // console.log(error.response.data),
+                        this.errorMessage = error.response.data,
+                        this.password = "";
                     this.loading = false;
                 });
         }
