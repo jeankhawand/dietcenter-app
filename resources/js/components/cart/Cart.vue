@@ -22,7 +22,7 @@
                               <v-container class="my-5">
                                   <v-layout row wrap>
                                       <v-flex xs12 sm6 md4 v-for="product in cart" :key="product.id">
-                                          <RecipeItem :product="product" />
+                                          <RecipeCart :product="product" />
                                       </v-flex>
                                   </v-layout>
                               </v-container>
@@ -60,11 +60,11 @@
       </template>
 
   </div>
-  <div v-else class="title"><h1><i class="fa fa-shopping-cart"></i> Your Cart is Empty</h1></div>
+  <div v-else class="title empty"><h1><v-icon size="80">mdi-cart-remove</v-icon> Your Cart is Empty</h1></div>
 </template>
 
 <script>
-    import RecipeItem from "../recipe/RecipeItem";
+    import RecipeCart from "../recipe/RecipeCart";
     import CardForm from "../Card/CardForm";
 
     export default {
@@ -84,7 +84,7 @@
       }
     },
     components: {
-        RecipeItem,
+        RecipeCart,
         CardForm
     },
         methods:{
@@ -103,4 +103,11 @@
 </script>
 <style lang="scss">
     //  @import '../Card/style.scss';
+    .empty{
+    position: absolute;
+    width: 40%;
+    height: 40%;
+    top: 30%;
+    left: 30%;
+    }
 </style>

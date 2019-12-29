@@ -38,7 +38,7 @@
     </v-list-item>
   </v-card>
     </v-flex>
-             <v-flex
+ <v-flex
         md12
         sm12
         lg4
