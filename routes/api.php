@@ -21,17 +21,35 @@ Route::middleware('auth:api')->group(function(){
     Route::get('role', function (Request $request) {
         return $request->user()->roles()->get();
     });
+    // Logout
+    Route::post('logout','AuthController@logout')->middleware('check-role:dietitian,chef,user,manager,admin');
+    // Register users
+    Route::post('register','AuthController@register')->middleware('check-role:dietitian,manager,admin');
+
+    //-----Recipe-----
     // Store Recipe
     Route::post('recipe','RecipeController@store')->middleware('check-role:dietitian,chef');
     // Update Recipe
     Route::patch('recipe/{recipe}','RecipeController@update')->middleware('check-role:dietitian,chef');
     // Delete Recipe
     Route::delete('recipe/{recipe}','RecipeController@destroy')->middleware('check-role:dietitian,chef');
-    // Logout
-    Route::post('logout','AuthController@logout')->middleware('check-role:dietitian,chef,user,manager,admin');
-    // Register users
-    Route::post('register','AuthController@register')->middleware('check-role:dietitian,manager,admin');
 
+    //-----Employee-----
+    // Store employee
+    Route::post('employee','UserController@storeEmployee')->middleware('check-role:manager');
+    // Update employee
+    Route::patch('employee/{employee}','UserController@updateEmployee')->middleware('check-role:manager');
+    // Delete employee
+    Route::delete('employee/{employee}','UserController@destroyEmployee')->middleware('check-role:manager');
+
+
+    //-----Client-----
+    // Store client
+    Route::post('client','UserController@storeClient')->middleware('check-role:dietitian');
+    // Update client
+    Route::patch('client/{client}','UserController@updateClient')->middleware('check-role:dietitian');
+    // Delete client
+    Route::delete('client/{client}','UserController@destroyClient')->middleware('check-role:dietitian');
 });
 
 // List Recipes
