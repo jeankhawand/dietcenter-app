@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->dateTimeTz('updated_at')->useCurrent();
             $table->uuid('userId');
             $table->foreign('userId')->on('User')->references('id');
-            $table->uuid('organizationId')->nullable(true);
+            $table->uuid('organizationId')->nullable();
             $table->foreign('organizationId')->on('Organization')->references('id');
             $table->softDeletes();
         });
@@ -32,6 +32,8 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('Order');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

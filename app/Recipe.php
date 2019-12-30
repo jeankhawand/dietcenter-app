@@ -22,4 +22,9 @@ class Recipe extends Model
     public function CreatedBy(){
         return $this->hasOne(User::class,'created_by');
     }
+    public function ingredients()
+    {
+        return $this->belongsToMany(Ingredient::class,'RecipeIngredient','recipeId','ingredientId');
+    }
+
 }
