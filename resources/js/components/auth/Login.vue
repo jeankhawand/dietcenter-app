@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-layout align-center justify-center="">
+        <v-layout align-center >
             <v-flex xs12 sm6 offset-sm3>
                 <v-card class="elevation-12" >
                      <v-toolbar dark color="green">
