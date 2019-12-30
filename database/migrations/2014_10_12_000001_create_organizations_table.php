@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserOrdersTable extends Migration
+class CreateOrganizationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateUserOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('UserOrder', function (Blueprint $table) {
-            $table->uuid('userId');
-            $table->integer('orderId')->unsigned();
-            $table->boolean('isDone');
-            $table->foreign('userId')->references('id')->on('User');
-            $table->foreign('orderId')->references('id')->on('Order');
+        Schema::create('Organization', function (Blueprint $table) {
+            $table->uuid('id');
+            $table->primary('id');
+            $table->string('name');
+            $table->string('domain');
             $table->dateTimeTz('created_at')->useCurrent();
             $table->dateTimeTz('edited_at')->useCurrent();
+            $table->softDeletes();
         });
     }
 
@@ -31,6 +31,8 @@ class CreateUserOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('UserOrder');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::dropIfExists('Organization');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

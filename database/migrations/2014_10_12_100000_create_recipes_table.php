@@ -21,6 +21,13 @@ class CreateRecipesTable extends Migration
             $table->double('price');
             $table->dateTimeTz('created_at')->useCurrent();
             $table->dateTimeTz('edited_at')->useCurrent();
+            $table->uuid('created_by')->nullable();
+            $table->uuid('edited_by')->nullable();
+            $table->uuid('organizationId')->nullable();
+            $table->foreign('organizationId')->on('Organization')->references('id');
+            $table->foreign('created_by')->on('User')->references('id');
+            $table->foreign('edited_by')->on('User')->references('id');
+
             $table->softDeletes();
         });
     }
@@ -32,6 +39,8 @@ class CreateRecipesTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('Recipe');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

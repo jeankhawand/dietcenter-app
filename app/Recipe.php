@@ -14,6 +14,17 @@ class Recipe extends Model
     protected $fillable = ['name','description','image','price'];
     public function orders()
     {
-        return $this->belongsToMany('App\Order');
+        return $this->belongsToMany(User::class,'OrderRecipe','recipeId','orderId');
     }
+    public function EditedBy(){
+        return $this->hasOne(User::class,'edited_by');
+    }
+    public function CreatedBy(){
+        return $this->hasOne(User::class,'created_by');
+    }
+    public function ingredients()
+    {
+        return $this->belongsToMany(Ingredient::class,'RecipeIngredient','recipeId','ingredientId');
+    }
+
 }

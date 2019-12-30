@@ -4,6 +4,7 @@ import {
     ADD_PRODUCT_SUCCESS,
     ADD_QUANTITY_TO_CART,
     ADD_TO_CART,
+    ALL_CLIENTS,
     ALL_PRODUCTS,
     ALL_PRODUCTS_NEXT_PAGE_SUCCESS,
     ALL_PRODUCTS_SUCCESS,
@@ -20,7 +21,7 @@ import {
     UPDATE_SESSION_STORAGE_CART
 } from './mutation-types'
 // -------- PLEASE ENCAPSULATE AXIOS REQUEST WITH PROMISE BLOCK !!! -------
-axios.defaults.baseURL = process.env.MIX_API_ENDPOINT;;
+axios.defaults.baseURL = process.env.MIX_API_ENDPOINT;
 export const productActions = {
     allProducts({ commit }) {
         commit(ALL_PRODUCTS)
@@ -167,4 +168,11 @@ export const authActions = {
                 });
         });
     },
+
+    allClient({commit}){
+        commit(ALL_CLIENTS)
+        axios.get(`clients`).then(response => {
+            commit(ALL_CLIENTS_SUCCESS, response.data)
+        })
+    }
 }
