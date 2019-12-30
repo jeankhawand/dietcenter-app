@@ -32,13 +32,22 @@ Route::middleware('auth:api')->group(function(){
     Route::delete('recipe/{recipe}','RecipeController@destroy')->middleware('check-role:dietitian,chef');
 
 
-    //-----User-----
-    // Store Recipe
-    Route::post('recipe','RecipeController@store')->middleware('check-role:dietitian,chef');
-    // Update Recipe
-    Route::patch('recipe/{recipe}','RecipeController@update')->middleware('check-role:dietitian,chef');
-    // Delete Recipe
-    Route::delete('recipe/{recipe}','RecipeController@destroy')->middleware('check-role:dietitian,chef');
+    //-----Employee-----
+    // Store employee
+    Route::post('employee','UserController@storeEmployee')->middleware('check-role:manager');
+    // Update employee
+    Route::patch('employee/{employee}','UserController@updateEmployee')->middleware('check-role:manager');
+    // Delete employee
+    Route::delete('employee/{employee}','UserController@destroyEmployee')->middleware('check-role:manager');
+
+
+    //-----Client-----
+    // Store client
+    Route::post('client','UserController@storeClient')->middleware('check-role:dietitian');
+    // Update client
+    Route::patch('client/{client}','UserController@updateClient')->middleware('check-role:dietitian');
+    // Delete client
+    Route::delete('client/{client}','UserController@destroyClient')->middleware('check-role:dietitian');
 });
 
 // List Recipes

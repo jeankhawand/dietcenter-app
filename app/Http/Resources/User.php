@@ -17,11 +17,11 @@ class UserResource extends JsonResource
         // return parent::toArray($request); used to return all the date
         // to customize it so we can call it from vue
         return [
-            'uuid' => $this->uuid,
+            'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description,
-            'image'=> $this->image,
-            'price'=> $this->price,
+            'email' => $this->email,
+            'password' => $this->password,
+            'phoneNumber'=> $this->phoneNumber
         ];
     }
 }
