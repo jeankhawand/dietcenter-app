@@ -31,9 +31,5 @@ php artisan migrate:refresh --seed
 ```
 php artisan passport:install --force
 ```
-6. next insert ingredients 
-```
-php artisan start:ingredientsimport
-```
 
 
