@@ -14,6 +14,7 @@
 
               <v-stepper-items>
                   <v-stepper-content step="1">
+                    <div style="text-align:right;fontSize:1.5em"><b>SubTotal :</b> ${{getSubtotal}}</div>
                       <template>
                           <div>
                               <v-container class="my-5">
@@ -21,16 +22,20 @@
                                       <v-flex xs12 sm6 md4 v-for="product in cart" :key="product.id">
                                           <RecipeCart :product="product" />
                                       </v-flex>
+                                      
                                   </v-layout>
-                              </v-container>
-                          </div>
-                      </template>
-                      <v-btn
+                                  <v-btn
                           color="primary"
                           @click="e1 = 2"
                       >
                           Continue
                       </v-btn>
+                              </v-container>
+                          </div>
+                      </template>
+                
+                      
+                      
                   </v-stepper-content>
 
                   <v-stepper-content step="2">
@@ -62,7 +67,10 @@
         PaymentForm,
         RecipeCart
     },
-        methods:{
+        computed:{
+             getSubtotal() {
+      return this.$store.getters.cartTotalProductsCost;
+   }
 
         }
   }
@@ -70,10 +78,13 @@
 
 <style scoped>
  .empty{
-      position: absolute;
-    width: 40%;
-    height: 40%;
-    top: 30%;
-    left: 30%;
+    position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 430px;
+  height: 100px;
  }
 </style>

@@ -30,8 +30,8 @@
                                 </v-icon>
                             </v-list-item-avatar>
                             <v-list-item-content>
-                                <div class="category grey--text font-weight-light text-right">Revenue</div>
-                                <div class="display-1 mb-2 font-weight-light text-right">34,000$</div>
+                                <div class="category grey--text font-weight-light text-right">Total Appointments</div>
+                                <div class="display-1 mb-2 font-weight-light text-right">34</div>
 
                             </v-list-item-content>
 
@@ -64,8 +64,8 @@
                                 </v-icon>
                             </v-list-item-avatar>
                             <v-list-item-content>
-                                <div class="category grey--text font-weight-light text-right">Revenue</div>
-                                <div class="display-1 mb-2 font-weight-light text-right">34,000$</div>
+                                <div class="category grey--text font-weight-light text-right">Total Clients</div>
+                                <div class="display-1 mb-2 font-weight-light text-right">3</div>
 
                             </v-list-item-content>
 
@@ -99,7 +99,7 @@
                             </v-list-item-avatar>
                             <v-list-item-content>
                                 <div class="category grey--text font-weight-light text-right">Revenue</div>
-                                <div class="display-1 mb-2 font-weight-light text-right">34,000$</div>
+                                <div class="display-1 mb-2 font-weight-light text-right">4,000$</div>
 
                             </v-list-item-content>
 

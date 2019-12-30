@@ -7,11 +7,24 @@ import Revenue from "./components/Admin/Revenue.vue";
 import Admin from "./components/Admin/Admin.vue";
 import Client from "./components/Client/Client.vue";
 import Client_Dashboard from "./components/Client/Client_Dashboard.vue";
+import NotFound from "./components/Error/Error";
+import Success from "./components/Payment/Success";
 
 const routes = [{
         path: "/",
         name: "Home",
         component: Home
+    },
+
+    {
+        path: "*",
+        name: "Error",
+        component: NotFound
+    },
+    {
+        path: "/success",
+        name: "Success",
+        component: Success
     },
     {
         path: "/login",

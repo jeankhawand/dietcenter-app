@@ -29,7 +29,7 @@
       </v-list>
       <template v-slot:append>
         <v-list-item>
-          <v-switch v-model="$vuetify.theme.dark" primary />
+          <v-switch v-model="$vuetify.theme.dark" inset color="black" />
         </v-list-item>
         <v-list-item class="pa-2" icon>
           <v-list-item-action>
@@ -75,9 +75,25 @@
       <v-btn v-if="!loggedIn" icon @click="loginIn()">
         <v-icon dark medium>fas fa-lock</v-icon>
       </v-btn>
-      <v-avatar v-if="loggedIn">
-        <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
-      </v-avatar>
+      <v-menu offset-y origin="center center" :nudge-right="140" :nudge-bottom="10" transition="scale-transition">
+      <v-btn icon large flat slot="activator">
+        <v-avatar size="30px">
+          <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+        </v-avatar>
+      </v-btn>
+      <v-list class="pa-0">
+        <v-list-tile v-for="(item,index) in items" :to="!item.href ? { name: item.name } : null" :href="item.href"
+                     @click="item.click" ripple="ripple" :disabled="item.disabled" :target="item.target" rel="noopener"
+                     :key="index">
+          <v-list-tile-action v-if="item.icon">
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-menu>
     </v-app-bar>
     <v-content>
       <router-view></router-view>
@@ -154,7 +170,28 @@ export default {
         'fab fa-linkedin',
         'fab fa-instagram',
       ],
+       items: [
+          {
+            icon: 'account_circle',
+            href: '#',
+            title: 'Profile',
+           
+          },
+          {
+            icon: 'settings',
+            href: '#',
+            title: 'Settings',
+           
+          },
+          {
+            icon: 'fullscreen_exit',
+            href: '#',
+            title: 'Logout',
+            
+          }
+        ],
   }),
+  
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
