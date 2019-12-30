@@ -17,18 +17,24 @@ class UserController extends Controller
     }
     public function storeEmployee(Request $request)
     {
-
+//        dd($request);
         $data = $request->validate([
             'name'=>'required|string',
-            'email'=>'required|email|unique:User,email',
-            'phonenumber'=>'required|unique:User,phonenumber',
-            'created_by'=>'required|string',
+            'email'=>'required|email',
+            'phonenumber'=>'required',
+            'password'=> 'required',
+        ]);
 
-        ]);
-        $role = $request->validate([
-            'name' => 'required|string',
-        ]);
-        $employee = User::create($data)->roles()->attach($role);
-        return response($employee,201);
+      User::create(
+             [
+                 'name' => $request->name,
+                 'email' => $request->email,
+                 'phonenumber' => $request->phonenumber,
+                 'password' => \Hash::make($request->password),
+                 'created_by'=>$request->user()->id,
+             ]
+         )->roles()->attach($request->roles);
+
+        return response()->json('Employee Created',200);
     }
 }

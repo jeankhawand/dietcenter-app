@@ -15,3 +15,4 @@
 
 
 Route::get('/{any}', 'RecipeController@showAll')->where('any', '.*');
+Route::get('/login')->name('login');

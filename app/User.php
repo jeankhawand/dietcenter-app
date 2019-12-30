@@ -37,7 +37,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id','name', 'email', 'password',
+        'id','name', 'email', 'password', 'phonenumber' ,'created_by'
     ];
 
     /**
@@ -77,8 +77,9 @@ class User extends Authenticatable
     }
 
     /**
-     * check if the current user is an employee
-     * @return bool
+     * Find out if User is an employee, based on if has any roles
+     *
+     * @return boolean
      */
     public function isEmployee()
     {
@@ -86,23 +87,41 @@ class User extends Authenticatable
         return !empty($roles);
     }
 
-    /** check user specific roles
-     * @param $check
-     * @return bool
+    /**
+     * Find out if user has a specific role
+     *
+     * $return boolean
      */
-    public function hasRoleName()
+    public function hasRole($check)
     {
-        return $this->roles()->get();
+        return in_array($check, array_fetch($this->roles->toArray(), 'name'));
     }
-    public function hasRoleId()
+    /**
+     * Get key in array with corresponding value
+     *
+     * @return int
+     */
+    private function getIdInArray($array, $term)
     {
-        return $this->roles()->select('roleId')->first();
-    }
-    public function hasRole($role)
-    {
-        if ($this->roles()->where('name', $role)->first()) {
-            return true;
+        foreach ($array as $key => $value) {
+            if ($value == $term) {
+                return $key;
+            }
         }
-        return false;
+
+        throw new UnexpectedValueException;
+    }
+    /**
+     * Add roles to user to make them a concierge
+     */
+    public function makeEmployee($title)
+    {
+        $assigned_roles = array();
+
+        $roles = array_fetch(Role::all()->toArray(), 'name');
+
+
+
+        $this->roles()->attach($assigned_roles);
     }
 }
