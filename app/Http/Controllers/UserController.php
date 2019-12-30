@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
+    /** get all the employees as resources
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index()
+    public function getEmployee()
     {
         //get first 5 users
         $users = User::orderBy('created_at','desc')->paginate(5);

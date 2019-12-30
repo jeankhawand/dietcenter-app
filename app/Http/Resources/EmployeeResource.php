@@ -21,7 +21,7 @@ class EmployeeResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'phonenumber'=> $this->phonenumber,
-            'roles' => $this->roles,
+            'roles' => RoleResource::collection($this->roles),
         ];
     }
 }

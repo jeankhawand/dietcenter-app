@@ -46,6 +46,8 @@ Route::middleware('auth:api')->group(function(){
 
 
     //-----Client-----
+    // Fetch client
+    Route::get('client','UserController@getClient')->middleware('check-role:dietitian');
     // Store client
     Route::post('client','UserController@storeClient')->middleware('check-role:dietitian');
     // Update client
