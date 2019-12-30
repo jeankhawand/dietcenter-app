@@ -13,7 +13,9 @@ jobs:
       - name: Build Docker Compose
         run: docker-compose up -d
   test:
-    name: Testing Job
-    runs-on: ubuntu-latest
+    steps:
+      - name: Testing Job
+      runs-on: ubuntu-latest
   deploy:
-    name: Deploy Docker Compose to AWS EC2
+    steps:
+      - name: Deploy Docker Compose to AWS EC2
