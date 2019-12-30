@@ -2,34 +2,30 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Http\Resources\RecipeResource;
 use App\Recipe;
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use Illuminate\Support\Facades\DB;
-use App\Http\Resources\RecipeResource;
+
 
 class RecipeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        //$recipes = DB::table('Recipe')->select('name','description','image')->get();
 
-        //return view('welcome')->with('recipes', $recipes);
-        //get first 15 recipies
         $recipes = Recipe::orderBy('created_at', 'desc')->paginate(5);
-        // return collection of recipies as a resource
         return RecipeResource::collection($recipes);
     }
 
-    // public function showAll()
-    // {
-    //     return view('app');
-    // }
+     public function showAll()
+     {
+         return view('app');
+     }
 
     /**
      * Display the specified resource.

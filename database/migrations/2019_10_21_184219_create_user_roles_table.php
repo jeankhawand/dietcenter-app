@@ -21,10 +21,10 @@ class CreateUserRolesTable extends Migration
             $table->foreign('roleId')->references('id')->on('Role');
             $table->dateTimeTz('created_at')->useCurrent();
             $table->dateTimeTz('edited_at')->useCurrent();
-            $table->uuid('created_by');
+            $table->uuid('created_by')->nullable();
             $table->foreign('created_by')->on('User')->references('id');
             $table->foreign('edited_by')->on('User')->references('id');
-            $table->uuid('edited_by');
+            $table->uuid('edited_by')->nullable();
         });
     }
 
