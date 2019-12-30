@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Resources\EmployeeResource;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserController extends Controller
 {
     /** get all the employees as resources
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function getEmployee()
+    public function getEmployees()
     {
         //get first 5 users
-        $users = User::orderBy('created_at','desc')->paginate(5);
+        $users = User::whereHas('roles', function (Builder $query) {
+            $query->where('id', '>', '1');
+        })->orderBy('created_at','desc')->paginate(5);
         // return collection of users as a resource
         return EmployeeResource::collection($users);
     }

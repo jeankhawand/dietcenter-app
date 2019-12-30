@@ -28,7 +28,7 @@
         </v-list-item>
       </v-list>
       <template v-slot:append>
-        <div class="pa-2" @click="logout()" v-if="loggedIn" icon>
+        <div class="pa-2" @click="logout()" icon>
           <v-btn block>Logout</v-btn>
         </div>
       </template>

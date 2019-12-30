@@ -36,7 +36,7 @@ Route::middleware('auth:api')->group(function(){
 
     //-----Employee-----
     // Fetch Employee
-    Route::get('employees','UserController@index')->middleware('check-role:manager');
+    Route::get('employees','UserController@getEmployees')->middleware('check-role:manager');
     // Store employee
     Route::post('employee','UserController@storeEmployee')->middleware('check-role:manager');
     // Update employee
@@ -47,7 +47,7 @@ Route::middleware('auth:api')->group(function(){
 
     //-----Client-----
     // Fetch client
-    Route::get('client','UserController@getClient')->middleware('check-role:dietitian');
+    Route::get('clients','UserController@getClients')->middleware('check-role:dietitian');
     // Store client
     Route::post('client','UserController@storeClient')->middleware('check-role:dietitian');
     // Update client
