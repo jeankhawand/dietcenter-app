@@ -1,17 +1,24 @@
 export const productGetters = {
-  allProducts: (state) => {
-    return state.products
-  },
-  productById: (state, getters) => id => {
-    if (getters.allProducts.length > 0) {
-      return getters.allProducts.filter(p => p._id === id)[0]
-    } else {
-      return state.product
+    allProducts: (state) => {
+        return state.products
+    },
+    productById: (state, getters) => id => {
+        if (getters.allProducts.length > 0) {
+            return getters.allProducts.filter(p => p._id === id)[0]
+        } else {
+            return state.product
+        }
+    },
+    productsPageIndex: (state) => {
+        return state.productsPageIndex
+    },
+    cartTotalProductsCost: (state) => {
+        var total = 0
+        for (var i = 0; i < state.cart.length; i++) {
+            total += state.cart[i].price;
+        }
+        return total * 100
     }
-  },
-  productsPageIndex: (state) => {
-      return state.productsPageIndex
-  }
 }
 
 export const authGetters = {

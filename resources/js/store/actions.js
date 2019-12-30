@@ -20,7 +20,7 @@ import {
     UPDATE_SESSION_STORAGE_CART
 } from './mutation-types'
 // -------- PLEASE ENCAPSULATE AXIOS REQUEST WITH PROMISE BLOCK !!! -------
-axios.defaults.baseURL = process.env.MIX_API_ENDPOINT;;
+axios.defaults.baseURL = process.env.MIX_API_ENDPOINT;
 export const productActions = {
     allProducts({ commit }) {
         commit(ALL_PRODUCTS)

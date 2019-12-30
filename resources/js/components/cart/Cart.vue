@@ -46,7 +46,7 @@
 </template>
 
 <script>
-    import RecipeItem from "../recipe/RecipeItem";
+    import RecipeCart from "../recipe/RecipeCart";
     import PaymentForm from "../Payment/PaymentForm";
 
     export default {
@@ -59,8 +59,8 @@
       }
     },
     components: {
-        RecipeItem,
-        PaymentForm
+        PaymentForm,
+        RecipeCart
     },
         methods:{
 

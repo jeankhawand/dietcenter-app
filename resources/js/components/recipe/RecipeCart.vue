@@ -44,9 +44,7 @@ export default {
       return this.$store.state.cart.indexOf(this.product) < 0;
     },
    getSubtotal() {
-      return this.data.product.reduce(
-        (a, b) => a + b.price * b.quantity,
-      0);
+      return this.$store.getters.cartTotalProductsCost;
    }
   },
 
