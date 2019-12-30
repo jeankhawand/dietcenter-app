@@ -1,29 +1,29 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app disable-route-watcher expand-on-hover v-if="loggedIn">
+    <v-navigation-drawer v-model="drawer" color="green" app disable-route-watcher expand-on-hover v-if="loggedIn">
       <v-list dense>
-        <v-list-item class="mt-10" to="/admin/dashboard">
+        <v-list-item class="drawer" to="/admin/dashboard">
           <v-list-item-action>
-            <v-icon color="black">mdi-home</v-icon>
+            <v-icon color="white">mdi-home</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Dashboard</v-list-item-title>
+            <v-list-item-title style="color:white">Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item to="/admin/revenue">
           <v-list-item-action>
-            <v-icon color="black">mdi-currency-usd</v-icon>
+            <v-icon color="white">mdi-currency-usd</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Revenue</v-list-item-title>
+            <v-list-item-title style="color:white">Revenue</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item to="/client/client_dashboard">
           <v-list-item-action>
-            <v-icon color="black">mdi-home</v-icon>
+            <v-icon color="white" >mdi-home</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>ClientDashboard</v-list-item-title>
+            <v-list-item-title style="color:white">Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -34,17 +34,17 @@
         <v-list-item class="pa-2" icon>
           <v-list-item-action>
             <v-btn text @click="logout()">
-              <v-icon>mdi-export</v-icon>
+              <v-icon color="white">mdi-export</v-icon>
             </v-btn>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Logout</v-list-item-title>
+            <v-list-item-title style="color:white">Logout</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </template>
     </v-navigation-drawer>
 
-    <v-app-bar app color="green" dark>
+    <v-app-bar  inset color="green" fixed app dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="loggedIn" />
       <v-toolbar-title @click="goBack()">Diet Center</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -82,9 +82,62 @@
     <v-content>
       <router-view></router-view>
     </v-content>
-    <v-footer color="green" app>
-      <span class="white--text">&copy; 2019</span>
-    </v-footer>
+     <v-footer
+    absolute
+    padless
+    app
+    inset
+  >
+    <v-card
+      class="flex"
+      flat
+      tile
+    >
+      <v-card-title class="green">
+        <strong class="subheading white--text">Get connected with us on social networks!</strong>
+
+        <v-spacer></v-spacer>
+
+        <v-btn
+          class="mx-4"
+          dark
+          icon
+          href="https://www.youtube.com/channel/UC2YlJ0G0L9DTlj-9pSA-BrQ?view_as=subscriber" target="_blank"
+        >
+          <v-icon size="24px" class="fab fa-youtube"></v-icon>
+        </v-btn>
+         <v-btn
+          class="mx-4"
+          dark
+          icon
+          href="https://linkedin.com/company/kwalka" target="_blank"
+        >
+           <v-icon size="24px" class="fab fa-linkedin"></v-icon>
+         </v-btn>
+            <v-btn
+          class="mx-4"
+          dark
+          icon
+         href="https://www.instagram.com/kwalkacom/" target="_blank"
+        >
+            <v-icon size="24px" class="fab fa-instagram"></v-icon>
+            </v-btn>
+            <v-btn
+          class="mx-4"
+          dark
+          icon
+        href="https://blog.kwalka.com" target="_blank"
+        >
+            <v-icon size="24px" class="fas fa-pen-square"></v-icon>
+            </v-btn>
+       
+      </v-card-title>
+
+      <v-card-text class="py-2  text-center">
+        {{ new Date().getFullYear() }} — <strong>Kwalka</strong>
+      </v-card-text>
+    </v-card>
+  </v-footer>
   </v-app>
 </template>
 
@@ -95,7 +148,12 @@ export default {
   },
   data: () => ({
     drawer: null,
-    search: ""
+    search: "",
+    icons: [
+        'fab fa-youtube',
+        'fab fa-linkedin',
+        'fab fa-instagram',
+      ],
   }),
   computed: {
     loggedIn() {
@@ -160,3 +218,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+
+.drawer{
+  margin-top: 60px;
+}
+
+</style>

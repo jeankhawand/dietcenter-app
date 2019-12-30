@@ -67,3 +67,13 @@
         }
   }
 </script>
+
+<style scoped>
+ .empty{
+      position: absolute;
+    width: 40%;
+    height: 40%;
+    top: 30%;
+    left: 30%;
+ }
+</style>
