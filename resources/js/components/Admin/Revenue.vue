@@ -38,7 +38,7 @@
     </v-list-item>
   </v-card>
     </v-flex>
-             <v-flex
+ <v-flex
         md12
         sm12
         lg4
@@ -62,8 +62,8 @@
        </v-icon>
       </v-list-item-avatar>
       <v-list-item-content>
-        <div class="category grey--text font-weight-light text-right">Revenue</div>
-        <div class="display-1 mb-2 font-weight-light text-right">34,000$</div>
+        <div class="category grey--text font-weight-light text-right">Total Orders</div>
+        <div class="display-1 mb-2 font-weight-light text-right">34</div>
 
       </v-list-item-content>
 
@@ -96,8 +96,8 @@
        </v-icon>
       </v-list-item-avatar>
       <v-list-item-content>
-        <div class="category grey--text font-weight-light text-right">Revenue</div>
-        <div class="display-1 mb-2 font-weight-light text-right">34,000$</div>
+        <div class="category grey--text font-weight-light text-right">Total Users</div>
+        <div class="display-1 mb-2 font-weight-light text-right">102</div>
 
       </v-list-item-content>
 

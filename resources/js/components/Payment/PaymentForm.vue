@@ -25,22 +25,33 @@
 
         <v-btn
             color="primary"
-            @click='pay'
+            @click='pay();overlay = !overlay;emptyCart();'
             :disabled='!complete'
+            
         >
             Checkout
         </v-btn>
-
+<v-overlay :value="overlay">
+    
+        <v-icon color="green" size="300">mdi-check-circle</v-icon>
+        <v-divider></v-divider>
+      <v-btn to="/" color="black"
+      class="white--text">
+      BACK TO SHOP
+      </v-btn>
+    </v-overlay>
     </div>
 </template>
 
 <script>
     import {Card, createToken} from 'vue-stripe-elements-plus'
+   
 
     export default {
         components: {Card},
         data() {
             return {
+                overlay: false,
                 firstname: '',
                 lastname: '',
                 phonenumber: '',
@@ -52,6 +63,7 @@
                     v => !!v || 'E-mail is required',
                     v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
                 ],
+                
                 stripeOptions: {
                     // see https://stripe.com/docs/stripe.js#element-options for details
                     style: {
@@ -74,8 +86,8 @@
                 }
             }
         },
-
         methods: {
+       
             pay() {
                 var options = {
                     name: this.firstname + ' ' + this.lastname,
@@ -122,7 +134,8 @@
                 // }
                 this.errorType = 'error';
                 this.errorMessage = event.error ? event.error.message : ''
-            }
+            },
+        
         }
     }
 </script>

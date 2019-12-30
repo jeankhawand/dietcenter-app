@@ -1,8 +1,17 @@
 <template>
     <v-container>
-        <v-layout row>
+        <v-layout align-center justify-center="">
             <v-flex xs12 sm6 offset-sm3>
-                <v-card>
+                <v-card class="elevation-12" >
+                     <v-toolbar dark color="green">
+
+                <v-toolbar-title>Login To Your Profile</v-toolbar-title>
+
+                <v-spacer></v-spacer>
+
+               
+
+              </v-toolbar>
                     <v-card-text>
                         <v-container>
                             <v-progress-linear
@@ -19,6 +28,7 @@
                                             {{errorMessage}}
                                         </v-alert>
                                         <v-text-field
+                                        prepend-icon="mdi-account"
                                             name="email"
                                             label="Email/Username"
                                             id="email"
@@ -32,6 +42,7 @@
                                 <v-layout row>
                                     <v-flex xs12>
                                         <v-text-field
+                                        prepend-icon="mdi-lock" 
                                             name="password"
                                             label="Password"
                                             id="password"

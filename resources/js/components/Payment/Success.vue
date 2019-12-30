@@ -1,13 +1,21 @@
 <template>
-<!--please consider adding custom success icon and show id of the order and add back to home menu-->
+<v-container fill-height>
+    <v-layout align-center justify-center>
+     
+        <v-icon size="200" color="green" >mdi-check-circle</v-icon>
+      
+    </v-layout>
+</v-container>
 </template>
 
 <script>
     export default {
-        name: "Success"
+       
     }
 </script>
 
 <style scoped>
+
+
 
 </style>
