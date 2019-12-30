@@ -14,7 +14,7 @@ class RoleSeeder extends Seeder
     {
         DB::table('Role')->insert(array(
             array(
-                'name' => 'admin',
+                'name' => 'client',
             ),
             array(
                 'name' => 'manager',
@@ -23,8 +23,9 @@ class RoleSeeder extends Seeder
                 'name' => 'dietitian',
             ),
             array(
-                'name' => 'user',
+                'name' => 'chef',
             ),
+
 
         ));
     }
