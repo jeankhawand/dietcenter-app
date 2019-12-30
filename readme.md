@@ -25,7 +25,7 @@ npm run watch
 
 4. do migration and then seed data to the tables 
 ```
-php artisan migrate:refresh --seed
+php artisan migrate:fresh --seed
 ```
 5. generate password grant token 
 ```
