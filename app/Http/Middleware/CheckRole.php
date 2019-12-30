@@ -32,7 +32,7 @@ class CheckRole
             for ($i = 0; $i < $count1; $i++) {
                 for ($j = 0; $j < $count2; $j++) {
                     if ($roles[$i]->name == $rolesAssigned[$j]) {
-                        //echo $roles[$i]->name . ' and ' .$rolesAssigned[$j]; debugging
+//                        echo $roles[$i]->name . ' and ' .$rolesAssigned[$j]; debugging
                         //checking for matches
                         $match++;
                     }
@@ -44,9 +44,10 @@ class CheckRole
                 return $next($request);
             }
             //return json message
+            dd($roles);
             return response()->json('Unauthorized');
         }
 
-        return response()->json('Unauthorized');
+//        return response()->json('Unauthorized');
     }
 }
