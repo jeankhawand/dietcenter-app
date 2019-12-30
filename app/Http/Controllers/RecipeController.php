@@ -6,7 +6,7 @@ use App\Recipe;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
-use App\Http\Resources\Recipe as RecipeResource;
+use App\Http\Resources\RecipeResource;
 
 class RecipeController extends Controller
 {
@@ -25,10 +25,11 @@ class RecipeController extends Controller
         // return collection of recipies as a resource
         return RecipeResource::collection($recipes);
     }
-    public function showAll()
-    {
-        return view('app');
-    }
+
+    // public function showAll()
+    // {
+    //     return view('app');
+    // }
 
     /**
      * Display the specified resource.

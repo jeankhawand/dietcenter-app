@@ -4,6 +4,7 @@ import {
     ADD_PRODUCT_SUCCESS,
     ADD_QUANTITY_TO_CART,
     ADD_TO_CART,
+    ALL_CLIENTS,
     ALL_PRODUCTS,
     ALL_PRODUCTS_NEXT_PAGE_SUCCESS,
     ALL_PRODUCTS_SUCCESS,
@@ -167,4 +168,11 @@ export const authActions = {
                 });
         });
     },
+
+    allClient({ commit }) {
+        commit(ALL_CLIENTS)
+        axios.get(`clients`).then(response => {
+            commit(ALL_CLIENTS_SUCCESS, response.data)
+        })
+    }
 }

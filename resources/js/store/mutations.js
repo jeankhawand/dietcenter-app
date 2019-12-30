@@ -7,11 +7,18 @@ export const productMutations = {
   },
   [ALL_PRODUCTS_SUCCESS] (state, payload) {
     state.showLoader = false
+    for(var i = 0; i <payload.data.length; i++){
+        //Check for empty images, set them as empty
+        if(payload.data[i].image.length < "data:image/jpeg;base64,123".length) payload.data[i].image = ""
+    }
     state.products = payload
   },
   [ALL_PRODUCTS_NEXT_PAGE_SUCCESS] (state, payload) {
     state.showLoader = false
     for(var i = 0; i <payload.data.length; i++){
+        //Check for empty images, set them as empty
+        if(payload.data[i].image.length < "data:image/jpeg;base64,123".length) payload.data[i].image = ""
+        //Push received data to products array
         state.products.data.push(payload.data[i])
     }
   },

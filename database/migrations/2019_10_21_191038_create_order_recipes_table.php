@@ -14,6 +14,7 @@ class CreateOrderRecipesTable extends Migration
     public function up()
     {
         Schema::create('OrderRecipe', function (Blueprint $table) {
+            $table->primary(['orderId','recipeId']);
             $table->integer('orderId')->unsigned();
             $table->integer('recipeId')->unsigned();
             $table->foreign('orderId')->references('id')->on('Order');
@@ -30,6 +31,8 @@ class CreateOrderRecipesTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('OrderRecipe');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

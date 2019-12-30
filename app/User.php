@@ -25,6 +25,12 @@ class User extends Authenticatable
     {
          return Uuid::generate(4);
     }
+    public function EditedBy(){
+        return $this->hasOne(User::class,'edited_by');
+    }
+    public function CreatedBy(){
+        return $this->hasOne(User::class,'created_by');
+    }
     /**
      * The attributes that are mass assignable.
      *
@@ -56,7 +62,8 @@ class User extends Authenticatable
      * this function return a relationship between user and order
      */
     public function orders(){
-        return $this->belongsToMany('App\Order');
+        return $this->hasMany(Order::class,'userId');
+        //
     }
     /**
      * this function return a relationship between user and role
@@ -64,6 +71,9 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class,'UserRole','userId','roleId');
+    }
+    public function organization(){
+        return $this->belongsTo(Organization::class,'organizationId');
     }
 
     /**
