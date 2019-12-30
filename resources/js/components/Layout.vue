@@ -28,12 +28,10 @@
         </v-list-item>
       </v-list>
       <template v-slot:append>
-        <v-list-item>
-          <v-switch v-model="$vuetify.theme.dark" inset color="black" />
-        </v-list-item>
-        <v-list-item class="pa-2" icon>
+
+        <v-list-item class="pa-2" icon @click="logout()">
           <v-list-item-action>
-            <v-btn text @click="logout()">
+            <v-btn text >
               <v-icon color="white">mdi-export</v-icon>
             </v-btn>
           </v-list-item-action>
@@ -75,25 +73,64 @@
       <v-btn v-if="!loggedIn" icon @click="loginIn()">
         <v-icon dark medium>fas fa-lock</v-icon>
       </v-btn>
-      <v-menu offset-y origin="center center" :nudge-right="140" :nudge-bottom="10" transition="scale-transition">
-      <v-btn icon large flat slot="activator">
-        <v-avatar size="30px">
-          <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
-        </v-avatar>
-      </v-btn>
-      <v-list class="pa-0">
-        <v-list-tile v-for="(item,index) in items" :to="!item.href ? { name: item.name } : null" :href="item.href"
-                     @click="item.click" ripple="ripple" :disabled="item.disabled" :target="item.target" rel="noopener"
-                     :key="index">
-          <v-list-tile-action v-if="item.icon">
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
+      <div class="text-center">
+    <v-menu
+      v-model="menu"
+      :close-on-content-click="false"
+      :nudge-width="200"
+      offset-x
+    >
+      <template v-slot:activator="{ on }">
+        <v-btn
+          flat
+          v-on="on"
+          icon
+        >
+          <v-icon>mdi-account</v-icon>
+        </v-btn>
+      </template>
+
+      <v-card>
+        <v-list>
+          <v-list-item>
+            <v-list-item-avatar>
+              <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <v-list-item-title>Toni Haydamous</v-list-item-title>
+              <v-list-item-subtitle>Diet Center</v-list-item-subtitle>
+            </v-list-item-content>
+
+          </v-list-item>
+        </v-list>
+
+        <v-divider></v-divider>
+
+        <v-list>
+          <v-list-item>
+            <v-list-item-action>
+          <v-switch v-model="$vuetify.theme.dark" inset color="black" />
+            </v-list-item-action>
+            <v-list-item-title>Dark Mode</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item to="/editprofile">
+            <v-list-item-action>
+              <v-icon>mdi-account-edit</v-icon>
+            </v-list-item-action>
+            <v-list-item-title>Edit Profile</v-list-item-title>
+          </v-list-item>
+        </v-list>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="primary" text @click="menu = false">Done</v-btn>
+        </v-card-actions>
+      </v-card>
     </v-menu>
+  </div>
     </v-app-bar>
     <v-content>
       <router-view></router-view>
@@ -165,31 +202,10 @@ export default {
   data: () => ({
     drawer: null,
     search: "",
-    icons: [
-        'fab fa-youtube',
-        'fab fa-linkedin',
-        'fab fa-instagram',
-      ],
-       items: [
-          {
-            icon: 'account_circle',
-            href: '#',
-            title: 'Profile',
-
-          },
-          {
-            icon: 'settings',
-            href: '#',
-            title: 'Settings',
-
-          },
-          {
-            icon: 'fullscreen_exit',
-            href: '#',
-            title: 'Logout',
-
-          }
-        ],
+    fav: true,
+      menu: false,
+      message: false,
+      hints: true,
   }),
 
   computed: {

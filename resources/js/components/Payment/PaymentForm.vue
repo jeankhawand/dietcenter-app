@@ -1,5 +1,18 @@
 <template>
-    <div>
+<v-container>
+        <v-layout align-center >
+            <v-flex xs12 sm6 offset-sm3>
+                <v-card class="elevation-12" >
+                     <v-toolbar dark color="green">
+
+                <v-toolbar-title>Fill Your Info</v-toolbar-title>
+
+                <v-spacer></v-spacer>
+
+               
+
+              </v-toolbar>
+    <v-card-text>
         <v-alert id="card-errors" ref="message" role="alert" v-if="errorMessage" :type="errorType">
             {{errorMessage}}
         </v-alert>
@@ -16,7 +29,7 @@
             label="Email"
             v-model="email" :rules="emailRules" type="email" required></v-text-field>
 
-        <card class='stripe-card'
+        <card class='stripe-card mb-5 mt-2'
               :class='{ complete }'
               stripe='pk_test_4S7dtz39zfwDh1YkcvBQfPs300tsPZAiB9'
               :options='stripeOptions'
@@ -25,7 +38,7 @@
 
         <v-btn
             color="primary"
-            @click='pay();overlay = !overlay;emptyCart();'
+            @click='pay();overlay = !overlay;'
             :disabled='!complete'
             
         >
@@ -40,7 +53,11 @@
       BACK TO SHOP
       </v-btn>
     </v-overlay>
-    </div>
+    </v-card-text>
+     </v-card>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
