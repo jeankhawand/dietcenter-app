@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RecipeResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,7 +17,7 @@ class RecipeResource extends JsonResource
         // return parent::toArray($request); used to return all the date
         // to customize it so we can call it from vue
         return [
-            'id' => $this->id,
+            'uuid' => $this->uuid,
             'name' => $this->name,
             'description' => $this->description,
             'image'=> $this->image,

@@ -21,6 +21,9 @@ Route::middleware('auth:api')->group(function(){
     Route::get('/role', function (Request $request) {
         return $request->user()->roles()->get();
     });
+    Route::post('/logout','AuthController@logout')->middleware('check-role:dietitian,chef,user,manager,admin');
+
+    //-----Recipe-----
     // Store Recipe
     Route::post('recipe','RecipeController@store')->middleware('check-role:dietitian,chef');
     // Update Recipe
@@ -28,8 +31,14 @@ Route::middleware('auth:api')->group(function(){
     // Delete Recipe
     Route::delete('recipe/{recipe}','RecipeController@destroy')->middleware('check-role:dietitian,chef');
 
-    Route::post('/logout','AuthController@logout')->middleware('check-role:dietitian,chef,user,manager,admin');
 
+    //-----User-----
+    // Store Recipe
+    Route::post('recipe','RecipeController@store')->middleware('check-role:dietitian,chef');
+    // Update Recipe
+    Route::patch('recipe/{recipe}','RecipeController@update')->middleware('check-role:dietitian,chef');
+    // Delete Recipe
+    Route::delete('recipe/{recipe}','RecipeController@destroy')->middleware('check-role:dietitian,chef');
 });
 
 // List Recipes
