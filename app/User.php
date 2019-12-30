@@ -86,6 +86,9 @@ class User extends Authenticatable
         $roles = $this->roles->toArray();
         return !empty($roles);
     }
+    public function rolesName(){
+        return $this->roles->get(0,1);
+    }
 
     /**
      * Find out if user has a specific role
