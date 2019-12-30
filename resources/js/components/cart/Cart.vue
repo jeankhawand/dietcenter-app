@@ -14,23 +14,28 @@
 
               <v-stepper-items>
                   <v-stepper-content step="1">
+                    <div style="text-align:right;fontSize:1.5em"><b>SubTotal :</b> ${{getSubtotal}}</div>
                       <template>
                           <div>
                               <v-container class="my-5">
                                   <v-layout row wrap>
                                       <v-flex xs12 sm6 md4 v-for="product in cart" :key="product.id">
-                                          <RecipeItem :product="product" />
+                                          <RecipeCart :product="product" />
                                       </v-flex>
+                                      
                                   </v-layout>
-                              </v-container>
-                          </div>
-                      </template>
-                      <v-btn
+                                  <v-btn
                           color="primary"
                           @click="e1 = 2"
                       >
                           Continue
                       </v-btn>
+                              </v-container>
+                          </div>
+                      </template>
+                
+                      
+                      
                   </v-stepper-content>
 
                   <v-stepper-content step="2">
@@ -42,11 +47,11 @@
       </template>
 
   </div>
-  <div v-else class="title"><h1><i class="fa fa-shopping-cart"></i> Your Cart is Empty</h1></div>
+  <div v-else class="title empty"><h1><v-icon size="80">mdi-cart-remove</v-icon> Your Cart is Empty</h1></div>
 </template>
 
 <script>
-    import RecipeItem from "../recipe/RecipeItem";
+    import RecipeCart from "../recipe/RecipeCart";
     import PaymentForm from "../Payment/PaymentForm";
 
     export default {
@@ -59,12 +64,27 @@
       }
     },
     components: {
-        RecipeItem,
-        PaymentForm
+        PaymentForm,
+        RecipeCart
     },
-        methods:{
+        computed:{
+             getSubtotal() {
+      return this.$store.getters.cartTotalProductsCost;
+   }
 
         }
   }
 </script>
 
+<style scoped>
+ .empty{
+    position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 430px;
+  height: 100px;
+ }
+</style>

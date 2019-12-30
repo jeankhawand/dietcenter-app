@@ -15,6 +15,7 @@ import {
     REMOVE_PRODUCT,
     REMOVE_PRODUCT_SUCCESS,
     REMOVE_QUANTITY_FROM_CART,
+    EMPTY_CART,
     RETRIEVE_TOKEN,
     UPDATE_PRODUCT,
     UPDATE_PRODUCT_SUCCESS,
@@ -169,7 +170,7 @@ export const authActions = {
         });
     },
 
-    allClient({commit}){
+    allClient({ commit }) {
         commit(ALL_CLIENTS)
         axios.get(`clients`).then(response => {
             commit(ALL_CLIENTS_SUCCESS, response.data)

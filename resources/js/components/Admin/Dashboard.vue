@@ -1,73 +1,115 @@
 <template>
-  <v-app>
-    <v-container fill-height fluid grid-list-xl>
-      <v-layout wrap>
-        <v-flex md12 sm12 lg4>
-          <v-card class="mx-auto" max-width="344" shaped elevation="2">
-            <v-list-item three-line>
-              <v-list-item-avatar size="80" color="green">
-                <v-icon size="40" color="white">mdi-store</v-icon>
-              </v-list-item-avatar>
-              <v-list-item-content>
-                <div class="category grey--text font-weight-light text-right">Revenue</div>
-                <div class="display-1 mb-2 font-weight-light text-right">34,000$</div>
-              </v-list-item-content>
-            </v-list-item>
-          </v-card>
-        </v-flex>
-        <v-flex md12 sm12 lg4>
-          <v-card class="mx-auto" max-width="344" shaped elevation="2">
-            <v-list-item three-line>
-              <v-list-item-avatar size="80" color="#25A032">
-                <v-icon size="40" color="white">mdi-store</v-icon>
-              </v-list-item-avatar>
-              <v-list-item-content>
-                <div class="category grey--text font-weight-light text-right">Revenue</div>
-                <div class="display-1 mb-2 font-weight-light text-right">34,000$</div>
-              </v-list-item-content>
-            </v-list-item>
-          </v-card>
-        </v-flex>
-        <v-flex md12 sm12 lg4>
-          <v-card class="mx-auto" max-width="344" shaped elevation="2">
-            <v-list-item three-line>
-              <v-list-item-avatar size="80" color="#006727">
-                <v-icon size="40" color="white">mdi-store</v-icon>
-              </v-list-item-avatar>
-              <v-list-item-content>
-                <div class="category grey--text font-weight-light text-right">Revenue</div>
-                <div class="display-1 mb-2 font-weight-light text-right">34,000$</div>
-              </v-list-item-content>
-            </v-list-item>
-          </v-card>
-        </v-flex>
+    <v-app>
+        <v-container fill-height
+                     fluid
+                     grid-list-xl
+        >
+            <v-layout wrap>
+                <v-flex
+                    md12
+                    sm12
+                    lg4
+                >
+                    <v-card
+                        class="mx-auto"
+                        max-width="344"
+                        shaped
+                        elevation="2"
+                    >
+                        <v-list-item three-line>
+                            <v-list-item-avatar
 
-        <v-flex lg12>
-          <v-card>
-            <v-data-table
-              :headers="headers"
-              :items="clients"
-              :items-per-page="itemsPerPage"
-              :search="search"
-              sort-by="firstname"
-              class="elevation-1"
-            >
-              <template v-slot:top>
-                <v-toolbar flat color="white">
-                  <v-toolbar-title>Clients</v-toolbar-title>
-                  <v-divider class="mx-4" inset vertical></v-divider>
-                  <v-text-field
-                    v-model="search"
-                    append-icon="mdi-magnify"
-                    label="Search"
-                    single-line
-                    hide-details
-                  ></v-text-field>
-                  <v-spacer></v-spacer>
-                  <v-dialog v-model="dialog" max-width="500px">
-                    <template v-slot:activator="{ on }">
-                      <v-btn color="primary" dark class="mb-2" v-on="on">New Client</v-btn>
-                    </template>
+                                size="80"
+                                color="green"
+                            >
+                                <v-icon
+                                    size="40"
+                                    color="white"
+                                >
+                                    mdi-store
+                                </v-icon>
+                            </v-list-item-avatar>
+                            <v-list-item-content>
+                                <div class="category grey--text font-weight-light text-right">Total Appointments</div>
+                                <div class="display-1 mb-2 font-weight-light text-right">34</div>
+
+                            </v-list-item-content>
+
+
+                        </v-list-item>
+                    </v-card>
+                </v-flex>
+                <v-flex
+                    md12
+                    sm12
+                    lg4
+                >
+                    <v-card
+                        class="mx-auto"
+                        max-width="344"
+                        shaped
+                        elevation="2"
+                    >
+                        <v-list-item three-line>
+                            <v-list-item-avatar
+
+                                size="80"
+                                color="#25A032"
+                            >
+                                <v-icon
+                                    size="40"
+                                    color="white"
+                                >
+                                    mdi-store
+                                </v-icon>
+                            </v-list-item-avatar>
+                            <v-list-item-content>
+                                <div class="category grey--text font-weight-light text-right">Total Clients</div>
+                                <div class="display-1 mb-2 font-weight-light text-right">3</div>
+
+                            </v-list-item-content>
+
+
+                        </v-list-item>
+                    </v-card>
+                </v-flex>
+                <v-flex
+                    md12
+                    sm12
+                    lg4
+                >
+                    <v-card
+                        class="mx-auto"
+                        max-width="344"
+                        shaped
+                        elevation="2"
+                    >
+                        <v-list-item three-line>
+                            <v-list-item-avatar
+
+                                size="80"
+                                color="#006727"
+                            >
+                                <v-icon
+                                    size="40"
+                                    color="white"
+                                >
+                                    mdi-store
+                                </v-icon>
+                            </v-list-item-avatar>
+                            <v-list-item-content>
+                                <div class="category grey--text font-weight-light text-right">Revenue</div>
+                                <div class="display-1 mb-2 font-weight-light text-right">4,000$</div>
+
+                            </v-list-item-content>
+
+
+                        </v-list-item>
+                    </v-card>
+                </v-flex>
+
+
+                <v-flex lg12>
                     <v-card>
                       <v-card-title>
                         <span class="headline">{{ formTitle }}</span>
