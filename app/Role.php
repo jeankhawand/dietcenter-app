@@ -13,7 +13,10 @@ class Role extends Model
      */
     protected $table ='Role';// custom user table
     public $timestamps = false;
-//    protected $fillable = ['id','name'];
+    protected $fillable = ['id','name'];
+//    protected $hidden = [
+//        'created_at', 'edited_at', 'deleted_at' , 'pivot' , 'id'
+//    ];
     public function users()
     {
         return $this->belongsToMany(User::class,'UserRole','roleId','userId');
