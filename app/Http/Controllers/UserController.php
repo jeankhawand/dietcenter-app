@@ -6,19 +6,17 @@ use App\Http\Resources\EmployeeResource;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Builder;
 
 class UserController extends Controller
 {
-    /** get all the employees as resources
+    /** Get a page of employees
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function getEmployees()
     {
-        //get first 5 users
         $users = User::whereHas('roles', function (Builder $query) {
             $query->where('id', '!=', '1');
-        })->orderBy('created_at','desc')->paginate(5);
+        })->orderBy('created_at','desc')->paginate(500);
         // return collection of users as a resource
         return EmployeeResource::collection($users);
     }
@@ -27,7 +25,7 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function storeEmployees(Request $request)
+    public function storeEmployee(Request $request)
     {
 //        dd($request);
         $data = $request->validate([
@@ -51,7 +49,7 @@ class UserController extends Controller
 
         return response()->json('Employee Created',200);
     }
-    public function  updateEmployees(Request $request, $id){
+    public function  updateEmployee(Request $request, $id){
 
         $data= $request->validate([
             'name'=>'string',
@@ -71,7 +69,7 @@ class UserController extends Controller
 
 
     }
-    public function destroyEmployees(Request $request,User $user)
+    public function destroyEmployee(Request $request,User $user)
     {
 //            dd($user);
         try {
@@ -85,14 +83,16 @@ class UserController extends Controller
 
         return response()->json('Employee Deleted Successfully', 200);
     }
+
+    //Get a page of clients
     public function getClients(){
-        $client = User::orderBy('created_at','desc')->whereHas('roles',function (Builder $query){
+        $clients = User::orderBy('created_at','desc')->whereHas('roles',function (Builder $query){
             $query->where('id','=','1');
-        })->orderBy('created_at','desc')->paginate(5);
-        return EmployeeResource::collection($client);
+        })->orderBy('created_at','desc')->paginate(500);
+        return EmployeeResource::collection($clients);
 
     }
-    public function storeClients(Request $request){
+    public function storeClient(Request $request){
 //        dd($request);
         $data = $request->validate([
             'name'=>'required|string',
@@ -112,10 +112,10 @@ class UserController extends Controller
 
         return response()->json('Client Created',200);
     }
-    public function  updateClients(Request $request, $id){
+    public function  updateClient(Request $request, $id){
        $data= $request->validate([
             'name'=>'string',
-            'email'=>'email:rfc,dns',
+            'email'=>'required|email',
             'phonenumber'=>'string',
                 'password'=>'string'
         ]);
@@ -128,7 +128,7 @@ class UserController extends Controller
         return response()->json('Unable to Update Client ',200);
 
     }
-    public function deleteClients(User $user)
+    public function deleteClient(User $user)
     {
 //            dd($user);
 
