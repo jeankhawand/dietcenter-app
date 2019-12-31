@@ -14,7 +14,7 @@
             <v-icon color="white">mdi-home</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title v-if="isManager" style="color:white">Dashboard</v-list-item-title>
+            <v-list-item-title style="color:white">Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item to="/admin/revenue">
@@ -184,15 +184,6 @@ export default {
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
-    },
-    isManager() {
-      return this.$store.getters.isManager;
-    },
-    isDietitian() {
-      return this.$store.getters.isDietitian;
-    },
-    isChef() {
-      return this.$store.getters.isChef;
     },
     cartItems() {
       return this.$store.state.cart.length;
