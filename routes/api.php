@@ -19,7 +19,7 @@ Route::middleware('auth:api')->group(function(){
         return $request->user();
     });
     Route::get('role', function (Request $request) {
-        return $request->user()->roles()->get();
+        return \App\Http\Resources\RoleResource::collection($request->user()->roles()->get());
     });
     // Logout
     Route::post('logout','AuthController@logout')->middleware('check-role:dietitian,chef,user,manager,admin');
