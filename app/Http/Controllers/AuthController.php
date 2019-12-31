@@ -26,6 +26,7 @@ class AuthController extends Controller
                 ]
             ]);
 //            dd($response->getBody()->getContents()); for debugging
+
             return  $response->getBody();
         } catch (\GuzzleHttp\Exception\BadResponseException $e) {
             if ($e->getCode() === 400) {
