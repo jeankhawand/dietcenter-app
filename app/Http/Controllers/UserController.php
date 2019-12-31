@@ -6,6 +6,7 @@ use App\Http\Resources\EmployeeResource;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserController extends Controller
 {
@@ -15,8 +16,8 @@ class UserController extends Controller
     public function getEmployees()
     {
         //get first 5 users
-        $users = User::orderBy('created_at','desc')->whereHas('roles',function (Builder $query){
-            $query->where('id','!=','1');
+        $users = User::whereHas('roles', function (Builder $query) {
+            $query->where('id', '!=', '1');
         })->orderBy('created_at','desc')->paginate(5);
         // return collection of users as a resource
         return EmployeeResource::collection($users);
