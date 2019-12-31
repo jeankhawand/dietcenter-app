@@ -28,7 +28,7 @@
         </v-list-item>
       </v-list>
       <template v-slot:append>
-        
+
         <v-list-item class="pa-2" icon @click="logout()">
           <v-list-item-action>
             <v-btn text >
@@ -109,7 +109,7 @@
 
         <v-list>
           <v-list-item>
-            <v-list-item-action> 
+            <v-list-item-action>
           <v-switch v-model="$vuetify.theme.dark" inset color="black" />
             </v-list-item-action>
             <v-list-item-title>Dark Mode</v-list-item-title>
@@ -183,7 +183,7 @@
         >
             <v-icon size="24px" class="fas fa-pen-square"></v-icon>
             </v-btn>
-       
+
       </v-card-title>
 
       <v-card-text class="py-2  text-center">
@@ -207,7 +207,7 @@ export default {
       message: false,
       hints: true,
   }),
-  
+
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
