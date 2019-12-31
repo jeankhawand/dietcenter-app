@@ -29,6 +29,8 @@
       </v-list>
       <template v-slot:append>
 
+
+
         <v-list-item class="pa-2" icon @click="logout()">
           <v-list-item-action>
             <v-btn text >
@@ -109,6 +111,7 @@
 
         <v-list>
           <v-list-item>
+
             <v-list-item-action>
           <v-switch v-model="$vuetify.theme.dark" inset color="black" />
             </v-list-item-action>
