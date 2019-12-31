@@ -46,7 +46,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="loggedIn" />
       <v-toolbar-title @click="goBack()">Diet Center</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-text-field
+      <v-text-field 
         class="hidden-md-and-down"
         v-model="search"
         clearable
@@ -56,8 +56,19 @@
         label="Search"
         @keyup.enter="searchit"
       ></v-text-field>
+       <v-text-field 
+      v-if="seen"
+        class="hidden-md-and-up"
+        v-model="search"
+        clearable
+        flat
+        solo-inverted
+        hide-details
+        label="Search"
+        @keyup.enter="searchit"
+      ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn class="d-lg-none d-md" icon>
+      <v-btn class="d-lg-none d-md" v-on:click="seen = !seen" icon>
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
       <v-btn v-if="loggedIn" class="hidden-sm-and-down" icon @click="handleFullScreen()">
@@ -202,6 +213,7 @@ export default {
   data: () => ({
     drawer: null,
     search: "",
+     seen: false,
     fav: true,
       menu: false,
       message: false,
