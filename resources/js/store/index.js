@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
     // vuex definitions
     strict: true,
     state: {
+        roles: [],
         cart: [],
         showLoader: false,
         product: {},
