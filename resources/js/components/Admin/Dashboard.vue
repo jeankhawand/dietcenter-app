@@ -1,170 +1,59 @@
 <template>
-    <v-app>
-        <v-container fill-height
-                     fluid
-                     grid-list-xl
-        >
-            <v-layout wrap>
-                <v-flex
-                    md12
-                    sm12
-                    lg4
-                >
-                    <v-card
-                        class="mx-auto"
-                        max-width="344"
-                        shaped
-                        elevation="2"
-                    >
-                        <v-list-item three-line>
-                            <v-list-item-avatar
-
-                                size="80"
-                                color="green"
-                            >
-                                <v-icon
-                                    size="40"
-                                    color="white"
-                                >
-                                    mdi-store
-                                </v-icon>
-                            </v-list-item-avatar>
-                            <v-list-item-content>
-                                <div class="category grey--text font-weight-light text-right">Total Appointments</div>
-                                <div class="display-1 mb-2 font-weight-light text-right">34</div>
-
-                            </v-list-item-content>
-
-
-                        </v-list-item>
-                    </v-card>
-                </v-flex>
-                <v-flex
-                    md12
-                    sm12
-                    lg4
-                >
-                    <v-card
-                        class="mx-auto"
-                        max-width="344"
-                        shaped
-                        elevation="2"
-                    >
-                        <v-list-item three-line>
-                            <v-list-item-avatar
-
-                                size="80"
-                                color="#25A032"
-                            >
-                                <v-icon
-                                    size="40"
-                                    color="white"
-                                >
-                                    mdi-store
-                                </v-icon>
-                            </v-list-item-avatar>
-                            <v-list-item-content>
-                                <div class="category grey--text font-weight-light text-right">Total Clients</div>
-                                <div class="display-1 mb-2 font-weight-light text-right">3</div>
-
-                            </v-list-item-content>
-
-
-                        </v-list-item>
-                    </v-card>
-                </v-flex>
-                <v-flex
-                    md12
-                    sm12
-                    lg4
-                >
-                    <v-card
-                        class="mx-auto"
-                        max-width="344"
-                        shaped
-                        elevation="2"
-                    >
-                        <v-list-item three-line>
-                            <v-list-item-avatar
-
-                                size="80"
-                                color="#006727"
-                            >
-                                <v-icon
-                                    size="40"
-                                    color="white"
-                                >
-                                    mdi-store
-                                </v-icon>
-                            </v-list-item-avatar>
-                            <v-list-item-content>
-                                <div class="category grey--text font-weight-light text-right">Revenue</div>
-                                <div class="display-1 mb-2 font-weight-light text-right">4,000$</div>
-
-                            </v-list-item-content>
-
-
-                        </v-list-item>
-                    </v-card>
-                </v-flex>
-
-
-                <v-flex lg12>
-                    <v-card>
-                      <v-card-title>
-                        <span class="headline">{{ formTitle }}</span>
-                      </v-card-title>
-
-                      <v-card-text>
-                        <v-container>
-                          <v-row>
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                type="text"
-                                v-model="editedItem.name"
-                                label="Full Name"
-                                :rules="nameRules"
-                                required
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                type="email"
-                                v-model="editedItem.email"
-                                label="Email"
-                                :rules="emailRules"
-                                required
-                              ></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                              <v-text-field
-                                :rules="phoneRules"
-                                type="numeric"
-                                v-model="editedItem.phonenumber"
-                                label="Phone Number"
-                                required
-                              ></v-text-field>
-                            </v-col>
-                          </v-row>
-                        </v-container>
-                      </v-card-text>
-
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                        <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-                      </v-card-actions>
-                    </v-card>
-                >
-              <template v-slot:item.action="{ item }">
-                <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-                <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-              </template>
-              <template v-slot:no-data>
-                <v-btn color="primary" @click="initialize">Reset</v-btn>
-              </template>
-            
+  <v-app>
+    <v-container fill-height fluid grid-list-xl>
+      <v-layout wrap>
+        <v-flex md12 sm12 lg4>
+          <v-card class="mx-auto" max-width="344" shaped elevation="2">
+            <v-list-item three-line>
+              <v-list-item-avatar size="80" color="green">
+                <v-icon size="40" color="white">mdi-store</v-icon>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <div class="category grey--text font-weight-light text-right">Total Appointments</div>
+                <div class="display-1 mb-2 font-weight-light text-right">34</div>
+              </v-list-item-content>
+            </v-list-item>
+          </v-card>
         </v-flex>
+        <v-flex md12 sm12 lg4>
+          <v-card class="mx-auto" max-width="344" shaped elevation="2">
+            <v-list-item three-line>
+              <v-list-item-avatar size="80" color="#25A032">
+                <v-icon size="40" color="white">mdi-store</v-icon>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <div class="category grey--text font-weight-light text-right">Total Clients</div>
+                <div class="display-1 mb-2 font-weight-light text-right">3</div>
+              </v-list-item-content>
+            </v-list-item>
+          </v-card>
+        </v-flex>
+        <v-flex md12 sm12 lg4>
+          <v-card class="mx-auto" max-width="344" shaped elevation="2">
+            <v-list-item three-line>
+              <v-list-item-avatar size="80" color="#006727">
+                <v-icon size="40" color="white">mdi-store</v-icon>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <div class="category grey--text font-weight-light text-right">Revenue</div>
+                <div class="display-1 mb-2 font-weight-light text-right">4,000$</div>
+              </v-list-item-content>
+            </v-list-item>
+          </v-card>
+        </v-flex>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
+          <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+        </v-card-actions>>
+        <template v-slot:item.action="{ item }">
+          <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+          <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+        </template>
+        <template v-slot:no-data>
+          <v-btn color="primary" @click="initialize">Reset</v-btn>
+        </template>
       </v-layout>
     </v-container>
   </v-app>

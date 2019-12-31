@@ -24,5 +24,14 @@ export const productGetters = {
 export const authGetters = {
     loggedIn(state) {
         return state.token !== null;
+    },
+    isManager(state) {
+        return state.roles.some(role => role.name == "manager");
+    },
+    isChef(state) {
+        return state.roles.some(role => role.name == "chef");
+    },
+    isDietitian(state) {
+        return state.roles.some(role => role.name == "dietitian");
     }
 }

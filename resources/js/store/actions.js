@@ -19,7 +19,8 @@ import {
     RETRIEVE_TOKEN,
     UPDATE_PRODUCT,
     UPDATE_PRODUCT_SUCCESS,
-    UPDATE_SESSION_STORAGE_CART
+    UPDATE_SESSION_STORAGE_CART,
+    GET_ROLES
 } from './mutation-types'
 // -------- PLEASE ENCAPSULATE AXIOS REQUEST WITH PROMISE BLOCK !!! -------
 axios.defaults.baseURL = process.env.MIX_API_ENDPOINT;
@@ -123,6 +124,27 @@ export const authActions = {
 
                     localStorage.setItem("access_token", token);
                     context.commit(RETRIEVE_TOKEN, token);
+                    resolve(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+        });
+    },
+    getRoles(context) {
+        /*
+        once user provide username / password we handle the recieve of the access_token
+
+         */
+        return new Promise((resolve, reject) => {
+            axios.get("role", {params:{}, headers: {
+                Authorization: "Bearer " + context.state.token,
+                Accept: "application/json"
+            } })
+                .then(response => {
+                    const roles = response.data;
+                    context.commit(GET_ROLES, roles.data);
                     resolve(response);
                 })
                 .catch(error => {
