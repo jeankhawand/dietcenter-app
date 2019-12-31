@@ -15,7 +15,7 @@
     max-width="600"
   >
     <div id="radial">
-      <apexchart type=radialBar height=350 :options="chartOptions" :series="series" />
+      <v-gauge :value="value1" unit="g"></v-gauge>
     </div>
     <v-divider></v-divider>
     <v-card-text>
@@ -30,7 +30,7 @@
     max-width="600"
   >
     <div id="radial">
-      <apexchart type=radialBar height=350 :options="chartOptions2" :series="series2" />
+      <v-gauge :value="value2" unit="g"></v-gauge>
     </div>
     <v-divider></v-divider>
     <v-card-text>
@@ -49,7 +49,7 @@
     max-width="600"
   >
     <div id="radial">
-      <apexchart type=radialBar height=350 :options="chartOptions3" :series="series3" />
+       <v-gauge :value="value3" unit="g"></v-gauge>
     </div>
     <v-divider></v-divider>
     <v-card-text>
@@ -63,7 +63,7 @@
     max-width="600"
   >
     <div id="radial">
-      <apexchart type=radialBar height=350 :options="chartOptions4" :series="series4" />
+      <v-gauge :value="value4" unit="g"></v-gauge>
     </div>
     <v-divider></v-divider>
     <v-card-text>
@@ -89,13 +89,22 @@
 
 <script>
     import VueApexCharts from 'vue-apexcharts'
+    import VGauge from 'vgauge';
+
 
     export default {
     components: {
-        apexchart: VueApexCharts,
+        apexchart: VueApexCharts, VGauge
    },
     data() {
     return {
+        value1: 35,
+        value2: 80,
+        value3: 45,
+        value4: 5,
+
+
+
         series2: [76],
         chartOptions2: {
           chart: {
