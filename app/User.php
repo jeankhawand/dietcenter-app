@@ -37,7 +37,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id','name', 'email', 'password', 'phonenumber' ,'created_by'
+        'id','name', 'email', 'password', 'phonenumber' ,'created_by','edited_by'
     ];
 
     /**
@@ -46,7 +46,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+         'remember_token',
     ];
 
     /**
@@ -76,55 +76,33 @@ class User extends Authenticatable
         return $this->belongsTo(Organization::class,'organizationId');
     }
 
-    /**
-     * Find out if User is an employee, based on if has any roles
-     *
-     * @return boolean
-     */
-    public function isEmployee()
-    {
-        $roles = $this->roles->toArray();
-        return !empty($roles);
-    }
-    public function rolesName(){
-        return $this->roles->get(0,1);
-    }
 
-    /**
-     * Find out if user has a specific role
-     *
-     * $return boolean
-     */
-    public function hasRole($check)
+    public function isUser()
     {
-        return in_array($check, array_fetch($this->roles->toArray(), 'name'));
-    }
-    /**
-     * Get key in array with corresponding value
-     *
-     * @return int
-     */
-    private function getIdInArray($array, $term)
-    {
-        foreach ($array as $key => $value) {
-            if ($value == $term) {
-                return $key;
+        foreach ($this->roles()->get() as $role)
+        {
+            if ($role->name == 'user')
+            {
+                return true;
             }
         }
 
-        throw new UnexpectedValueException;
+        return false;
     }
-    /**
-     * Add roles to user to make them a concierge
-     */
-    public function makeEmployee($title)
+    public function isUserSecond()
     {
-        $assigned_roles = array();
+        return null !== $this->roles()->where('name', 'user')->first();
+    }
+    public function isEmployee($roleName)
+    {
+        foreach ($this->roles()->get() as $role)
+        {
+            if ($role->name == $roleName)
+            {
+                return true;
+            }
+        }
 
-        $roles = array_fetch(Role::all()->toArray(), 'name');
-
-
-
-        $this->roles()->attach($assigned_roles);
+        return false;
     }
 }
