@@ -7,9 +7,9 @@ import Revenue from "./components/Admin/Revenue.vue";
 import Admin from "./components/Admin/Admin.vue";
 import Client from "./components/Client/Client.vue";
 import Client_Dashboard from "./components/Client/Client_Dashboard.vue";
+import Chef from "./components/Chef/Chef.vue";
+import Chef_Dashboard from "./components/Chef/Chef_Dashboard.vue";
 import NotFound from "./components/Error/Error";
-import Success from "./components/Payment/Success";
-
 const routes = [{
         path: "/",
         name: "Home",
@@ -20,11 +20,6 @@ const routes = [{
         path: "*",
         name: "Error",
         component: NotFound
-    },
-    {
-        path: "/success",
-        name: "Success",
-        component: Success
     },
     {
         path: "/login",
@@ -77,9 +72,24 @@ const routes = [{
             name: "CLient_Dashboard",
             component: Client_Dashboard,
         }],
+    },
+
+    {
+        path: "/chef",
+        name: "Chef",
+        component: Chef,
+        meta: {
+            requiresAuth: true,
+        },
+        children: [{
+            path: "chef_dashboard",
+            name: "Chef_Dashboard",
+            component: Chef_Dashboard,
+        }],
+    },
 
 
-    }
+
 
 
 ];

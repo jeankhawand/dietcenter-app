@@ -155,9 +155,7 @@
                         <v-btn color="blue darken-1" text @click="save">Save</v-btn>
                       </v-card-actions>
                     </v-card>
-                  </v-dialog>
-                </v-toolbar>
-              </template>
+                >
               <template v-slot:item.action="{ item }">
                 <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
                 <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
@@ -165,8 +163,7 @@
               <template v-slot:no-data>
                 <v-btn color="primary" @click="initialize">Reset</v-btn>
               </template>
-            </v-data-table>
-          </v-card>
+            
         </v-flex>
       </v-layout>
     </v-container>

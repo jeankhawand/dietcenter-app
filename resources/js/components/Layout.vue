@@ -26,6 +26,14 @@
             <v-list-item-title style="color:white">Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+         <v-list-item to="/chef/chef_dashboard">
+          <v-list-item-action>
+            <v-icon color="white" >mdi-home</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title style="color:white">Dashboard</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
       <template v-slot:append>
 
