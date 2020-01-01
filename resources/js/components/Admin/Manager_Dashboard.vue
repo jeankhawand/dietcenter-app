@@ -1,52 +1,73 @@
 <template>
-  <v-app>
-    <v-container fill-height fluid grid-list-xl>
-      <v-layout wrap>
-        <v-flex md12 sm12 lg4>
-          <v-card class="mx-auto" max-width="344" shaped elevation="2">
-            <v-list-item three-line>
-              <v-list-item-avatar size="80" color="green">
-                <v-icon size="40" color="white">mdi-store</v-icon>
-              </v-list-item-avatar>
-              <v-list-item-content>
-                <div class="category grey--text font-weight-light text-right">Total Appointments</div>
-                <div class="display-1 mb-2 font-weight-light text-right">34</div>
-              </v-list-item-content>
-            </v-list-item>
-          </v-card>
-        </v-flex>
-        <v-flex md12 sm12 lg4>
-          <v-card class="mx-auto" max-width="344" shaped elevation="2">
-            <v-list-item three-line>
-              <v-list-item-avatar size="80" color="#25A032">
-                <v-icon size="40" color="white">mdi-store</v-icon>
-              </v-list-item-avatar>
-              <v-list-item-content>
-                <div class="category grey--text font-weight-light text-right">Total Clients</div>
-                <div class="display-1 mb-2 font-weight-light text-right">3</div>
-              </v-list-item-content>
-            </v-list-item>
-          </v-card>
-        </v-flex>
-        <v-flex md12 sm12 lg4>
-          <v-card class="mx-auto" max-width="344" shaped elevation="2">
-            <v-list-item three-line>
-              <v-list-item-avatar size="80" color="#006727">
-                <v-icon size="40" color="white">mdi-store</v-icon>
-              </v-list-item-avatar>
-              <v-list-item-content>
-                <div class="category grey--text font-weight-light text-right">Revenue</div>
-                <div class="display-1 mb-2 font-weight-light text-right">4,000$</div>
-              </v-list-item-content>
-            </v-list-item>
-          </v-card>
-        </v-flex>
+  <v-container fill-height fluid grid-list-xl>
+    <v-layout wrap>
+      <v-flex md12 sm12 lg4>
+        <v-card class="mx-auto" max-width="344" shaped elevation="2">
+          <v-list-item three-line>
+            <v-list-item-avatar size="80" color="green">
+              <v-icon size="40" color="white">mdi-currency-usd</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <div class="category grey--text font-weight-light text-right">Revenue</div>
+              <div class="display-1 mb-2 font-weight-light text-right">34,000$</div>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+      </v-flex>
+      <v-flex md12 sm12 lg4>
+        <v-card class="mx-auto" max-width="344" shaped elevation="2">
+          <v-list-item three-line>
+            <v-list-item-avatar size="80" color="#25A032">
+              <v-icon size="40" color="white">mdi-store</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <div class="category grey--text font-weight-light text-right">Total Orders</div>
+              <div class="display-1 mb-2 font-weight-light text-right">34</div>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+      </v-flex>
+      <v-flex md12 sm12 lg4>
+        <v-card class="mx-auto" max-width="344" shaped elevation="2">
+          <v-list-item three-line>
+            <v-list-item-avatar size="80" color="#006727">
+              <v-icon size="40" color="white">mdi-account</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <div class="category grey--text font-weight-light text-right">Total Users</div>
+              <div class="display-1 mb-2 font-weight-light text-right">102</div>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+      </v-flex>
 
-  <v-flex lg12>
-                    <v-card>
+      <v-flex md12 sm12 lg6>
+        <v-card class="mx-auto text-center" max-width="600">
+          <apexchart type="line" height="350" :options="LinechartOptions" :series="Lineseries" />
+
+          <v-divider></v-divider>
+          <v-card-text>
+            <div class="display-1 font-weight-thin">Sales Last Year</div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+
+      <v-flex md12 sm12 lg6>
+        <v-card class="mx-auto text-center" max-width="600">
+          <div class="donut">
+            <apexchart type="donut" width="380" :options="DonutchartOptions" :series="Donutseries" />
+          </div>
+          <v-divider></v-divider>
+          <v-card-text>
+            <div class="display-1 font-weight-thin">Orders Breakdown</div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+ <v-flex lg12>
+                    <v-card class="mb-2">
                         <v-data-table
                             :headers="headers"
-                            :items="clients"
+                            :items="employees"
                             :items-per-page="itemsPerPage"
                             :search="search"
                             sort-by="firstname"
@@ -54,7 +75,7 @@
                         >
                             <template v-slot:top>
                                 <v-toolbar flat color="white">
-                                    <v-toolbar-title>Clients</v-toolbar-title>
+                                    <v-toolbar-title>Employees</v-toolbar-title>
                                     <v-divider
                                         class="mx-4"
                                         inset
@@ -70,7 +91,7 @@
                                     <v-spacer></v-spacer>
                                     <v-dialog v-model="dialog" max-width="500px">
                                         <template v-slot:activator="{ on }">
-                                            <v-btn color="primary" dark class="mb-2" v-on="on">New Client</v-btn>
+                                            <v-btn color="primary" dark class="mb-2" v-on="on">New Employee</v-btn>
                                         </template>
                                         <v-card>
                                             <v-card-title>
@@ -128,16 +149,89 @@
                     </v-card>
                 </v-flex>
      
-      </v-layout>
-    </v-container>
-  </v-app>
+
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
+import Vue from "vue";
+import VueApexCharts from "vue-apexcharts";
+
+Vue.use(VueApexCharts);
 export default {
+  components: {
+    apexchart: VueApexCharts
+  },
   data() {
     return {
-      dialog: false,
+      Lineseries: [
+        {
+          name: "revenue",
+          data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+        }
+      ],
+      LinechartOptions: {
+        chart: {
+          height: 350,
+          zoom: {
+            enabled: false
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          curve: "straight"
+        },
+
+        colors: ["#2ed72e"],
+        title: {
+          text: "",
+          align: "left"
+        },
+        grid: {
+          row: {
+            colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+            opacity: 0.5
+          }
+        },
+        xaxis: {
+          categories: [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep"
+          ]
+        }
+      },
+      Donutseries: [44, 55, 41, 17, 15],
+      DonutchartOptions: {
+        responsive: [
+          {
+            breakpoint: 350,
+            options: {
+              chart: {
+                width: 200
+              },
+              legend: {
+                position: "bottom"
+              }
+            }
+          }
+        ],
+        title: {
+          text: "",
+          align: "left"
+        },
+        colors: ["#014422", "#006727", "#248823", "#25A032"]
+      },
+       dialog: false,
       search: "",
       editedItem: {
         name: "",
@@ -160,7 +254,7 @@ export default {
       editedIndex: -1,
       search: "",
       selected: [],
-      clients: [],
+      employees: [],
       headers: [
         {
           text: "Avatar",
@@ -177,20 +271,20 @@ export default {
   },
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "New Client" : "Edit Client";
+      return this.editedIndex === -1 ? "New Employee" : "Edit Employee";
     }
   },
   methods: {
     editItem(item) {
-      this.editedIndex = this.clients.indexOf(item);
+      this.editedIndex = this.employees.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
-      const index = this.clients.indexOf(item);
+      const index = this.employees.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        this.clients.splice(index, 1);
+        this.employees.splice(index, 1);
     },
     close() {
       this.dialog = false;
@@ -201,13 +295,16 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.clients[this.editedIndex], this.editedItem);
+        Object.assign(this.employees[this.editedIndex], this.editedItem);
       } else {
-        this.clients.push(this.editedItem);
+        this.employees.push(this.editedItem);
       }
       this.close();
     },
     initialize() {}
   }
-};
+    };
 </script>
+
+<style scoped>
+</style>
