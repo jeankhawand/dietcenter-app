@@ -175,6 +175,8 @@ export const authActions = {
                 .post("/checkout", {
                     email: data.email,
                     stripetoken: data.stripetoken,
+                    amount: data.amount,
+                    meta: data.meta,
                 })
                 .then(response => {
                     console.log(response);

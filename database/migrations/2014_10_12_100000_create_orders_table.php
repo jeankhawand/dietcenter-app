@@ -15,9 +15,10 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('Order', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('stripeId');
             $table->dateTimeTz('created_at')->useCurrent();
             $table->dateTimeTz('updated_at')->useCurrent();
-            $table->uuid('userId');
+            $table->uuid('userId')->nullable();
             $table->foreign('userId')->on('User')->references('id');
             $table->uuid('organizationId')->nullable();
             $table->foreign('organizationId')->on('Organization')->references('id');
