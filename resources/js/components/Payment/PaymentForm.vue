@@ -9,7 +9,7 @@
 
                 <v-spacer></v-spacer>
 
-               
+
 
               </v-toolbar>
     <v-card-text>
@@ -18,13 +18,13 @@
         </v-alert>
         <v-text-field
             label="First Name"
-            v-model="firstname" required></v-text-field>
+            v-model="firstname" :rules="firstnameRules" required></v-text-field>
         <v-text-field
             label="Last Name"
-            v-model="lastname" required></v-text-field>
+            v-model="lastname" :rules="lastnameRules" required></v-text-field>
         <v-text-field
             label="Phone Number"
-            v-model="phonenumber" required></v-text-field>
+            v-model="phonenumber" :rules="phonenumberRules" required></v-text-field>
         <v-text-field
             label="Email"
             v-model="email" :rules="emailRules" type="email" required></v-text-field>
@@ -40,30 +40,18 @@
             color="primary"
             @click='pay();overlay = !overlay;'
             :disabled='!complete'
-            
-        >
+            >
             Checkout
         </v-btn>
+<!--        :disabled='!complete'-->
 <v-overlay :value="overlay">
-    
-  <v-card
-    class="mx-auto text-center"
-    max-width="600"
-    color="rgba(0, 0, 0, 0.0)"
-    flat
-  >
+
         <v-icon color="green" size="300">mdi-check-circle</v-icon>
         <v-divider></v-divider>
-          
-      <v-card-text>
-       <v-btn to="/" color="black"
+      <v-btn to="/" color="black"
       class="white--text">
       BACK TO SHOP
       </v-btn>
-    </v-card-text>
-
-
-  </v-card>
     </v-overlay>
     </v-card-text>
      </v-card>
@@ -74,8 +62,8 @@
 
 <script>
     import {Card, createToken} from 'vue-stripe-elements-plus'
-   
 
+    let result;
     export default {
         components: {Card},
         data() {
@@ -85,6 +73,7 @@
                 lastname: '',
                 phonenumber: '',
                 email: '',
+                cart: this.$store.state.cart,
                 complete: false,
                 errorMessage: '',
                 errorType: 'error',
@@ -92,7 +81,20 @@
                     v => !!v || 'E-mail is required',
                     v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
                 ],
-                
+                firstnameRules: [
+                    v => !!v || 'First Name is required',
+                    v => /^[A-Za-z]+$/.test(v) || 'First Name must be valid',
+                ],
+                lastnameRules: [
+                    v => !!v || 'Last Name is required',
+                    v => /^[A-Za-z]+$/.test(v) || 'Last Name must be valid',
+                ],
+
+                phonenumberRules: [
+                    v => !!v || 'Phone Number is required',
+                    v => /^[0-9]{8,10}$/.test(v) || 'Phone Number must be valid',
+                ],
+
                 stripeOptions: {
                     // see https://stripe.com/docs/stripe.js#element-options for details
                     style: {
@@ -115,11 +117,26 @@
                 }
             }
         },
+        mounted() {
+            function replacer(key,value)
+            {
+                if (key=="image") return undefined;
+                else if (key=="description") return undefined;
+                else return value;
+            }
+            // console.log(this.cart[0].description);
+            result = JSON.stringify(this.cart,replacer);
+        },
         methods: {
-       
+            getSubtotal() {
+                return this.$store.getters.cartTotalProductsCost;
+            },
             pay() {
+                console.log(this.cart);
+                console.log(this.getSubtotal());
                 var options = {
                     name: this.firstname + ' ' + this.lastname,
+                    address_country: 'LB',
                 }
                 // createToken returns a Promise which resolves in a result object with
                 // either a token or an error key.
@@ -128,10 +145,13 @@
                 // More general https://stripe.com/docs/stripe.js#stripe-create-token.
                 createToken(options)
                     .then(data => {
-                        console.log(data.token.id)
+                        console.log(data.token.id);
+                        console.log(result);
                         this.$store.dispatch("checkout", {
                             email: this.email,
+                            amount: this.getSubtotal(),
                             stripetoken: data.token.id,
+                            meta: result,
                         }).then(response => {
                             // console.log(response);
 
@@ -164,7 +184,7 @@
                 this.errorType = 'error';
                 this.errorMessage = event.error ? event.error.message : ''
             },
-        
+
         }
     }
 </script>

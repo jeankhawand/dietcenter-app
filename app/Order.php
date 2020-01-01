@@ -11,6 +11,9 @@ class Order extends Model
     public $incrementing = false;// disable defaults incrementing as integer key
     protected $table ='Order';// custom user table
     public $timestamps = false; // disable defaults timestamp
+    protected $fillable = [
+        'stripeId','id'
+    ];
     public function user (){
         return $this->belongsTo(User::class,'userId');
     }

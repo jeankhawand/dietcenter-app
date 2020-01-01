@@ -15,7 +15,6 @@ import {
     REMOVE_PRODUCT,
     REMOVE_PRODUCT_SUCCESS,
     REMOVE_QUANTITY_FROM_CART,
-    EMPTY_CART,
     RETRIEVE_TOKEN,
     UPDATE_PRODUCT,
     UPDATE_PRODUCT_SUCCESS,
@@ -164,6 +163,8 @@ export const authActions = {
                 .post("/checkout", {
                     email: data.email,
                     stripetoken: data.stripetoken,
+                    amount: data.amount,
+                    meta: data.meta,
                 })
                 .then(response => {
                     console.log(response);
