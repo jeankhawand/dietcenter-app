@@ -14,6 +14,8 @@ class User extends Authenticatable
     protected $table ='User';// custom user table
     public $timestamps = false; // disable defaults timestamp
     protected $keyType = 'string'; // had to change key type since we are using uuid
+
+
     public static function boot()
     {
          parent::boot();

@@ -21,7 +21,8 @@ import {
     DESTROY_TOKEN,
     RETRIEVE_TOKEN,
     EMPTY_CART,
-    GET_ROLES
+    GET_ROLES,
+    DESTROY_ROLES
 } from './mutation-types'
 
 export const productMutations = {
@@ -110,6 +111,7 @@ export const cartMutations = {
             state.cart.find((recipe) => { return recipe.id === payload.id }).quantity--
         }
     },
+    [EMPTY_CART]: (state) => { state.cart = [] },
 
 
     [UPDATE_SESSION_STORAGE_CART]: (state) => {
@@ -133,7 +135,9 @@ export const authMutations = {
     // Get roles and save it in state
     [GET_ROLES](state, roles) {
         state.roles = roles;
+    },
+    // Destroy roles in state
+    [DESTROY_ROLES](state, roles) {
+        state.roles = null;
     }
-
-
 }

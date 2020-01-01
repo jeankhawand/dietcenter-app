@@ -15,12 +15,13 @@ import {
     REMOVE_PRODUCT,
     REMOVE_PRODUCT_SUCCESS,
     REMOVE_QUANTITY_FROM_CART,
-    EMPTY_CART,
     RETRIEVE_TOKEN,
     UPDATE_PRODUCT,
     UPDATE_PRODUCT_SUCCESS,
     UPDATE_SESSION_STORAGE_CART,
-    GET_ROLES
+    GET_ROLES,
+    DESTROY_ROLES,
+    EMPTY_CART
 } from './mutation-types'
 // -------- PLEASE ENCAPSULATE AXIOS REQUEST WITH PROMISE BLOCK !!! -------
 axios.defaults.baseURL = process.env.MIX_API_ENDPOINT;
@@ -79,7 +80,7 @@ export const cartActions = {
     removeQuantityFromCart({ commit }, payload) {
         commit(REMOVE_QUANTITY_FROM_CART, payload)
         commit(UPDATE_SESSION_STORAGE_CART)
-    },
+    }
 }
 
 export const authActions = {
@@ -97,11 +98,15 @@ export const authActions = {
                     .then(response => {
                         localStorage.removeItem("access_token");
                         context.commit(DESTROY_TOKEN);
+                        localStorage.removeItem("roles");
+                        context.commit(DESTROY_ROLES);
                         resolve(response);
                     })
                     .catch(error => {
                         localStorage.removeItem("access_token");
                         context.commit(DESTROY_TOKEN);
+                        localStorage.removeItem("roles");
+                        context.commit(DESTROY_ROLES);
                         reject(error);
                     });
             });
@@ -144,6 +149,7 @@ export const authActions = {
             } })
                 .then(response => {
                     const roles = response.data;
+                    localStorage.setItem("roles", JSON.stringify(roles.data));
                     context.commit(GET_ROLES, roles.data);
                     resolve(response);
                 })
@@ -154,11 +160,16 @@ export const authActions = {
         });
     },
 
-    checkout(context, data) {
+    checkout({commit}, data) {
         /*
         checkout token
 
          */
+        //Empty Cart in session storage and in state
+        sessionStorage.removeItem("cart");
+        commit(EMPTY_CART);
+
+
         return new Promise((resolve, reject) => {
             axios
                 .post("/checkout", {
