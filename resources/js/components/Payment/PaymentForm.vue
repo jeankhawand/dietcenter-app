@@ -49,6 +49,15 @@
         </v-btn>
 <!--        :disabled='!complete'-->
  <v-overlay :value="overlay">
+                        <v-btn
+                            color="primary"
+                            @click='pay();overlay = !overlay;'
+                            :disabled='!complete'
+                        >
+                            Checkout
+                        </v-btn>
+                        <!--        :disabled='!complete'-->
+                        <v-overlay :value="overlay">
 
   <v-card
     class="mx-auto text-center"
@@ -70,6 +79,15 @@
     </v-overlay>
     </v-card-text>
      </v-card>
+                            <v-icon color="green" size="300">mdi-check-circle</v-icon>
+                            <v-divider></v-divider>
+                            <v-btn to="/" color="black"
+                                   class="white--text">
+                                BACK TO SHOP
+                            </v-btn>
+                        </v-overlay>
+                    </v-card-text>
+                </v-card>
             </v-flex>
         </v-layout>
     </v-container>
