@@ -20,7 +20,8 @@ import {
     ERROR_MSG,
     DESTROY_TOKEN,
     RETRIEVE_TOKEN,
-    EMPTY_CART
+    EMPTY_CART,
+    GET_ROLES
 } from './mutation-types'
 
 export const productMutations = {
@@ -128,6 +129,10 @@ export const authMutations = {
     //  PS : I have later on to hash the access token or store it safely but for the time being we have to stick with that
     [RETRIEVE_TOKEN](state, token) {
         state.token = token;
+    },
+    // Get roles and save it in state
+    [GET_ROLES](state, roles) {
+        state.roles = roles;
     }
 
 
