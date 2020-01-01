@@ -62,19 +62,20 @@ export const productActions = {
             commit(REMOVE_PRODUCT_SUCCESS, response.data)
         })
     },
-    addRecipe(payload) {
+    addRecipe(context, payload) {
         axios.post(`recipe`, payload, {
             Authorization: "Bearer " + context.state.token,
             Accept: "application/json"
         })
     },
-    updateRecipe(payload) {
+    updateRecipe(context, payload) {
         axios.put(`recipe/${payload.id}`, payload, {
             Authorization: "Bearer " + context.state.token,
             Accept: "application/json"
         })
     },
-    removeRecipe(id) {
+    removeRecipe(context, id) {
+        console.log(id)
         axios.delete(`recipe/${id}`, id, {
             Authorization: "Bearer " + context.state.token,
             Accept: "application/json"
@@ -119,7 +120,7 @@ export const authActions = {
                         localStorage.removeItem("user");
                         context.commit(DESTROY_USER_INFO);
                         sessionStorage.removeItem("cart");
-                        commit(EMPTY_CART);
+                        context.commit(EMPTY_CART);
                         resolve(response);
                     })
                     .catch(error => {
@@ -128,7 +129,7 @@ export const authActions = {
                         localStorage.removeItem("user");
                         context.commit(DESTROY_USER_INFO);
                         sessionStorage.removeItem("cart");
-                        commit(EMPTY_CART);
+                        context.commit(EMPTY_CART);
                         reject(error);
                     });
             });
