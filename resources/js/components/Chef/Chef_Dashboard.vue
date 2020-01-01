@@ -3,6 +3,13 @@
     <v-layout wrap>
       <v-flex lg12>
         <v-card class="mb-2">
+          <v-progress-linear
+            :active="loading"
+            :indeterminate="loading"
+            absolute
+            bottom
+            color="deep-purple accent-4"
+          ></v-progress-linear>
           <v-data-table
             :headers="headers"
             :items="recipes"
@@ -92,6 +99,7 @@
 
 <script>
 export default {
+  loading: false,
   data() {
     return {
       dialog: false,
@@ -134,13 +142,13 @@ export default {
       return this.editedIndex === -1 ? "New Recipe" : "Edit Recipe";
     },
     isManager(state) {
-        return this.$store.getters.isManager;
+      return this.$store.getters.isManager;
     },
     isChef(state) {
-        return this.$store.getters.isChef;
+      return this.$store.getters.isChef;
     },
     isDietitian(state) {
-        return this.$store.getters.isDietitian;
+      return this.$store.getters.isDietitian;
     }
   },
   beforeMount() {
@@ -173,12 +181,13 @@ export default {
     deleteItem(item) {
       const index = this.recipes.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        this.recipes.splice(index, 1) && this.$store.dispatch("removeRecipe",item.id).catch(error => {
+        this.recipes.splice(index, 1) &&
+        this.$store.dispatch("removeRecipe", item.id).catch(error => {
           // console.log(error.response.data),
           (this.errorMessage = error.response.data), (this.password = "");
           this.loading = false;
         });
-        alert("Wsolet");
+      alert("Wsolet");
     },
     close() {
       this.dialog = false;

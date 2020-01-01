@@ -10,6 +10,9 @@ class Organization extends Model
     public $incrementing = false;// disable defaults incrementing as integer key
     protected $table ='Organization';// custom user table
     public $timestamps = false; // disable defaults timestamp
+    protected $fillable = [
+        'id','name'
+    ];
     protected $keyType = 'string'; // had to change key type since we are using uuid
     public static function boot()
     {

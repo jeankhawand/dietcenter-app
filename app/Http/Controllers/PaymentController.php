@@ -30,6 +30,10 @@ class PaymentController extends Controller
         return join($glue, $output);
     }
 
+    /** format to array of ids
+     * @param $arr1
+     * @return array
+     */
     public function formatit($arr1)
     {
         $arr2 = [];
@@ -42,7 +46,7 @@ class PaymentController extends Controller
 
     }
 
-    /** Checkout
+    /** Checkout for None login User
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      * @throws \Stripe\Exception\ApiErrorException
@@ -52,14 +56,6 @@ class PaymentController extends Controller
 
         $orders = json_decode($request->meta);
         $str = $this->object_to_string($orders, $field = 'id');
-//
-       if (!$request->user()) {
-            $description = 'Express Checkout';
-            $userid = 'none';
-        }
-
-
-//        $order = Order::firstOrCreate();
         try {
 //            dd($request->meta);
             \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
@@ -67,11 +63,11 @@ class PaymentController extends Controller
                 'amount' => $request->amount,
                 'currency' => 'usd',
                 'source' => $request->stripetoken,
-                'description' => $description,
+                'description' => 'Express Checkout',
                 'receipt_email' => $request->email,
                 'metadata' =>
                     [
-                        'user_id' => $userid,
+                        'user_id' => 'none',
                         'product_ids' => $str,
                         'email' => $request->email,
                         'phonenumber' => $request->phonenumber,
@@ -79,36 +75,38 @@ class PaymentController extends Controller
             ]);
 
             // save this info to your database
-                $orderNonAuth = new Order;
-                $orderNonAuth->create([
+
+                Order::create([
                     'stripeId' => $charge->id,
-//                dd($orderNonAuth->id);
-//                $orderNonAuth->save();
-                ])->recipes()->attach($orderNonAuth->getKey(),$this->formatit($orders));
-//                dd($orderNonAuth);
-            return response()->json('Thank You!! For your Purchase');
+
+                ])->recipes()->attach($this->formatit($orders));
+            return response()->json('Thank you! Your payment has been accepted.');
         }catch (\Exception $e){
-            return response()->json($e->getMessage() . $e->getCode());
+            return response()->json('Unable to Process your Payment , Please Contact Us at hi@kwalka.com');
         }
     }
-    public function checkoutAuth(Request $request){
 
-        if ($request->user()){
+    /**Check in for Login Users
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Stripe\Exception\ApiErrorException
+     */
+    public function checkoutAuth(Request $request){
+//        dd($request->user()->id);
+//        dd($request->user()->organization()->id);
+
             $orders = json_decode($request->meta);
 //        dd();
-//            dd($request);
 //        dd($orders[0]->id);
             $str = $this->object_to_string($orders, $field = 'id');
-            $description = 'Authenticated User';
             try {
-            dd($request->user()->email);
-            dd($request->user()->organization()->id);
+
                 \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
                 $charge = \Stripe\Charge::create([
                     'amount' => $request->amount,
                     'currency' => 'usd',
                     'source' => $request->stripetoken,
-                    'description' => $description,
+                    'description' => 'Authenticated User',
                     'receipt_email' => $request->user()->email,
                     'metadata' =>
                         [
@@ -116,19 +114,15 @@ class PaymentController extends Controller
                             'product_ids' => $str,
                         ],
                 ]);
-                $orderAuth = new Order;
-                $orderAuth->create([
+                Order::create([
                     'stripeId' => $charge->id,
                     'userId' => $request->user()->id,
-                    'organizationId' => $request->user()->organization()->id,
-                ]);
-                $orderAuth->recipes()->attach($this->formatit($orders));
+                ])->recipes()->attach($this->formatit($orders));
+//                dd($request->user()->id);
                 return response()->json('Thank you! Your payment has been accepted.');
         }catch (Exception $e){
-                return response()->json($e->getMessage() . $e->getCode());
+                return response()->json('Unable to Process your Payment , Please Contact Us at hi@kwalka.com');
             }
-        }
-        return response()->json('unable to proccess your payment');
     }
 
 
