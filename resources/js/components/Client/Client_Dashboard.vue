@@ -265,21 +265,25 @@ export default {
       user: []
     };
   },
-  beforeMount(){
-      return new Promise((resolve, reject) => {
-            axios.get("employees", {params:{}, headers: {
-                Authorization: "Bearer " + this.$store.state.token,
-                Accept: "application/json"
-            } })
-                .then(response => {
-                    this.user = response.data.data;
-                    resolve(response);
-                })
-                .catch(error => {
-                    console.log(error);
-                    reject(error);
-                });
+  beforeMount() {
+    return new Promise((resolve, reject) => {
+      axios
+        .get("employees", {
+          params: {},
+          headers: {
+            Authorization: "Bearer " + this.$store.state.token,
+            Accept: "application/json"
+          }
+        })
+        .then(response => {
+          this.user = response.data.data;
+          resolve(response);
+        })
+        .catch(error => {
+          console.log(error);
+          reject(error);
         });
+    });
   }
 };
 </script>
