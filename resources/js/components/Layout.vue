@@ -9,20 +9,20 @@
       v-if="loggedIn"
     >
       <v-list dense>
-        <v-list-item class="drawer" to="/admin/dashboard" v-if="isDietitian">
+        <v-list-item class="drawer" to="/admin/diet_dashboard" v-if="isDietitian">
+          <v-list-item-action>
+            <v-icon color="white">mdi-home</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title style="color:white">Clients</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item to="/admin/manager_dashboard" v-if="isManager">
           <v-list-item-action>
             <v-icon color="white">mdi-home</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title style="color:white">Dashboard</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item to="/admin/revenue" v-if="isManager">
-          <v-list-item-action>
-            <v-icon color="white">mdi-currency-usd</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title style="color:white">Revenue</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item to="/client/client_dashboard" v-if="isClient"> 

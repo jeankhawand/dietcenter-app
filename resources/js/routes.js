@@ -2,8 +2,8 @@ import Home from "./components/recipe/RecipeList.vue";
 import Login from "./components/auth/Login.vue";
 import Logout from "./components/auth/Logout.vue";
 import Cart from "./components/cart/Cart.vue";
-import Dashboard from "./components/Admin/Dashboard.vue";
-import Revenue from "./components/Admin/Revenue.vue";
+import Diet_Dashboard from "./components/Admin/Diet_Dashboard.vue";
+import Manager_Dashboard from "./components/Admin/Manager_Dashboard.vue";
 import Admin from "./components/Admin/Admin.vue";
 import Client from "./components/Client/Client.vue";
 import Client_Dashboard from "./components/Client/Client_Dashboard.vue";
@@ -49,14 +49,14 @@ const routes = [{
         },
         children: [{
 
-                path: "revenue",
-                name: "Revenue",
-                component: Revenue
+                path: "manager_dashboard",
+                name: "Manager_Dashboard",
+                component: Manager_Dashboard
             },
             {
-                path: "dashboard",
-                name: "Dashboard",
-                component: Dashboard,
+                path: "diet_dashboard",
+                name: "Diet_Dashboard",
+                component: Diet_Dashboard,
             }
         ],
     },

@@ -1,36 +1,40 @@
 <template>
   <v-container fill-height fluid grid-list-xl>
     <v-layout wrap>
-      <v-flex lg12>
-        <v-card>
-          <v-data-table
-            :headers="headers"
-            :items="recipes"
-            :items-per-page="itemsPerPage"
-            :search="search"
-            sort-by="firstname"
-            class="elevation-1"
-          >
-            <template v-slot:top>
-              <v-toolbar flat color="white">
-                <v-toolbar-title>Recipes</v-toolbar-title>
-                <v-divider class="mx-4" inset vertical></v-divider>
-                <v-text-field
-                  v-model="search"
-                  append-icon="mdi-magnify"
-                  label="Search"
-                  single-line
-                  hide-details
-                ></v-text-field>
-                <v-spacer></v-spacer>
-                <v-dialog v-model="dialog" max-width="500px">
-                  <template v-slot:activator="{ on }" v-if="isChef">
-                    <v-btn color="primary" dark class="mb-2" v-on="on">New Recipe</v-btn>
-                  </template>
-                  <v-card>
-                    <v-card-title>
-                      <span class="headline">{{ formTitle }}</span>
-                    </v-card-title>
+    <v-flex lg12>
+                    <v-card class="mb-2">
+                        <v-data-table
+                            :headers="headers"
+                            :items="recipes"
+                            :items-per-page="itemsPerPage"
+                            :search="search"
+                            sort-by="firstname"
+                            class="elevation-1"
+                        >
+                            <template v-slot:top>
+                                <v-toolbar flat color="white">
+                                    <v-toolbar-title>Recipes</v-toolbar-title>
+                                    <v-divider
+                                        class="mx-4"
+                                        inset
+                                        vertical
+                                    ></v-divider>
+                                    <v-text-field
+                                        v-model="search"
+                                        append-icon="mdi-magnify"
+                                        label="Search"
+                                        single-line
+                                        hide-details
+                                    ></v-text-field>
+                                    <v-spacer></v-spacer>
+                                    <v-dialog v-model="dialog" max-width="500px">
+                                        <template v-slot:activator="{ on }" v-if="isChef">
+                                            <v-btn color="primary" dark class="mb-2" v-on="on">New Recipe</v-btn>
+                                        </template>
+                                        <v-card>
+                                            <v-card-title>
+                                                <span class="headline">{{ formTitle }}</span>
+                                            </v-card-title>
 
                     <v-card-text>
                       <v-container>
@@ -66,25 +70,38 @@
                       </v-container>
                     </v-card-text>
 
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                      <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-              </v-toolbar>
-            </template>
-            <template v-slot:item.action="{ item }">
-              <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-              <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-            </template>
-            <template v-slot:no-data>
-              <v-btn color="primary" @click="initialize">Reset</v-btn>
-            </template>
-          </v-data-table>
-        </v-card>
-      </v-flex>
+                                            <v-card-actions>
+                                                <v-spacer></v-spacer>
+                                                <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
+                                                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-dialog>
+                                </v-toolbar>
+                            </template>
+                            <template v-slot:item.action="{ item }" v-if=" isManager || isDietitian ">
+                                <v-icon
+                                    small
+                                    class="mr-2"
+                                    @click="editItem(item)"
+                                    :disabled='isDisabled'
+                                >
+                                    mdi-pencil
+                                </v-icon>
+                                <v-icon
+                                    small
+                                    @click="deleteItem(item)"
+                                    :disabled='isDisabled'
+                                >
+                                    mdi-delete
+                                </v-icon>
+                            </template>
+                            <template v-slot:no-data>
+                                <v-btn color="primary" @click="initialize">Reset</v-btn>
+                            </template>
+                        </v-data-table>
+                    </v-card>
+                </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -107,7 +124,7 @@ export default {
       ],
       priceRules: [
         v => !!v || "Price is required",
-        v => /[a-zA-Z]/.test(v) || "price must be valid"
+        v => /^\d*(\.\d{1,2})?$/.test(v) || "price must be valid"
       ],
       descriptionRules: [v => !!v || "Description is required"],
       itemsPerPage: 5,

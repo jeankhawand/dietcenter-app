@@ -6,7 +6,7 @@
           <v-card class="mx-auto" max-width="344" shaped elevation="2">
             <v-list-item three-line>
               <v-list-item-avatar size="80" color="green">
-                <v-icon size="40" color="white">mdi-store</v-icon>
+                <v-icon size="40" color="white">mdi-book-plus</v-icon>
               </v-list-item-avatar>
               <v-list-item-content>
                 <div class="category grey--text font-weight-light text-right">Total Appointments</div>
@@ -19,7 +19,7 @@
           <v-card class="mx-auto" max-width="344" shaped elevation="2">
             <v-list-item three-line>
               <v-list-item-avatar size="80" color="#25A032">
-                <v-icon size="40" color="white">mdi-store</v-icon>
+                <v-icon size="40" color="white">mdi-account</v-icon>
               </v-list-item-avatar>
               <v-list-item-content>
                 <div class="category grey--text font-weight-light text-right">Total Clients</div>
@@ -32,7 +32,7 @@
           <v-card class="mx-auto" max-width="344" shaped elevation="2">
             <v-list-item three-line>
               <v-list-item-avatar size="80" color="#006727">
-                <v-icon size="40" color="white">mdi-store</v-icon>
+                <v-icon size="40" color="white">mdi-currency-usd</v-icon>
               </v-list-item-avatar>
               <v-list-item-content>
                 <div class="category grey--text font-weight-light text-right">Revenue</div>
@@ -43,7 +43,7 @@
         </v-flex>
 
         <v-flex lg12>
-          <v-card>
+          <v-card class="mb-2">
             <v-data-table
               :headers="headers"
               :items="clients"

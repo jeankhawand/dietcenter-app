@@ -48,14 +48,25 @@
             Checkout
         </v-btn>
 <!--        :disabled='!complete'-->
-<v-overlay :value="overlay">
+ <v-overlay :value="overlay">
 
+  <v-card
+    class="mx-auto text-center"
+    max-width="600"
+    color="rgba(0, 0, 0, 0.0)"
+    flat
+  >
         <v-icon color="green" size="300">mdi-check-circle</v-icon>
         <v-divider></v-divider>
-      <v-btn to="/" color="black"
+      <v-card-text>
+       <v-btn to="/" color="black"
       class="white--text">
       BACK TO SHOP
       </v-btn>
+    </v-card-text>
+
+
+  </v-card>
     </v-overlay>
     </v-card-text>
      </v-card>
