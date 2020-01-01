@@ -47,7 +47,11 @@
       </template>
 
   </div>
-  <div v-else class="title empty"><h1><v-icon size="80">mdi-cart-remove</v-icon> Your Cart is Empty</h1></div>
+  <div v-else class="title empty">
+      <v-layout align-center justify-center>
+      <h1><v-icon size="80">mdi-cart-remove</v-icon> Your Cart is Empty</h1>
+      </v-layout>
+      </div>
 </template>
 
 <script>
@@ -77,14 +81,5 @@
 </script>
 
 <style scoped>
- .empty{
-    position: absolute;
-  margin: auto;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 430px;
-  height: 100px;
- }
+ 
 </style>
