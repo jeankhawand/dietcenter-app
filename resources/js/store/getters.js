@@ -33,5 +33,8 @@ export const authGetters = {
     },
     isDietitian(state) {
         return state.user.roles.some(role => role.name == "dietitian");
+    },
+    isClient(state) {
+        return state.user.roles.some(role => role.name == "client");
     }
 }

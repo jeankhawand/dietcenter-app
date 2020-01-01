@@ -1,7 +1,8 @@
 <template>
-  <div class="hello">
+<v-layout align-center justify-center >
+  
     <h1>(404) Page NotFound</h1>
-  </div>
+</v-layout>
 </template>
 
 <script>
@@ -10,16 +11,5 @@ export default {};
 
 <style scoped>
 
-.hello{
-position: absolute;
-  margin: auto;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 308px;
-  height: 100px;
-
-}
 
 </style>

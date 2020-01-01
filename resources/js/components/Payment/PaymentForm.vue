@@ -1,44 +1,54 @@
 <template>
-    <v-container>
-        <v-layout align-center>
+<v-container>
+        <v-layout align-center >
             <v-flex xs12 sm6 offset-sm3>
-                <v-card class="elevation-12">
-                    <v-toolbar dark color="green">
+                <v-card class="elevation-12" >
+                     <v-toolbar dark color="green">
 
-                        <v-toolbar-title>Fill Your Info</v-toolbar-title>
+                <v-toolbar-title>Fill Your Info</v-toolbar-title>
 
-                        <v-spacer></v-spacer>
+                <v-spacer></v-spacer>
 
 
-                    </v-toolbar>
-                    <v-card-text>
-                        <v-alert id="card-errors" ref="message" role="alert" v-if="errorMessage" :type="errorType">
-                            {{errorMessage}}
-                        </v-alert>
-                        <v-text-field
-                            v-if="!loggedIn"
-                            label="First Name"
-                            v-model="firstname" :rules="firstnameRules" required></v-text-field>
-                        <v-text-field
-                            v-if="!loggedIn"
-                            label="Last Name"
-                            v-model="lastname" :rules="lastnameRules" required></v-text-field>
-                        <v-text-field
-                            v-if="!loggedIn"
-                            label="Phone Number"
-                            v-model="phonenumber" :rules="phonenumberRules" required></v-text-field>
-                        <v-text-field
-                            v-if="!loggedIn"
-                            label="Email"
-                            v-model="email" :rules="emailRules" type="email" required></v-text-field>
 
-                        <card class='stripe-card mb-5 mt-2'
-                              :class='{ complete }'
-                              stripe='pk_test_4S7dtz39zfwDh1YkcvBQfPs300tsPZAiB9'
-                              :options='stripeOptions'
-                              @change='complete = $event.complete || change($event)'
-                        />
+              </v-toolbar>
+    <v-card-text>
+        <v-alert id="card-errors" ref="message" role="alert" v-if="errorMessage" :type="errorType">
+            {{errorMessage}}
+        </v-alert>
+        <v-text-field
+            v-if="!loggedIn"
+            label="First Name"
+            v-model="firstname" :rules="firstnameRules" required></v-text-field>
+        <v-text-field
+            v-if="!loggedIn"
+            label="Last Name"
+            v-model="lastname" :rules="lastnameRules" required></v-text-field>
+        <v-text-field
+            v-if="!loggedIn"
+            label="Phone Number"
+            v-model="phonenumber" :rules="phonenumberRules" required></v-text-field>
+        <v-text-field
+            v-if="!loggedIn"
+            label="Email"
+            v-model="email" :rules="emailRules" type="email" required></v-text-field>
 
+        <card class='stripe-card mb-5 mt-2'
+              :class='{ complete }'
+              stripe='pk_test_4S7dtz39zfwDh1YkcvBQfPs300tsPZAiB9'
+              :options='stripeOptions'
+              @change='complete = $event.complete || change($event)'
+        />
+
+        <v-btn
+            color="primary"
+            @click='pay();overlay = !overlay;'
+            :disabled='!complete'
+            >
+            Checkout
+        </v-btn>
+<!--        :disabled='!complete'-->
+ <v-overlay :value="overlay">
                         <v-btn
                             color="primary"
                             @click='pay();overlay = !overlay;'
@@ -49,6 +59,26 @@
                         <!--        :disabled='!complete'-->
                         <v-overlay :value="overlay">
 
+  <v-card
+    class="mx-auto text-center"
+    max-width="600"
+    color="rgba(0, 0, 0, 0.0)"
+    flat
+  >
+        <v-icon color="green" size="300">mdi-check-circle</v-icon>
+        <v-divider></v-divider>
+      <v-card-text>
+       <v-btn to="/" color="black"
+      class="white--text">
+      BACK TO SHOP
+      </v-btn>
+    </v-card-text>
+
+
+  </v-card>
+    </v-overlay>
+    </v-card-text>
+     </v-card>
                             <v-icon color="green" size="300">mdi-check-circle</v-icon>
                             <v-divider></v-divider>
                             <v-btn to="/" color="black"
@@ -121,69 +151,90 @@
             }
         },
         mounted() {
-            function replacer(key, value) {
-                if (key == "image") return undefined;
-                else if (key == "description") return undefined;
+            function replacer(key,value)
+            {
+                if (key=="image") return undefined;
+                else if (key=="description") return undefined;
                 else return value;
             }
-
             // console.log(this.cart[0].description);
-            result = JSON.stringify(this.cart, replacer);
+            result = JSON.stringify(this.cart,replacer);
         },
-        computed: {
+        computed:{
             loggedIn() {
                 return this.$store.getters.loggedIn;
             },
+        },
+        methods: {
+
+
             getSubtotal() {
                 return this.$store.getters.cartTotalProductsCost;
             },
-        },
-        methods: {
             pay() {
                 console.log(this.cart);
-                console.log(this.getSubtotal);
+                console.log(this.getSubtotal());
                 var options = {
-
-                    name:  this.lastname=== '' && this.firstname==='' ? this.$store.state.user.name : this.firstname + ' ' + this.lastname,
+                    name: this.firstname + ' '+this.lastname,
                     address_country: 'LB',
                 }
-                if (this.loggedIn) {
-                    createToken(options)
-                        .then(datas => {
+                createToken(options)
+                    .then(data => {
+                        console.log(data.token.id);
+                        console.log(result);
+                        console.log(this.loggedIn);
+                        if (this.loggedIn){
+                            console.log('loggedin');
                             this.$store.dispatch("checkout", {
-                                amount: this.getSubtotal,
-                                stripetoken: datas.token.id,
+                                amount: this.getSubtotal(),
+                                stripetoken: data.token.id,
                                 meta: result,
                             }).then(response => {
-                                this.errorType = 'success';
-                                // console.log(response.data);
-                                this.errorMessage = response.data;
-                            })
+                                // console.log(response);
 
-                        }).catch(error => {
-                        this.errorMessage = error.response.data;
-                    })
-                }
-                if (!this.loggedIn) {
-                    createToken(options)
-                        .then(datas => {
+                                console.log(this.$refs);
+                                this.errorType = 'success';
+                                this.errorMessage = response.data;
+                                // this.loading = false;
+                                // this.$router.push({ name: "Success" });
+                            }).catch(error => {
+                                // console.log(error.response.data),
+
+                                this.errorMessage = error.response.data;
+
+                            })
+                        }else if(!this.loggedIn){
+                            console.log('not logged'),
                             this.$store.dispatch("checkoutNonAuth", {
                                 email: this.email,
                                 phonenumber: this.phonenumber,
-                                amount: this.getSubtotal,
-                                stripetoken: datas.token.id,
+                                amount: this.getSubtotal(),
+                                stripetoken: data.token.id,
                                 meta: result,
                             }).then(response => {
+                                // console.log(response);
+
+                                console.log(this.$refs);
                                 this.errorType = 'success';
-                                // console.log(response.data);
                                 this.errorMessage = response.data;
+                                // this.loading = false;
+                                // this.$router.push({ name: "Success" });
+                            }).catch(error => {
+                                // console.log(error.response.data),
+
+                                this.errorMessage = error.response.data;
+
                             })
+                        }
 
-                        }).catch(error => {
-                        this.errorMessage = error.response.data;
-                    })
-                }
 
+
+                    }).catch(error => {
+                    // console.log(error.response.data),
+
+                        (this.errorMessage = error.response.data);
+                    // this.loading = false;
+                });
             },
             change(event) {
                 // if (event.error) {

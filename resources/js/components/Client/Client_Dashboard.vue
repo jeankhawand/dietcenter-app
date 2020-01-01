@@ -57,6 +57,7 @@ export default {
   components: {
     apexchart: VueApexCharts
   },
+   loading: false,
   data() {
     return {
       series2: [76],
