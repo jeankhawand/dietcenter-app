@@ -173,7 +173,12 @@ export default {
     deleteItem(item) {
       const index = this.recipes.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        this.recipes.splice(index, 1);
+        this.recipes.splice(index, 1) && this.$store.dispatch("removeRecipe",item.id).catch(error => {
+          // console.log(error.response.data),
+          (this.errorMessage = error.response.data), (this.password = "");
+          this.loading = false;
+        });
+        alert("Wsolet");
     },
     close() {
       this.dialog = false;

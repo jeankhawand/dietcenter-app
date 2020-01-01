@@ -20,12 +20,12 @@
 
     <v-card-actions>
       <v-btn v-if="isNotAdded" color="accent-4" text @click="addToCart"><v-icon>mdi-cart</v-icon>Add To Cart</v-btn>
-      <div v-else>    
+      <div v-else>
         <v-btn   color=" accent-4" text @click="removeFromCart"><v-icon>mdi-delete</v-icon></v-btn>
         <v-btn color="accent-4" text @click="removeQuantityFromCart">-</v-btn>
         <span >{{ product.quantity }}</span>
         <v-btn  color=" accent-4" text @click="addQuantityToCart">+</v-btn>
-       
+
       </div>
     </v-card-actions>
   </v-card>
@@ -46,7 +46,7 @@ export default {
 
   computed: {
     isNotAdded() {
-      return this.$store.state.cart.indexOf(this.product) < 0;
+      return this.$store.state.cart.findIndex(product => product.id == this.product.id) < 0;
     }
   },
 

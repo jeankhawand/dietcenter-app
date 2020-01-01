@@ -2,6 +2,7 @@ import axios from 'axios'
 import {
     ADD_PRODUCT,
     ADD_PRODUCT_SUCCESS,
+    ADD_RECIPE,
     ADD_QUANTITY_TO_CART,
     ADD_TO_CART,
     ALL_CLIENTS,
@@ -14,10 +15,12 @@ import {
     REMOVE_FROM_CART,
     REMOVE_PRODUCT,
     REMOVE_PRODUCT_SUCCESS,
+    REMOVE_RECIPE,
     REMOVE_QUANTITY_FROM_CART,
     RETRIEVE_TOKEN,
     UPDATE_PRODUCT,
     UPDATE_PRODUCT_SUCCESS,
+    UPDATE_RECIPE,
     UPDATE_SESSION_STORAGE_CART,
     GET_USER_INFO,
     DESTROY_USER_INFO,
@@ -60,6 +63,24 @@ export const productActions = {
         commit(REMOVE_PRODUCT)
         axios.delete(`products/${payload}`, payload).then(response => {
             commit(REMOVE_PRODUCT_SUCCESS, response.data)
+        })
+    },
+    addRecipe(payload) {
+        axios.post(`recipe`, payload, {
+            Authorization: "Bearer " + context.state.token,
+            Accept: "application/json"
+        })
+    },
+    updateRecipe(payload) {
+        axios.put(`recipe/${payload.id}`, payload, {
+            Authorization: "Bearer " + context.state.token,
+            Accept: "application/json"
+        })
+    },
+    removeRecipe(id) {
+        axios.delete(`recipe/${id}`, id, {
+            Authorization: "Bearer " + context.state.token,
+            Accept: "application/json"
         })
     }
 }
