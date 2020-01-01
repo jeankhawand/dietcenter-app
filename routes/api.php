@@ -16,7 +16,8 @@ Route::middleware('auth:api')->group(function(){
     //  these api's are exposed for user only
     // later on I will have to add user role so not everyone can get access to super users api
     Route::get('user', function (Request $request) {
-        return $request->user();
+        // since I am receiving one instance not a collection
+        return new \App\Http\Resources\EmployeeResource($request->user());
     });
     Route::get('role', function (Request $request) {
         return \App\Http\Resources\RoleResource::collection($request->user()->roles()->get());

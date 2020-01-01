@@ -62,7 +62,18 @@ class UserController extends Controller
 //       dd($data);
         $data['password'] = \Hash::make($request->password);
         $data['edited_by'] = $request->user()->id;
-        if ($user = User::findOrFail($id)->update($data)){
+        // check for later on https://stackoverflow.com/questions/23968415/laravel-eloquent-attach-vs-sync
+//        dd($user = User::find($id)->roles()->sync($request->roles));
+
+        if ($user = User::find($id)){
+//            dd($request->roles);
+            if (!$request->roles){
+                $user = User::find($id)->update($data);
+            }else if ($request->roles) {
+//                echo 'no roles';
+                $user = User::find($id)->update($data);
+                $user = User::find($id)->roles()->sync($request->roles);
+            }
             return response()->json('Employee Updated Successfully',200);
         }
         return response()->json('Unable to Update Employee ',200);
@@ -115,7 +126,7 @@ class UserController extends Controller
     public function  updateClient(Request $request, $id){
        $data= $request->validate([
             'name'=>'string',
-            'email'=>'required|email',
+            'email'=>'email:rfc,dns',
             'phonenumber'=>'string',
                 'password'=>'string'
         ]);

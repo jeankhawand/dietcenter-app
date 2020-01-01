@@ -17,7 +17,8 @@
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^1.0",
         "stripe/stripe-php": "^7.14",
-        "webpatser/laravel-uuid": "^3.0"
+        "webpatser/laravel-uuid": "^3.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
