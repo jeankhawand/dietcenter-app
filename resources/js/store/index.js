@@ -11,12 +11,12 @@ export const store = new Vuex.Store({
     // vuex definitions
     strict: true,
     state: {
-        roles: [],
         cart: [],
         showLoader: false,
         product: {},
         products: [],
         productsPageIndex: 1,
+        user: JSON.parse(localStorage.getItem("user")) || null,
         token: localStorage.getItem("access_token") || null
     },
     mutations: Object.assign(

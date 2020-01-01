@@ -26,12 +26,12 @@ export const authGetters = {
         return state.token !== null;
     },
     isManager(state) {
-        return state.roles.some(role => role.name == "manager");
+        return state.user.roles.some(role => role.name == "manager");
     },
     isChef(state) {
-        return state.roles.some(role => role.name == "chef");
+        return state.user.roles.some(role => role.name == "chef");
     },
     isDietitian(state) {
-        return state.roles.some(role => role.name == "dietitian");
+        return state.user.roles.some(role => role.name == "dietitian");
     }
 }
