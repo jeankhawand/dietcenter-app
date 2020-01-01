@@ -12,12 +12,12 @@ class Order extends Model
     protected $table ='Order';// custom user table
     public $timestamps = false; // disable defaults timestamp
     protected $fillable = [
-        'stripeId','id'
+        'id','stripeId',
     ];
     public function user (){
         return $this->belongsTo(User::class,'userId');
     }
-    public function recipe()
+    public function recipes()
     {
         return $this->belongsToMany(Role::class,'OrderRecipe','orderId','recipeId');
     }
