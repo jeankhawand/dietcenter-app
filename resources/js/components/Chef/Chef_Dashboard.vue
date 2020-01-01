@@ -65,17 +65,19 @@
                                     </v-dialog>
                                 </v-toolbar>
                             </template>
-                            <template v-slot:item.action="{ item }">
+                            <template v-slot:item.action="{ item }" v-if=" isManager || isDietitian ">
                                 <v-icon
                                     small
                                     class="mr-2"
                                     @click="editItem(item)"
+                                    :disabled='isDisabled'
                                 >
                                     mdi-pencil
                                 </v-icon>
                                 <v-icon
                                     small
                                     @click="deleteItem(item)"
+                                    :disabled='isDisabled'
                                 >
                                     mdi-delete
                                 </v-icon>
@@ -108,7 +110,7 @@ export default {
       ],
       priceRules: [
         v => !!v || "Price is required",
-        v => /[a-zA-Z]/.test(v) || "price must be valid"
+        v => /^\d*(\.\d{1,2})?$/.test(v) || "price must be valid"
       ],
       descriptionRules: [
         v => !!v || "Description is required",
@@ -139,6 +141,15 @@ export default {
     },
      isChef(state) {
         return this.$store.getters.isChef;
+    },
+      isManager(state) {
+        return this.$store.getters.isManager;
+    },
+     isDietitian(state) {
+        return this.$store.getters.isDietitian;
+    },
+    isDisabled: function(){
+    	return !this.terms;
     },
   },
   methods: {
