@@ -9,6 +9,7 @@ import {
     ALL_PRODUCTS_NEXT_PAGE_SUCCESS,
     ALL_PRODUCTS_SUCCESS,
     DESTROY_TOKEN,
+    GET_ROLES,
     PRODUCT_BY_ID,
     PRODUCT_BY_ID_SUCCESS,
     REMOVE_FROM_CART,
@@ -18,8 +19,7 @@ import {
     RETRIEVE_TOKEN,
     UPDATE_PRODUCT,
     UPDATE_PRODUCT_SUCCESS,
-    UPDATE_SESSION_STORAGE_CART,
-    GET_ROLES
+    UPDATE_SESSION_STORAGE_CART
 } from './mutation-types'
 // -------- PLEASE ENCAPSULATE AXIOS REQUEST WITH PROMISE BLOCK !!! -------
 axios.defaults.baseURL = process.env.MIX_API_ENDPOINT;
@@ -161,7 +161,32 @@ export const authActions = {
         return new Promise((resolve, reject) => {
             axios
                 .post("/checkout", {
+                    Authorization: "Bearer " + context.state.token,
+                    Accept: "application/json",
+                    stripetoken: data.stripetoken,
+                    amount: data.amount,
+                    meta: data.meta,
+                })
+                .then(response => {
+                    console.log(response);
+                    resolve(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+        });
+    },
+    checkoutNonAuth(context, data) {
+        /*
+        checkout token
+
+         */
+        return new Promise((resolve, reject) => {
+            axios
+                .post("/checkout", {
                     email: data.email,
+                    phonenumber: data.phonenumber,
                     stripetoken: data.stripetoken,
                     amount: data.amount,
                     meta: data.meta,

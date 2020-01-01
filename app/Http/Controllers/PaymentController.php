@@ -51,16 +51,9 @@ class PaymentController extends Controller
     {
 
         $orders = json_decode($request->meta);
-//        dd();
-
-//        dd($orders[0]->id);
         $str = $this->object_to_string($orders, $field = 'id');
-//        dd($str);
-        if ($request->user()) {
-//            dd($request->user()->id);
-            $description = 'Authenticated User';
-            $userid = $request->user()->id;
-        } else if (!$request->user()) {
+//
+       if (!$request->user()) {
             $description = 'Express Checkout';
             $userid = 'none';
         }
@@ -80,34 +73,62 @@ class PaymentController extends Controller
                     [
                         'user_id' => $userid,
                         'product_ids' => $str,
+                        'email' => $request->email,
+                        'phonenumber' => $request->phonenumber,
                     ],
             ]);
-//            dd($charge);
+
             // save this info to your database
-            if ($request->user()) {
-               $orderAuth =  Order::create([
+                $orderNonAuth = new Order;
+                $orderNonAuth->create([
+                    'stripeId' => $charge->id,
+//                dd($orderNonAuth->id);
+//                $orderNonAuth->save();
+                ])->recipes()->attach($orderNonAuth->getKey(),$this->formatit($orders));
+//                dd($orderNonAuth);
+            return response()->json('Thank You!! For your Purchase');
+        }catch (\Exception $e){
+            return response()->json($e->getMessage() . $e->getCode());
+        }
+    }
+    public function checkoutAuth(Request $request){
+
+        if ($request->user()){
+            $orders = json_decode($request->meta);
+//        dd();
+//            dd($request);
+//        dd($orders[0]->id);
+            $str = $this->object_to_string($orders, $field = 'id');
+            $description = 'Authenticated User';
+            try {
+            dd($request->user()->email);
+            dd($request->user()->organization()->id);
+                \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+                $charge = \Stripe\Charge::create([
+                    'amount' => $request->amount,
+                    'currency' => 'usd',
+                    'source' => $request->stripetoken,
+                    'description' => $description,
+                    'receipt_email' => $request->user()->email,
+                    'metadata' =>
+                        [
+                            'user_id' => $request->user()->id,
+                            'product_ids' => $str,
+                        ],
+                ]);
+                $orderAuth = new Order;
+                $orderAuth->create([
                     'stripeId' => $charge->id,
                     'userId' => $request->user()->id,
                     'organizationId' => $request->user()->organization()->id,
                 ]);
-               $orderAuth->recipe->attach($this->formatit($orders));
-            } else if (!$request->user()) {
-                $orderNonAuth = Order::create([
-                    'stripeId' => $charge->id,
-
-                ]);
-//                dd($orderNonAuth->id);
-                $orderNonAuth->recipe()->attach($this->formatit($orders));
-//                dd($orderNonAuth);
+                $orderAuth->recipes()->attach($this->formatit($orders));
+                return response()->json('Thank you! Your payment has been accepted.');
+        }catch (Exception $e){
+                return response()->json($e->getMessage() . $e->getCode());
             }
-
-
-            // SUCCESSFUL
-            return response()->json('Thank you! Your payment has been accepted.');
-        } catch (Exception $e) {
-            // save info to database for failed
-            return response()->json($e->getMessage() . $e->getCode());
         }
+        return response()->json('unable to proccess your payment');
     }
 
 

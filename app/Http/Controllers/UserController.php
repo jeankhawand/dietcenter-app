@@ -36,7 +36,7 @@ class UserController extends Controller
             'roles'=>"required|array",
             'roles.*'=> 'required|integer|distinct',
         ]);
-
+//        dd($request->roles);
       User::create(
              [
                  'name' => $request->name,

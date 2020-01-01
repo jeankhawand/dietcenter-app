@@ -17,15 +17,19 @@
             {{errorMessage}}
         </v-alert>
         <v-text-field
+            v-if="!loggedIn"
             label="First Name"
             v-model="firstname" :rules="firstnameRules" required></v-text-field>
         <v-text-field
+            v-if="!loggedIn"
             label="Last Name"
             v-model="lastname" :rules="lastnameRules" required></v-text-field>
         <v-text-field
+            v-if="!loggedIn"
             label="Phone Number"
             v-model="phonenumber" :rules="phonenumberRules" required></v-text-field>
         <v-text-field
+            v-if="!loggedIn"
             label="Email"
             v-model="email" :rules="emailRules" type="email" required></v-text-field>
 
@@ -127,7 +131,14 @@
             // console.log(this.cart[0].description);
             result = JSON.stringify(this.cart,replacer);
         },
+        computed:{
+            loggedIn() {
+                return this.$store.getters.loggedIn;
+            },
+        },
         methods: {
+
+
             getSubtotal() {
                 return this.$store.getters.cartTotalProductsCost;
             },
@@ -135,37 +146,58 @@
                 console.log(this.cart);
                 console.log(this.getSubtotal());
                 var options = {
-                    name: this.firstname + ' ' + this.lastname,
+                    name: this.firstname + ' '+this.lastname,
                     address_country: 'LB',
                 }
-                // createToken returns a Promise which resolves in a result object with
-                // either a token or an error key.
-                // See https://stripe.com/docs/api#tokens for the token object.
-                // See https://stripe.com/docs/api#errors for the error object.
-                // More general https://stripe.com/docs/stripe.js#stripe-create-token.
                 createToken(options)
                     .then(data => {
                         console.log(data.token.id);
                         console.log(result);
-                        this.$store.dispatch("checkout", {
-                            email: this.email,
-                            amount: this.getSubtotal(),
-                            stripetoken: data.token.id,
-                            meta: result,
-                        }).then(response => {
-                            // console.log(response);
+                        console.log(this.loggedIn);
+                        if (this.loggedIn){
+                            console.log('loggedin');
+                            this.$store.dispatch("checkout", {
+                                amount: this.getSubtotal(),
+                                stripetoken: data.token.id,
+                                meta: result,
+                            }).then(response => {
+                                // console.log(response);
 
-                            console.log(this.$refs);
-                            this.errorType = 'success';
-                            this.errorMessage = response.data;
-                            // this.loading = false;
-                            // this.$router.push({ name: "Success" });
-                        }).catch(error => {
-                            // console.log(error.response.data),
+                                console.log(this.$refs);
+                                this.errorType = 'success';
+                                this.errorMessage = response.data;
+                                // this.loading = false;
+                                // this.$router.push({ name: "Success" });
+                            }).catch(error => {
+                                // console.log(error.response.data),
 
                                 this.errorMessage = error.response.data;
 
-                        })
+                            })
+                        }else if(!this.loggedIn){
+                            console.log('not logged'),
+                            this.$store.dispatch("checkoutNonAuth", {
+                                email: this.email,
+                                phonenumber: this.phonenumber,
+                                amount: this.getSubtotal(),
+                                stripetoken: data.token.id,
+                                meta: result,
+                            }).then(response => {
+                                // console.log(response);
+
+                                console.log(this.$refs);
+                                this.errorType = 'success';
+                                this.errorMessage = response.data;
+                                // this.loading = false;
+                                // this.$router.push({ name: "Success" });
+                            }).catch(error => {
+                                // console.log(error.response.data),
+
+                                this.errorMessage = error.response.data;
+
+                            })
+                        }
+
 
 
                     }).catch(error => {
