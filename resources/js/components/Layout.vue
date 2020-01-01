@@ -9,7 +9,7 @@
       v-if="loggedIn"
     >
       <v-list dense>
-        <v-list-item class="drawer" to="/admin/dashboard">
+        <v-list-item class="drawer" to="/admin/dashboard" v-if="isDietitian">
           <v-list-item-action>
             <v-icon color="white">mdi-home</v-icon>
           </v-list-item-action>
@@ -17,7 +17,7 @@
             <v-list-item-title style="color:white">Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/admin/revenue">
+        <v-list-item to="/admin/revenue" v-if="isManager">
           <v-list-item-action>
             <v-icon color="white">mdi-currency-usd</v-icon>
           </v-list-item-action>
@@ -25,12 +25,20 @@
             <v-list-item-title style="color:white">Revenue</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/client/client_dashboard">
+        <v-list-item to="/client/client_dashboard" v-if="isClient"> 
           <v-list-item-action>
             <v-icon color="white">mdi-home</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title style="color:white">Dashboard</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item to="/chef/chef_dashboard" v-if="isChef || isDietitian || isManager">
+          <v-list-item-action>
+            <v-icon color="white">mdi-home</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title style="color:white">Recipes</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -79,10 +87,10 @@
       <v-btn v-if="!loggedIn" icon @click="loginIn()">
         <v-icon dark medium>fas fa-lock</v-icon>
       </v-btn>
-      <div class="text-center">
-        <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
-          <template v-slot:activator="{ on }">
-            <v-btn text v-on="on" icon>
+      <div class="text-center" v-if="loggedIn">
+        <v-menu v-model="menu" :close-on-content-click="true" :nudge-width="200" offset-x >
+          <template v-slot:activator="{ on }" >
+            <v-btn text v-on="on" icon >
               <v-icon>mdi-account</v-icon>
             </v-btn>
           </template>
@@ -116,6 +124,12 @@
                   <v-icon>mdi-account-edit</v-icon>
                 </v-list-item-action>
                 <v-list-item-title>Edit Profile</v-list-item-title>
+              </v-list-item>
+               <v-list-item  icon @click="logout()">
+                <v-list-item-action>
+                  <v-icon>mdi-export</v-icon>
+                </v-list-item-action>
+                <v-list-item-title>Logout</v-list-item-title>
               </v-list-item>
             </v-list>
 
@@ -184,6 +198,18 @@ export default {
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    isManager(state) {
+        return this.$store.getters.isManager;
+    },
+    isChef(state) {
+        return this.$store.getters.isChef;
+    },
+    isDietitian(state) {
+        return this.$store.getters.isDietitian;
+    },
+     isClient(state) {
+        return  this.$store.getters.isClient;
     },
     cartItems() {
       return this.$store.state.cart.length;
