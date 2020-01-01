@@ -9,9 +9,6 @@ import {
     ALL_PRODUCTS_NEXT_PAGE_SUCCESS,
     ALL_PRODUCTS_SUCCESS,
     DESTROY_TOKEN,
-    DESTROY_USER_INFO,
-    EMPTY_CART,
-    GET_USER_INFO,
     PRODUCT_BY_ID,
     PRODUCT_BY_ID_SUCCESS,
     REMOVE_FROM_CART,
@@ -21,7 +18,10 @@ import {
     RETRIEVE_TOKEN,
     UPDATE_PRODUCT,
     UPDATE_PRODUCT_SUCCESS,
-    UPDATE_SESSION_STORAGE_CART
+    UPDATE_SESSION_STORAGE_CART,
+    GET_USER_INFO,
+    DESTROY_USER_INFO,
+    EMPTY_CART
 } from './mutation-types'
 // -------- PLEASE ENCAPSULATE AXIOS REQUEST WITH PROMISE BLOCK !!! -------
 axios.defaults.baseURL = process.env.MIX_API_ENDPOINT;
@@ -60,6 +60,24 @@ export const productActions = {
         commit(REMOVE_PRODUCT)
         axios.delete(`products/${payload}`, payload).then(response => {
             commit(REMOVE_PRODUCT_SUCCESS, response.data)
+        })
+    },
+    addRecipe(payload) {
+        axios.post(`recipe`, payload, {
+            Authorization: "Bearer " + context.state.token,
+            Accept: "application/json"
+        })
+    },
+    updateRecipe(payload) {
+        axios.put(`recipe/${payload.id}`, payload, {
+            Authorization: "Bearer " + context.state.token,
+            Accept: "application/json"
+        })
+    },
+    removeRecipe(id) {
+        axios.delete(`recipe/${id}`, id, {
+            Authorization: "Bearer " + context.state.token,
+            Accept: "application/json"
         })
     }
 }
@@ -100,6 +118,8 @@ export const authActions = {
                         context.commit(DESTROY_TOKEN);
                         localStorage.removeItem("user");
                         context.commit(DESTROY_USER_INFO);
+                        sessionStorage.removeItem("cart");
+                        commit(EMPTY_CART);
                         resolve(response);
                     })
                     .catch(error => {
@@ -107,6 +127,8 @@ export const authActions = {
                         context.commit(DESTROY_TOKEN);
                         localStorage.removeItem("user");
                         context.commit(DESTROY_USER_INFO);
+                        sessionStorage.removeItem("cart");
+                        commit(EMPTY_CART);
                         reject(error);
                     });
             });
@@ -139,7 +161,7 @@ export const authActions = {
     },
     getUserInfo(context) {
         /*
-        once user provide username / password we handle the recieve of the access_token
+        After access_token is received, get all user's info
 
          */
         return new Promise((resolve, reject) => {

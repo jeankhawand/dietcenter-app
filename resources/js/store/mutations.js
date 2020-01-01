@@ -97,7 +97,7 @@ export const cartMutations = {
         }
     },
     [REMOVE_FROM_CART]: (state, payload) => {
-        const index = state.cart.findIndex(p => p._id === payload.id)
+        const index = state.cart.findIndex(p => p.id === payload)
         state.cart.splice(index, 1)
     },
     [ADD_QUANTITY_TO_CART]: (state, payload) => {

@@ -23,7 +23,7 @@
               </v-list-item-avatar>
               <v-list-item-content>
                 <div class="category grey--text font-weight-light text-right">Total Clients</div>
-                <div class="display-1 mb-2 font-weight-light text-right">3</div>
+                <div class="display-1 mb-2 font-weight-light text-right">{{clients.length}}</div>
               </v-list-item-content>
             </v-list-item>
           </v-card>
@@ -42,99 +42,97 @@
           </v-card>
         </v-flex>
 
-  <v-flex lg12>
-                    <v-card class="mb-2"> 
-                         <v-progress-linear
-                :active="loading"
-                :indeterminate="loading"
-                absolute
-                bottom
-                color="deep-purple accent-4"
-              ></v-progress-linear>
-                        <v-data-table
-                            :headers="headers"
-                            :items="clients"
-                            :items-per-page="itemsPerPage"
-                            :search="search"
-                            sort-by="firstname"
-                            class="elevation-1"
-                        >
-                            <template v-slot:top>
-                                <v-toolbar flat color="white">
-                                    <v-toolbar-title>Clients</v-toolbar-title>
-                                    <v-divider
-                                        class="mx-4"
-                                        inset
-                                        vertical
-                                    ></v-divider>
-                                    <v-text-field
-                                        v-model="search"
-                                        append-icon="mdi-magnify"
-                                        label="Search"
-                                        single-line
-                                        hide-details
-                                    ></v-text-field>
-                                    <v-spacer></v-spacer>
-                                    <v-dialog v-model="dialog" max-width="500px">
-                                        <template v-slot:activator="{ on }">
-                                            <v-btn color="primary" dark class="mb-2" v-on="on">New Client</v-btn>
-                                        </template>
-                                        <v-card>
-                                            <v-card-title>
-                                                <span class="headline">{{ formTitle }}</span>
-                                            </v-card-title>
+        <v-flex lg12>
+          <v-card class="mb-2">
+            <v-progress-linear
+              :active="loading"
+              :indeterminate="loading"
+              absolute
+              bottom
+              color="deep-purple accent-4"
+            ></v-progress-linear>
+            <v-data-table
+              :headers="headers"
+              :items="clients"
+              :items-per-page="itemsPerPage"
+              :search="search"
+              sort-by="firstname"
+              class="elevation-1"
+            >
+              <template v-slot:top>
+                <v-toolbar flat color="white">
+                  <v-toolbar-title>Clients</v-toolbar-title>
+                  <v-divider class="mx-4" inset vertical></v-divider>
+                  <v-text-field
+                    v-model="search"
+                    append-icon="mdi-magnify"
+                    label="Search"
+                    single-line
+                    hide-details
+                  ></v-text-field>
+                  <v-spacer></v-spacer>
+                  <v-dialog v-model="dialog" max-width="500px">
+                    <template v-slot:activator="{ on }">
+                      <v-btn color="primary" dark class="mb-2" v-on="on">New Client</v-btn>
+                    </template>
+                    <v-card>
+                      <v-card-title>
+                        <span class="headline">{{ formTitle }}</span>
+                      </v-card-title>
 
-                                            <v-card-text>
-                                                <v-container>
-                                                    <v-row>
-                                                        <v-col cols="12" sm="6" md="4">
-                                                            <v-text-field type="text" v-model="editedItem.name"
-                                                                          label="Full Name" :rules="nameRules" required></v-text-field>
-                                                        </v-col>
-                                                        <v-col cols="12" sm="6" md="4">
-                                                            <v-text-field type="email" v-model="editedItem.email"
-                                                                          label="Email" :rules="emailRules" required></v-text-field>
-                                                        </v-col>
-                                                        <v-col cols="12" sm="6" md="4">
-                                                            <v-text-field :rules="phoneRules" type="numeric"
-                                                                          v-model="editedItem.phonenumber"
-                                                                          label="Phone Number"  required></v-text-field>
-                                                        </v-col>
-                                                    </v-row>
-                                                </v-container>
-                                            </v-card-text>
+                      <v-card-text>
+                        <v-container>
+                          <v-row>
+                            <v-col cols="12" sm="6" md="4">
+                              <v-text-field
+                                type="text"
+                                v-model="editedItem.name"
+                                label="Full Name"
+                                :rules="nameRules"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4">
+                              <v-text-field
+                                type="email"
+                                v-model="editedItem.email"
+                                label="Email"
+                                :rules="emailRules"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4">
+                              <v-text-field
+                                :rules="phoneRules"
+                                type="numeric"
+                                v-model="editedItem.phonenumber"
+                                label="Phone Number"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </v-card-text>
 
-                                            <v-card-actions>
-                                                <v-spacer></v-spacer>
-                                                <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                                                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-                                            </v-card-actions>
-                                        </v-card>
-                                    </v-dialog>
-                                </v-toolbar>
-                            </template>
-                            <template v-slot:item.action="{ item }">
-                                <v-icon
-                                    small
-                                    class="mr-2"
-                                    @click="editItem(item)"
-                                >
-                                    mdi-pencil
-                                </v-icon>
-                                <v-icon
-                                    small
-                                    @click="deleteItem(item)"
-                                >
-                                    mdi-delete
-                                </v-icon>
-                            </template>
-                            <template v-slot:no-data>
-                                <v-btn color="primary" @click="initialize">Reset</v-btn>
-                            </template>
-                        </v-data-table>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
+                        <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                      </v-card-actions>
                     </v-card>
-                </v-flex>
-     
+                  </v-dialog>
+                </v-toolbar>
+              </template>
+              <template v-slot:item.action="{ item }">
+                <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+                <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+              </template>
+              <template v-slot:no-data>
+                <v-btn color="primary" @click="initialize">Reset</v-btn>
+              </template>
+            </v-data-table>
+          </v-card>
+        </v-flex>
       </v-layout>
     </v-container>
   </v-app>
@@ -142,7 +140,7 @@
 
 <script>
 export default {
-   loading: false,
+  loading: false,
   data() {
     return {
       dialog: false,
@@ -171,17 +169,36 @@ export default {
       clients: [],
       headers: [
         {
-          text: "Avatar",
+          text: "Name",
           align: "left",
           sortable: false,
-          value: "avatar"
+          value: "name"
         },
-        { text: "Name", value: "name" },
-        { text: "Email", value: "email" },
-        { text: "Phone Number", value: "phonenumber" },
-        { text: "Actions", value: "action", sortable: false }
+        { text: "email", value: "email" },
+        { text: "ID", value: "id" },
+        { text: "Phone Number", value: "phonenumber" }
       ]
     };
+  },
+  beforeMount() {
+    return new Promise((resolve, reject) => {
+      axios
+        .get("clients", {
+          params: {},
+          headers: {
+            Authorization: "Bearer " + this.$store.state.token,
+            Accept: "application/json"
+          }
+        })
+        .then(response => {
+          this.clients = response.data.data;
+          resolve(response);
+        })
+        .catch(error => {
+          console.log(error);
+          reject(error);
+        });
+    });
   },
   computed: {
     formTitle() {
