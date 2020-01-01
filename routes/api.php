@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Resources\EmployeeResource;
+use App\Http\Resources\RoleResource;
 use Illuminate\Http\Request;
 
 /*
@@ -17,10 +19,10 @@ Route::middleware('auth:api')->group(function(){
     // later on I will have to add user role so not everyone can get access to super users api
     Route::get('user', function (Request $request) {
         // since I am receiving one instance not a collection
-        return new \App\Http\Resources\EmployeeResource($request->user());
+        return new EmployeeResource($request->user());
     });
     Route::get('role', function (Request $request) {
-        return \App\Http\Resources\RoleResource::collection($request->user()->roles()->get());
+        return RoleResource::collection($request->user()->roles()->get());
     });
     //Auth User Checkout
     Route::post('checkout','PaymentController@checkoutAuth');
