@@ -96,7 +96,7 @@ export default {
         .then(response => {
           // console.log(response);
           this.$store
-            .dispatch("getRoles")
+            .dispatch("getUserInfo")
             .catch(error => {
               (this.errorMessage = error.response.data), (this.password = "");
               this.loading = false;

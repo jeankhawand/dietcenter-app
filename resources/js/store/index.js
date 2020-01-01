@@ -16,7 +16,7 @@ export const store = new Vuex.Store({
         product: {},
         products: [],
         productsPageIndex: 1,
-        roles: JSON.parse(localStorage.getItem("roles")) || null,
+        user: JSON.parse(localStorage.getItem("user")) || null,
         token: localStorage.getItem("access_token") || null
     },
     mutations: Object.assign(

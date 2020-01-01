@@ -19,8 +19,8 @@ import {
     UPDATE_PRODUCT,
     UPDATE_PRODUCT_SUCCESS,
     UPDATE_SESSION_STORAGE_CART,
-    GET_ROLES,
-    DESTROY_ROLES,
+    GET_USER_INFO,
+    DESTROY_USER_INFO,
     EMPTY_CART
 } from './mutation-types'
 // -------- PLEASE ENCAPSULATE AXIOS REQUEST WITH PROMISE BLOCK !!! -------
@@ -98,15 +98,15 @@ export const authActions = {
                     .then(response => {
                         localStorage.removeItem("access_token");
                         context.commit(DESTROY_TOKEN);
-                        localStorage.removeItem("roles");
-                        context.commit(DESTROY_ROLES);
+                        localStorage.removeItem("user");
+                        context.commit(DESTROY_USER_INFO);
                         resolve(response);
                     })
                     .catch(error => {
                         localStorage.removeItem("access_token");
                         context.commit(DESTROY_TOKEN);
-                        localStorage.removeItem("roles");
-                        context.commit(DESTROY_ROLES);
+                        localStorage.removeItem("user");
+                        context.commit(DESTROY_USER_INFO);
                         reject(error);
                     });
             });
@@ -137,20 +137,20 @@ export const authActions = {
                 });
         });
     },
-    getRoles(context) {
+    getUserInfo(context) {
         /*
         once user provide username / password we handle the recieve of the access_token
 
          */
         return new Promise((resolve, reject) => {
-            axios.get("role", {params:{}, headers: {
+            axios.get("user", {params:{}, headers: {
                 Authorization: "Bearer " + context.state.token,
                 Accept: "application/json"
             } })
                 .then(response => {
-                    const roles = response.data;
-                    localStorage.setItem("roles", JSON.stringify(roles.data));
-                    context.commit(GET_ROLES, roles.data);
+                    const user = response.data.data;
+                    localStorage.setItem("user", JSON.stringify(user));
+                    context.commit(GET_USER_INFO, user);
                     resolve(response);
                 })
                 .catch(error => {
