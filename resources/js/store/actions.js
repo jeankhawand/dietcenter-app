@@ -139,7 +139,7 @@ export const authActions = {
     },
     getUserInfo(context) {
         /*
-        once user provide username / password we handle the recieve of the access_token
+        After access_token is received, get all user's info
 
          */
         return new Promise((resolve, reject) => {
