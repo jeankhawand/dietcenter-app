@@ -63,22 +63,39 @@ export const productActions = {
         })
     },
     addRecipe(context, payload) {
-        axios.post(`recipe`, payload, {
-            Authorization: "Bearer " + context.state.token,
-            Accept: "application/json"
+        payload.image = "data:image/jpeg;base64,"
+        console.log(payload)
+        axios.post(`recipe`, payload ,
+        {
+            headers: {
+                Authorization: "Bearer " + context.state.token,
+                Accept: "application/json",
+            }
+
+        }).then(response => {
+            console.log(response);
         })
     },
     updateRecipe(context, payload) {
-        axios.put(`recipe/${payload.id}`, payload, {
-            Authorization: "Bearer " + context.state.token,
-            Accept: "application/json"
+        console.log(payload)
+        axios.patch(`recipe/${payload.id}`, payload,
+        {
+            headers: {
+                Authorization: "Bearer " + context.state.token,
+                Accept: "application/json",
+            }
+
+        }).then(response => {
+            console.log(response);
         })
     },
     removeRecipe(context, id) {
-        console.log(id)
-        axios.delete(`recipe/${id}`, id, {
+        let headers = {
             Authorization: "Bearer " + context.state.token,
             Accept: "application/json"
+        }
+        axios.delete(`recipe/${id}`, { id, headers }).then(response => {
+            console.log(response);
         })
     }
 }
@@ -147,7 +164,7 @@ export const authActions = {
                     password: credentials.password
                 })
                 .then(response => {
-                    console.log(response);
+                    // console.log(response);
                     const token = response.data.access_token;
 
                     localStorage.setItem("access_token", token);

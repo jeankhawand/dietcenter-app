@@ -95,7 +95,6 @@ export default {
         })
         .then(response => {
           // console.log(response);
-          alert("GetUserInfo");
           this.$store
             .dispatch("getUserInfo")
             .catch(error => {

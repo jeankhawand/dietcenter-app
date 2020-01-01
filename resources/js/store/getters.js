@@ -38,6 +38,7 @@ export const authGetters = {
         return state.user.roles.some(role => role.name == "dietitian");
     },
     isClient(state) {
+        if(state.user == null) return false;
         return state.user.roles.some(role => role.name == "client");
     }
 }

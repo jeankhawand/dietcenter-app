@@ -54,7 +54,8 @@ class RecipeController extends Controller
         $data = $request->validate([
             'name'=>'required|string',
             'description'=>'required',
-            'image'=>'required'
+            'image'=>'string',
+            'price'=>'required'
         ]);
         $recipe->update($data);
         return response($recipe,200);
