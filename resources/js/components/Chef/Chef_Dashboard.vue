@@ -3,6 +3,13 @@
     <v-layout wrap>
     <v-flex lg12>
                     <v-card class="mb-2">
+                         <v-progress-linear
+                :active="loading"
+                :indeterminate="loading"
+                absolute
+                bottom
+                color="deep-purple accent-4"
+              ></v-progress-linear>
                         <v-data-table
                             :headers="headers"
                             :items="recipes"
@@ -95,6 +102,7 @@
 
 <script>
 export default {
+   loading: false,
   data() {
     return {
       dialog: false,
