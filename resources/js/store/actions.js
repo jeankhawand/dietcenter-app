@@ -100,6 +100,8 @@ export const authActions = {
                         context.commit(DESTROY_TOKEN);
                         localStorage.removeItem("user");
                         context.commit(DESTROY_USER_INFO);
+                        sessionStorage.removeItem("cart");
+                        commit(EMPTY_CART);
                         resolve(response);
                     })
                     .catch(error => {
@@ -107,6 +109,8 @@ export const authActions = {
                         context.commit(DESTROY_TOKEN);
                         localStorage.removeItem("user");
                         context.commit(DESTROY_USER_INFO);
+                        sessionStorage.removeItem("cart");
+                        commit(EMPTY_CART);
                         reject(error);
                     });
             });
