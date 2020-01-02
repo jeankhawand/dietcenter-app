@@ -109,7 +109,7 @@ class UserController extends Controller
             'name'=>'required|string',
             'email'=>'required|email',
             'phonenumber'=>'required',
-            'password'=> 'required',
+            'password'=> 'string',
         ]);
         User::create(
             [
@@ -126,7 +126,7 @@ class UserController extends Controller
     public function  updateClient(Request $request, $id){
        $data= $request->validate([
             'name'=>'string',
-            'email'=>'email:rfc,dns',
+            'email'=>'email',
             'phonenumber'=>'string',
                 'password'=>'string'
         ]);

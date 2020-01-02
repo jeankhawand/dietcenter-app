@@ -140,15 +140,16 @@
 
 <script>
 export default {
-  loading: false,
   data() {
     return {
+      loading: false,
       dialog: false,
       search: "",
       editedItem: {
         name: "",
         email: "",
-        phonenumber: ""
+        phonenumber: "",
+        password: ""
       },
       emailRules: [
         v => !!v || "E-mail is required",
@@ -215,7 +216,11 @@ export default {
     deleteItem(item) {
       const index = this.clients.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        this.clients.splice(index, 1);
+        this.clients.splice(index, 1) &&
+        this.$store.dispatch("removeClient", this.editedItem).catch(error => {
+          (this.errorMessage = error.response.data), (this.password = "");
+          this.loading = false;
+        });
     },
     close() {
       this.dialog = false;
@@ -227,8 +232,18 @@ export default {
     save() {
       if (this.editedIndex > -1) {
         Object.assign(this.clients[this.editedIndex], this.editedItem);
+        this.editedItem.password = "";
+        this.$store.dispatch("updateClient", this.editedItem).catch(error => {
+          (this.errorMessage = error.response.data), (this.password = "");
+          this.loading = false;
+        });
       } else {
         this.clients.push(this.editedItem);
+        this.editedItem.password = "123";
+        this.$store.dispatch("addClient", this.editedItem).catch(error => {
+          (this.errorMessage = error.response.data), (this.password = "");
+          this.loading = false;
+        });
       }
       this.close();
     },

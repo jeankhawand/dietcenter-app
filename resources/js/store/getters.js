@@ -26,15 +26,19 @@ export const authGetters = {
         return state.token !== null;
     },
     isManager(state) {
+        if(state.user == null) return false;
         return state.user.roles.some(role => role.name == "manager");
     },
     isChef(state) {
+        if(state.user == null) return false;
         return state.user.roles.some(role => role.name == "chef");
     },
     isDietitian(state) {
+        if(state.user == null) return false;
         return state.user.roles.some(role => role.name == "dietitian");
     },
     isClient(state) {
+        if(state.user == null) return false;
         return state.user.roles.some(role => role.name == "client");
     }
 }

@@ -18,7 +18,7 @@ class RecipeController extends Controller
     public function index()
     {
 
-        $recipes = Recipe::orderBy('id')->paginate(8);
+        $recipes = Recipe::orderBy('id','DESC')->paginate(8);
         return RecipeResource::collection($recipes);
     }
 
@@ -54,7 +54,8 @@ class RecipeController extends Controller
         $data = $request->validate([
             'name'=>'required|string',
             'description'=>'required',
-            'image'=>'required'
+            'image'=>'string',
+            'price'=>'required'
         ]);
         $recipe->update($data);
         return response($recipe,200);

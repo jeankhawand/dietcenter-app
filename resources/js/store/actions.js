@@ -61,24 +61,6 @@ export const productActions = {
         axios.delete(`products/${payload}`, payload).then(response => {
             commit(REMOVE_PRODUCT_SUCCESS, response.data)
         })
-    },
-    addRecipe(payload) {
-        axios.post(`recipe`, payload, {
-            Authorization: "Bearer " + context.state.token,
-            Accept: "application/json"
-        })
-    },
-    updateRecipe(payload) {
-        axios.put(`recipe/${payload.id}`, payload, {
-            Authorization: "Bearer " + context.state.token,
-            Accept: "application/json"
-        })
-    },
-    removeRecipe(id) {
-        axios.delete(`recipe/${id}`, id, {
-            Authorization: "Bearer " + context.state.token,
-            Accept: "application/json"
-        })
     }
 }
 
@@ -101,6 +83,118 @@ export const cartActions = {
     }
 }
 
+export const employeesActions = {
+    //-----Recipes-----
+    addRecipe(context, payload) {
+        payload.image = "data:image/jpeg;base64,"
+        console.log(payload)
+        axios.post(`recipe`, payload ,
+        {
+            headers: {
+                Authorization: "Bearer " + context.state.token,
+                Accept: "application/json",
+            }
+
+        }).then(response => {
+            console.log(response);
+        })
+    },
+    updateRecipe(context, payload) {
+        console.log(payload)
+        axios.patch(`recipe/${payload.id}`, payload,
+        {
+            headers: {
+                Authorization: "Bearer " + context.state.token,
+                Accept: "application/json",
+            }
+
+        }).then(response => {
+            console.log(response);
+        })
+    },
+    removeRecipe(context, id) {
+        let headers = {
+            Authorization: "Bearer " + context.state.token,
+            Accept: "application/json"
+        }
+        axios.delete(`recipe/${id}`, { id, headers }).then(response => {
+            console.log(response);
+        })
+    },
+    //-----Employees-----
+    addEmployee(context, payload) {
+        console.log(payload)
+        axios.post(`employee`, payload ,
+        {
+            headers: {
+                Authorization: "Bearer " + context.state.token,
+                Accept: "application/json",
+            }
+
+        }).then(response => {
+            console.log(response);
+        })
+    },
+    updateEmployee(context, payload) {
+        console.log(payload)
+        axios.patch(`employee/${payload.id}`, payload,
+        {
+            headers: {
+                Authorization: "Bearer " + context.state.token,
+                Accept: "application/json",
+            }
+
+        }).then(response => {
+            console.log(response);
+        })
+    },
+    removeEmployee(context, id) {
+        let headers = {
+            Authorization: "Bearer " + context.state.token,
+            Accept: "application/json"
+        }
+        axios.delete(`employee/${id}`, { id, headers }).then(response => {
+            console.log(response);
+        })
+    },
+    //-----Clients-----
+    addClient(context, payload) {
+        console.log(payload)
+        axios.post(`client`, payload ,
+        {
+            headers: {
+                Authorization: "Bearer " + context.state.token,
+                Accept: "application/json",
+            }
+
+        }).then(response => {
+            console.log(response);
+        })
+    },
+    updateClient(context, payload) {
+        console.log(payload)
+        axios.patch(`client/${payload.id}`, payload,
+        {
+            headers: {
+                Authorization: "Bearer " + context.state.token,
+                Accept: "application/json",
+            }
+
+        }).then(response => {
+            console.log(response);
+        })
+    },
+    removeClient(context, id) {
+        let headers = {
+            Authorization: "Bearer " + context.state.token,
+            Accept: "application/json"
+        }
+        axios.delete(`client/${id}`, { id, headers }).then(response => {
+            console.log(response);
+        })
+    }
+}
+
 export const authActions = {
     destroyToken(context) {
         // setup destroy token in order once user login he have to provide the authorization which is
@@ -119,7 +213,7 @@ export const authActions = {
                         localStorage.removeItem("user");
                         context.commit(DESTROY_USER_INFO);
                         sessionStorage.removeItem("cart");
-                        commit(EMPTY_CART);
+                        context.commit(EMPTY_CART);
                         resolve(response);
                     })
                     .catch(error => {
@@ -128,7 +222,7 @@ export const authActions = {
                         localStorage.removeItem("user");
                         context.commit(DESTROY_USER_INFO);
                         sessionStorage.removeItem("cart");
-                        commit(EMPTY_CART);
+                        context.commit(EMPTY_CART);
                         reject(error);
                     });
             });
@@ -146,7 +240,7 @@ export const authActions = {
                     password: credentials.password
                 })
                 .then(response => {
-                    console.log(response);
+                    // console.log(response);
                     const token = response.data.access_token;
 
                     localStorage.setItem("access_token", token);

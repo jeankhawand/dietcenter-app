@@ -83,8 +83,8 @@
               </v-toolbar>
             </template>
             <template v-slot:item.action="{ item }" v-if="isChef">
-              <v-icon small class="mr-2" @click="editItem(item)" :disabled="isDisabled">mdi-pencil</v-icon>
-              <v-icon small @click="deleteItem(item)" :disabled="isDisabled">mdi-delete</v-icon>
+              <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+              <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
             </template>
             <template v-slot:no-data>
               <v-btn color="primary" @click="initialize">Reset</v-btn>
@@ -99,9 +99,9 @@
 
 <script>
 export default {
-  loading: false,
   data() {
     return {
+      loading: false,
       dialog: false,
       search: "",
       editedItem: {
@@ -183,11 +183,9 @@ export default {
       confirm("Are you sure you want to delete this item?") &&
         this.recipes.splice(index, 1) &&
         this.$store.dispatch("removeRecipe", item.id).catch(error => {
-          // console.log(error.response.data),
           (this.errorMessage = error.response.data), (this.password = "");
           this.loading = false;
         });
-      alert("Wsolet");
     },
     close() {
       this.dialog = false;
@@ -198,9 +196,17 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.clients[this.editedIndex], this.editedItem);
+        Object.assign(this.recipes[this.editedIndex], this.editedItem);
+        this.$store.dispatch("updateRecipe", this.editedItem).catch(error => {
+          (this.errorMessage = error.response.data), (this.password = "");
+          this.loading = false;
+        });
       } else {
         this.recipes.push(this.editedItem);
+        this.$store.dispatch("addRecipe", this.editedItem).catch(error => {
+          (this.errorMessage = error.response.data), (this.password = "");
+          this.loading = false;
+        });
       }
       this.close();
     },
