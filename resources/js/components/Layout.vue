@@ -11,7 +11,7 @@
       <v-list dense>
         <v-list-item class="drawer" to="/admin/diet_dashboard" v-if="isDietitian">
           <v-list-item-action>
-            <v-icon color="white">mdi-home</v-icon>
+            <v-icon color="white">mdi-account-badge-horizontal-outline</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title style="color:white">Clients</v-list-item-title>
@@ -19,7 +19,7 @@
         </v-list-item>
         <v-list-item to="/admin/manager_dashboard" v-if="isManager">
           <v-list-item-action>
-            <v-icon color="white">mdi-home</v-icon>
+            <v-icon color="white">mdi-account-cash</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title style="color:white">Dashboard</v-list-item-title>
@@ -35,7 +35,7 @@
         </v-list-item>
         <v-list-item to="/chef/chef_dashboard" v-if="isChef || isDietitian || isManager">
           <v-list-item-action>
-            <v-icon color="white">mdi-home</v-icon>
+            <v-icon color="white">mdi-chef-hat</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title style="color:white">Recipes</v-list-item-title>
@@ -74,7 +74,7 @@
       <v-btn class="d-lg-none d-md" icon>
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
-      <v-btn v-if="loggedIn" class="hidden-sm-and-down" icon @click="handleFullScreen()">
+      <v-btn class="hidden-sm-and-down" icon @click="handleFullScreen()">
         <v-icon>mdi-fullscreen</v-icon>
       </v-btn>
       <v-btn icon @click="goCart()">
@@ -103,7 +103,7 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                  <v-list-item-title>Toni Haydamous</v-list-item-title>
+                  <v-list-item-title>Daniel Green</v-list-item-title>
                   <v-list-item-subtitle>Diet Center</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>

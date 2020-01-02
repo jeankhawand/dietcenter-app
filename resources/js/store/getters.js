@@ -17,7 +17,7 @@ export const productGetters = {
         for (var i = 0; i < state.cart.length; i++) {
             total += state.cart[i].price * state.cart[i].quantity;
         }
-        return total * 100
+        return total
     }
 }
 
