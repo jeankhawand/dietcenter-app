@@ -5,7 +5,7 @@ Vue.use(Vuex);
 // we have to import each object from getters.js, mutations.js, and actions.js
 import { productGetters, authGetters } from "./getters";
 import { productMutations, cartMutations, authMutations} from "./mutations";
-import { productActions, cartActions, authActions } from "./actions";
+import { productActions, cartActions, authActions, employeesActions } from "./actions";
 
 export const store = new Vuex.Store({
     // vuex definitions
@@ -34,5 +34,6 @@ export const store = new Vuex.Store({
         {},
         productActions,
         cartActions,
+        employeesActions,
         authActions)
 });

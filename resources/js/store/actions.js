@@ -61,7 +61,30 @@ export const productActions = {
         axios.delete(`products/${payload}`, payload).then(response => {
             commit(REMOVE_PRODUCT_SUCCESS, response.data)
         })
+    }
+}
+
+export const cartActions = {
+    addToCart({commit}, payload) {
+        commit(ADD_TO_CART, payload)
+        commit(UPDATE_SESSION_STORAGE_CART)
     },
+    removeFromCart({commit}, payload) {
+        commit(REMOVE_FROM_CART, payload)
+        commit(UPDATE_SESSION_STORAGE_CART)
+    },
+    addQuantityToCart({commit}, payload) {
+        commit(ADD_QUANTITY_TO_CART, payload)
+        commit(UPDATE_SESSION_STORAGE_CART)
+    },
+    removeQuantityFromCart({commit}, payload) {
+        commit(REMOVE_QUANTITY_FROM_CART, payload)
+        commit(UPDATE_SESSION_STORAGE_CART)
+    }
+}
+
+export const employeesActions = {
+    //-----Recipes-----
     addRecipe(context, payload) {
         payload.image = "data:image/jpeg;base64,"
         console.log(payload)
@@ -97,25 +120,78 @@ export const productActions = {
         axios.delete(`recipe/${id}`, { id, headers }).then(response => {
             console.log(response);
         })
-    }
-}
+    },
+    //-----Employees-----
+    addEmployee(context, payload) {
+        console.log(payload)
+        axios.post(`employee`, payload ,
+        {
+            headers: {
+                Authorization: "Bearer " + context.state.token,
+                Accept: "application/json",
+            }
 
-export const cartActions = {
-    addToCart({commit}, payload) {
-        commit(ADD_TO_CART, payload)
-        commit(UPDATE_SESSION_STORAGE_CART)
+        }).then(response => {
+            console.log(response);
+        })
     },
-    removeFromCart({commit}, payload) {
-        commit(REMOVE_FROM_CART, payload)
-        commit(UPDATE_SESSION_STORAGE_CART)
+    updateEmployee(context, payload) {
+        console.log(payload)
+        axios.patch(`employee/${payload.id}`, payload,
+        {
+            headers: {
+                Authorization: "Bearer " + context.state.token,
+                Accept: "application/json",
+            }
+
+        }).then(response => {
+            console.log(response);
+        })
     },
-    addQuantityToCart({commit}, payload) {
-        commit(ADD_QUANTITY_TO_CART, payload)
-        commit(UPDATE_SESSION_STORAGE_CART)
+    removeEmployee(context, id) {
+        let headers = {
+            Authorization: "Bearer " + context.state.token,
+            Accept: "application/json"
+        }
+        axios.delete(`employee/${id}`, { id, headers }).then(response => {
+            console.log(response);
+        })
     },
-    removeQuantityFromCart({commit}, payload) {
-        commit(REMOVE_QUANTITY_FROM_CART, payload)
-        commit(UPDATE_SESSION_STORAGE_CART)
+    //-----Clients-----
+    addClient(context, payload) {
+        console.log(payload)
+        axios.post(`client`, payload ,
+        {
+            headers: {
+                Authorization: "Bearer " + context.state.token,
+                Accept: "application/json",
+            }
+
+        }).then(response => {
+            console.log(response);
+        })
+    },
+    updateClient(context, payload) {
+        console.log(payload)
+        axios.patch(`client/${payload.id}`, payload,
+        {
+            headers: {
+                Authorization: "Bearer " + context.state.token,
+                Accept: "application/json",
+            }
+
+        }).then(response => {
+            console.log(response);
+        })
+    },
+    removeClient(context, id) {
+        let headers = {
+            Authorization: "Bearer " + context.state.token,
+            Accept: "application/json"
+        }
+        axios.delete(`client/${id}`, { id, headers }).then(response => {
+            console.log(response);
+        })
     }
 }
 
