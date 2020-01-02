@@ -15,7 +15,7 @@
 
 
     },
-  created() {
+  beforeMount() {
     if (sessionStorage.cart) {
       this.$store.commit(LOAD_SESSION_STORAGE_CART);
     }

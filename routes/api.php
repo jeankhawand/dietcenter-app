@@ -25,7 +25,7 @@ Route::middleware('auth:api')->group(function(){
         return RoleResource::collection($request->user()->roles()->get());
     });
     //Auth User Checkout
-    Route::post('checkout','PaymentController@checkoutAuth');
+    Route::post('checkout/auth','PaymentController@checkoutAuth');
     // Logout
     Route::post('logout','AuthController@logout')->middleware('check-role:dietitian,chef,user,manager,admin');
     // Register users

@@ -34,8 +34,8 @@
               <v-icon size="40" color="white">mdi-account</v-icon>
             </v-list-item-avatar>
             <v-list-item-content>
-              <div class="category grey--text font-weight-light text-right">Total Users</div>
-              <div class="display-1 mb-2 font-weight-light text-right">102</div>
+              <div class="category grey--text font-weight-light text-right">Total Employees</div>
+              <div class="display-1 mb-2 font-weight-light text-right">{{employees.length}}</div>
             </v-list-item-content>
           </v-list-item>
         </v-card>
@@ -155,7 +155,7 @@
                         </v-data-table>
                     </v-card>
                 </v-flex>
-     
+
 
     </v-layout>
   </v-container>
@@ -276,6 +276,26 @@ export default {
         { text: "Actions", value: "action", sortable: false }
       ]
     };
+  },
+  beforeMount() {
+    return new Promise((resolve, reject) => {
+      axios
+        .get("employees", {
+          params: {},
+          headers: {
+            Authorization: "Bearer " + this.$store.state.token,
+            Accept: "application/json"
+          }
+        })
+        .then(response => {
+          this.employees = response.data.data;
+          resolve(response);
+        })
+        .catch(error => {
+          console.log(error);
+          reject(error);
+        });
+    });
   },
   computed: {
     formTitle() {
